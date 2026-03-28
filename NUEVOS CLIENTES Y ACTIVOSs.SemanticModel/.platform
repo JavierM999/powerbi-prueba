@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "NUEVOS CLIENTES Y ACTIVOSs"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "97d78499-b6fd-470e-a28a-6ff9dcd86268"
+  }
+}

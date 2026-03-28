@@ -1,0 +1,224 @@
+table contracn
+	lineageTag: 116b9bb8-c565-4ca5-bf86-c1f637eed1ea
+
+	measure 'Cli.Nuevos' = ```
+			
+			IF(NOT(MIN(Calendario[Date]) > CALCULATE(MAX(contracn[ctfechaini]), ALL(contracn))),
+			    VAR primeraFecha = FIRSTDATE(Calendario[Date])
+			    VAR tabla = FILTER(
+			                        ALL(Calendario),
+			                        Calendario[Date] >= DATEADD(primeraFecha, -1, YEAR) && Calendario[Date] <= MAX(Calendario[Date]) 
+			                    )
+			    RETURN
+			    COUNTROWS(
+			        FILTER(
+			            ADDCOLUMNS(
+			                CALCULATETABLE(
+			                    VALUES(contracn[ConCenCli]),
+			                    tabla
+			                ),
+			                "FechaPrimFactura", CALCULATE(MIN(contracn[ctfechaini]), tabla)
+			            ),
+			            [FechaPrimFactura] >= primeraFecha
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 23390fbb-d08f-43e5-b258-cd59959d7602
+
+	measure 'Cli.Nuevos N' = ```
+			
+			IF(NOT(MIN(Calendario[Date]) > CALCULATE(MAX(contracn[ctfechaini]), ALL(contracn))),
+			    VAR primeraFecha = FIRSTDATE(Calendario[Date])
+			    VAR tabla = FILTER(
+			                        ALL(Calendario),
+			                        Calendario[Date] >= DATEADD(primeraFecha, -1, YEAR) && Calendario[Date] <= MAX(Calendario[Date]) 
+			                    )
+			    RETURN
+			    COUNTROWS(
+			        FILTER(
+			            ADDCOLUMNS(
+			                CALCULATETABLE(
+			                    VALUES(contracn[ConCenCli]),
+			                    
+			                    tabla
+			                ),
+			                "Maxfecfin", CALCULATE(IF(ISBLANK(MAX(Contratos[ctfechafinreal]))=TRUE(),[fecfin],MAX(Contratos[ctfechafinreal])))
+			            ),
+			            [Maxfecfin] >= primeraFecha
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: fe14d79c-f760-4aa1-a15c-46c59bb51cca
+
+	measure 'ClientesNuevos 3' = ```
+			
+			VAR FecIniSeleccionada = [fecini]
+			VAR FecFinSeleccionada = [fecfin]
+			VAR AnoAnteriorIni = EDATE(FecIniSeleccionada, -12)
+			VAR AnoAnteriorFin = EDATE(FecFinSeleccionada, -12)
+			
+			RETURN
+			CALCULATE(
+			    COUNTROWS(VALUES(contracn[ConCenCli])),
+			    FILTER(
+			        VALUES(contracn[ConCenCli]),
+			        NOT(
+			            COUNTROWS(
+			                FILTER(
+			                    contracn,
+			                    contracn[ConCenCli] = EARLIER(contracn[ConCenCli]) &&
+			                    (
+			                        (ISBLANK(contracn[ctfechafinreal]) && contracn[ctfechaini] <= AnoAnteriorFin && contracn[ctfechaini] >= AnoAnteriorIni) ||
+			                        (NOT(ISBLANK(contracn[ctfechafinreal])) && contracn[ctfechafinreal] >= AnoAnteriorIni && contracn[ctfechaini] <= AnoAnteriorFin)
+			                    )
+			                )
+			            ) > 0
+			        )
+			    )
+			)
+			
+			
+			```
+		formatString: 0
+		lineageTag: 98c62584-9e29-4887-8702-600ea4650e01
+
+	measure 'New Clients' = ```
+			
+			VAR ClientesT = VALUES(contracn[ConCenCli])
+			VAR ClientesPA = CALCULATETABLE(VALUES(contracn[ConCenCli]),
+			                    FILTER(ALL(Calendario),
+			                        Calendario[Date] > MIN(Calendario[Date])- 90 && 
+			                        Calendario[Date] < MIN(Calendario[Date])))
+			RETURN
+			COUNTROWS(EXCEPT(ClientesT,ClientesPA))
+			```
+		formatString: 0
+		lineageTag: 76c22a56-57ea-4ec5-92d6-a7f309ac1e79
+
+	measure 'New Clients 2' =
+			
+			VAR ClientesT = VALUES(contracn[ConCenCli])
+			VAR ClientesPA = CALCULATETABLE(VALUES(contracn[ConCenCli]),
+			                    FILTER ( ALL ( contracn[ctfechaini] ), Contracn[ctfechaini] <= [feciniay] ),
+			                    FILTER (
+			                        ALL ( contracn[ctfechafinreal] ),
+			                        ISBLANK ( Contracn[ctfechafinreal] ) = TRUE ()
+			                        || Contracn[ctfechafinreal] >= [feciniay]
+			        ))
+			RETURN
+			COUNTROWS(EXCEPT(ClientesT,ClientesPA))
+		formatString: 0
+		lineageTag: 35f1173c-3cdc-4d47-acab-d665ab11a048
+
+	measure 'Clients 2' =
+			
+			VAR ClientesT = VALUES(contracn[ConCenCli])
+			RETURN
+			COUNTROWS(ClientesT)
+		formatString: 0
+		lineageTag: 0819624d-e371-4614-bd05-3da596ff9821
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 56faba84-b948-4883-9006-1dbf7a5014a4
+		summarizeBy: none
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: ce8bf2be-720f-4fec-95b1-f00953a88325
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 85a8b4d7-5d69-4460-9977-ba3f82b84ded
+		summarizeBy: sum
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: cd5e9075-840d-467a-8659-cd1efb90d5b1
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: 9bbc0a50-00d4-464f-a37f-26f01676dce5
+		summarizeBy: sum
+		sourceColumn: ctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1172a0e8-cbd7-452c-81f1-7cd21f41a25e
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 06cd0e18-9da2-48a6-82ca-e129857f1450
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		variation Variación
+			isDefault
+			relationship: 7d9b80c7-1fbe-4ad2-9c1d-de0bf9bfad53
+			defaultHierarchy: LocalDateTable_6ebf005c-ba64-4434-9d52-6e5ff33f7cad.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcatepuesto
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a3be26e-8e2b-4916-bf41-0c4cbf8d8c8f
+		summarizeBy: sum
+		sourceColumn: ctcatepuesto
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConCenCli = FORMAT(contracn[ctcentro],"00")&FORMAT(contracn[ctcliente],"000000")
+		lineageTag: c762bab5-5ab3-4421-a002-b6e212d8d763
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition contracn-0f93c036-84b6-459a-8fb0-2135667a9d2a = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001"),
+				    dbo_contra = Source{[Schema="dbo",Item="contra"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_contra, each [ctempresa] = 1),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"ctcentro", "ctcontrato", "cttrabajador", "ctcliente", "ctcencli", "ctfechaini", "ctfechafinreal", "ctcatepuesto"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Removed Other Columns", each [ctcentro] >= 1 and [ctcentro] <= 87),
+				    #"Filtered Rows2" = Table.SelectRows(#"Filtered Rows1", each [ctfechafinreal] > #datetime(2018, 12, 31, 0, 0, 0) or [ctfechafinreal] = null),
+				    #"Filtered Rows3" = Table.SelectRows(#"Filtered Rows2", each true),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Filtered Rows3",{{"ctcentro", Int64.Type}, {"ctcencli", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+

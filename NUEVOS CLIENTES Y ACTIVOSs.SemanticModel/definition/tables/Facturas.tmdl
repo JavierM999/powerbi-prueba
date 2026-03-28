@@ -1,0 +1,149 @@
+table Facturas
+	lineageTag: f7995c5d-a5a3-4ffd-bd2e-a31b852d122b
+
+	measure 'Clientes Nuevos' = ```
+			
+			IF(NOT(MIN(Calendario[Date]) > CALCULATE(MAX(Facturas[fcfecha]), ALL(Facturas))),
+			    VAR primeraFecha = FIRSTDATE(Calendario[Date])
+			    VAR tabla = FILTER(
+			                        ALL(Calendario),
+			                        Calendario[Date] >= DATEADD(primeraFecha, -1, YEAR) && Calendario[Date] <= MAX(Calendario[Date]) 
+			                    )
+			    RETURN
+			    COUNTROWS(
+			        FILTER(
+			            ADDCOLUMNS(
+			                CALCULATETABLE(
+			                    VALUES(Facturas[UniCodCli16]),
+			                    tabla
+			                ),
+			                "FechaPrimFactura", CALCULATE(MIN(Facturas[fcfecha]), tabla)
+			            ),
+			            [FechaPrimFactura] >= primeraFecha
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 263caada-3633-459a-8a97-d9cc7ff079e0
+
+	measure TFraCN = ```
+			
+			SUMX(
+			    VALUES(Facturas[UniCodCli16]), 
+			    IF([Clientes Nuevos] > 0, [TotFra], BLANK())
+			)
+			```
+		formatString: #,0.00
+		lineageTag: bda66390-49b3-4615-9d77-21d63ed46715
+
+	measure TotFra = SUM(Facturas[fcbruto])
+		lineageTag: 334551d2-16cf-4e32-841b-3df6d66187e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fccentro
+		dataType: int64
+		formatString: 0
+		lineageTag: b8c66fc2-1edd-431f-b21b-697d5a8751e5
+		summarizeBy: none
+		sourceColumn: fccentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcserie
+		dataType: int64
+		formatString: 0
+		lineageTag: 7404904a-ef5b-495a-9038-730204b9fd04
+		summarizeBy: sum
+		sourceColumn: fcserie
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcano
+		dataType: int64
+		formatString: 0
+		lineageTag: 758d49e8-8839-4ac4-98f3-bc0b011a2c46
+		summarizeBy: sum
+		sourceColumn: fcano
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8c867543-6738-4a68-932e-8d3ca79af2bb
+		summarizeBy: none
+		sourceColumn: fcfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fccliente
+		dataType: int64
+		formatString: 0
+		lineageTag: cb143ed8-78f7-414f-9c9b-613b9381a0e3
+		summarizeBy: sum
+		sourceColumn: fccliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcvendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: 98609a87-eea3-4db3-92df-4e98d3a91b72
+		summarizeBy: sum
+		sourceColumn: fcvendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcbruto
+		dataType: double
+		lineageTag: 0f4828b1-ed9a-4cf9-bf7a-33a6bcb3e35d
+		summarizeBy: sum
+		sourceColumn: fcbruto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fctotal
+		dataType: double
+		lineageTag: 507ed24b-8279-4d89-b6c7-5c2f6996533a
+		summarizeBy: sum
+		sourceColumn: fctotal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UniCodCli16 = FORMAT(Facturas[fccentro],"00")&FORMAT(Facturas[fccliente],"000000")
+		lineageTag: 184ded38-88fd-47a3-9ab9-208ea6008feb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnombre
+		dataType: string
+		lineageTag: 033ea060-a052-47b4-9bc7-bffd3827cd70
+		summarizeBy: none
+		sourceColumn: clnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Facturas-75235228-93da-4598-bf60-7602963888a7 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select fccentro,fcserie,fcano,fcfecha,fccliente,fcvendedor,fcbruto,fctotal  #(lf)from facturas#(lf)where YEAR(fcfecha) >= YEAR(GETDATE()) - 1#(lf)and fcempresa=1#(lf)and fccentro<99#(lf)and fcbruto>0#(lf)#(lf)"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"fccentro", Int64.Type}, {"fcserie", Int64.Type}, {"fcano", Int64.Type}, {"fcfecha", type date}}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Changed Type", {"fccentro", "fccliente"}, Clientes, {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes" = Table.ExpandTableColumn(#"Consultas combinadas", "Clientes", {"clnombre"}, {"clnombre"})
+				in
+				    #"Se expandió Clientes"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

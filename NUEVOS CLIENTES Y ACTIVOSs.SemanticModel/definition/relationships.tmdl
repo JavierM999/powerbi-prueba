@@ -1,0 +1,84 @@
+relationship 12bc9e92-8d23-4e9f-a6fb-c6a83943dc68
+	fromColumn: OFlineas.IdOfLineas
+	toColumn: Ofertas.IdOferta
+
+relationship 0d47fdd1-b511-4186-ab63-e468700f158d
+	fromColumn: OFlineas.oflcatepuesto
+	toColumn: Catego.cacodigo
+
+relationship a68e58df-c4f7-44c6-8b59-3cb22332f73a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Ofertas.offechaoferta
+	toColumn: LocalDateTable_d4594326-cbae-45c7-a36a-353653c67496.Date
+
+relationship 8eff0520-1eb0-474a-8dcb-e31141785c24
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Ofertas.offechavalidez
+	toColumn: LocalDateTable_00efc980-4fee-4b8a-a969-c6d399a86c36.Date
+
+relationship 47cf1ab8-4f62-49b3-8628-2787fb0201ab
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: MCANCentros.Id
+	toColumn: Centros.cecentro
+
+relationship a452bcc3-7fea-40b4-80fa-42a1998f14dd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Date
+	toColumn: LocalDateTable_dfb366fe-5938-417b-ab64-1d998bc894f8.Date
+
+relationship 18babc9f-1246-4a1d-ade9-2ade42a08ba6
+	fromColumn: OFlineas.offechaoferta
+	toColumn: Calendario.Date
+
+relationship dd79ff31-d96a-4b9a-a042-1474a3a516d3
+	fromColumn: Facturas.fcfecha
+	toColumn: Calendario.Date
+
+relationship 87bfc202-f15a-45e7-806f-9d2b612c30d4
+	fromColumn: Facturas.fccentro
+	toColumn: MCANCentros.Id
+
+relationship b52b48d4-efa5-45fe-8a54-5d59506271f8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contratos.ctfechafinreal
+	toColumn: LocalDateTable_2cc0ea2b-2f2d-41a3-8c51-e8a2a1c02e36.Date
+
+relationship 18bb3db8-c5fd-4464-a2a0-970f23ad0a97
+	fromColumn: contratos.ctcentro
+	toColumn: MCANCentros.Id
+
+relationship 753b973d-e720-49aa-9dbb-6ccdf26335f9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contratos.ctfechaini
+	toColumn: LocalDateTable_139578cb-d8fd-4db2-9846-6855dcc468fd.Date
+
+relationship 7d9b80c7-1fbe-4ad2-9c1d-de0bf9bfad53
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contracn.ctfechafinreal
+	toColumn: LocalDateTable_6ebf005c-ba64-4434-9d52-6e5ff33f7cad.Date
+
+relationship ba5ec7b0-591f-4797-bc64-4383d79b660b
+	fromColumn: contracn.ctcentro
+	toColumn: MCANCentros.Id
+
+relationship 1786a470-1d92-40bf-98e5-521ab7c85828
+	fromColumn: contracn.ctfechaini
+	toColumn: Calendario.Date
+
+relationship 2ef41e0a-02f5-498c-ae83-f8f1cab641f8
+	fromColumn: Ofertas.ofvendedor
+	toColumn: Vendedores.vecodigo
+
+relationship 0b8937cf-1a32-4540-aa70-4bd3b0607319
+	fromColumn: contracn.ConCenCli
+	toColumn: Clientes.CliCodCli
+
+relationship cb2cccf4-9672-447d-9487-162e518fd369
+	fromColumn: Ofertas.ofcentro
+	toColumn: MCANCentros.Id
+
+relationship 853ce06f-b01e-42d2-98a9-78cea64ea88f
+	fromColumn: Clientes.clvendedor
+	toColumn: Vendedores.vecodigo
+

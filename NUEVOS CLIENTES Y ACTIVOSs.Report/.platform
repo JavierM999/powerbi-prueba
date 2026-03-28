@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "NUEVOS CLIENTES Y ACTIVOSs"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3aecd7e4-cefc-41b1-9e58-b20036f03f77"
+  }
+}

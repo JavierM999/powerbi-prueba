@@ -1,0 +1,166 @@
+table Ofertas
+	lineageTag: 1b9f6693-3fe2-4383-8f6b-c3a49a448e96
+
+	measure TotalOf = COUNTROWS(Ofertas)
+		formatString: 0
+		lineageTag: cdc1c246-4a7c-4939-bcb5-30b782b42079
+
+	measure TOfertasT = CALCULATE([TotalOf],FILTER(Ofertas,Ofertas[offechaoferta]>=[fecini]),FILTER(Ofertas,Ofertas[offechaoferta]<=[fecfin]))
+		formatString: 0
+		lineageTag: ce8e50e2-c98e-440a-9559-f8f741273db2
+
+	measure OfertasAT = CALCULATE(COUNTROWS(Ofertas),FILTER(Ofertas,Ofertas[offechaoferta]>=[fecini]),FILTER(Ofertas,Ofertas[offechaoferta]<=[fecfin]),FILTER(Ofertas,Ofertas[ofestado]="A"))
+		formatString: 0
+		lineageTag: bdd4f2f8-c3d4-4c92-98ba-d42858eff2e3
+
+	column ofcentro
+		dataType: int64
+		lineageTag: d29a5672-0ab3-4313-93a8-d7e83d2a6188
+		summarizeBy: none
+		sourceColumn: ofcentro
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofcodigo
+		dataType: int64
+		lineageTag: c28be8cc-66fa-4107-b661-c1952baa7bc5
+		summarizeBy: sum
+		sourceColumn: ofcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofcliente
+		dataType: int64
+		lineageTag: 2d68296a-4c62-4e0c-b8a4-9be0d9f0e6b5
+		summarizeBy: sum
+		sourceColumn: ofcliente
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofcencli
+		dataType: int64
+		lineageTag: 864ead97-d490-4a0d-a47e-5d61538410ba
+		summarizeBy: sum
+		sourceColumn: ofcencli
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofnombre
+		dataType: string
+		lineageTag: e9c65527-b65b-49ba-ad9f-975005cf09ae
+		summarizeBy: none
+		sourceColumn: ofnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofprovin
+		dataType: string
+		lineageTag: 42e33fe7-546f-4d29-9e3f-b43e37bce6cd
+		summarizeBy: none
+		sourceColumn: ofprovin
+
+		annotation SummarizationSetBy = Automatic
+
+	column offechaoferta
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c0613153-039d-441e-b18e-6fa321741d73
+		summarizeBy: none
+		sourceColumn: offechaoferta
+
+		variation Variación
+			isDefault
+			relationship: a68e58df-c4f7-44c6-8b59-3cb22332f73a
+			defaultHierarchy: LocalDateTable_d4594326-cbae-45c7-a36a-353653c67496.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column offechavalidez
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 386ccbaa-710a-40de-8509-9a5833663270
+		summarizeBy: none
+		sourceColumn: offechavalidez
+
+		variation Variación
+			isDefault
+			relationship: 8eff0520-1eb0-474a-8dcb-e31141785c24
+			defaultHierarchy: LocalDateTable_00efc980-4fee-4b8a-a969-c6d399a86c36.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ofpedidocliente
+		dataType: string
+		lineageTag: 0626cbc0-621c-446d-becf-622ed4638a9c
+		summarizeBy: none
+		sourceColumn: ofpedidocliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofestado
+		dataType: string
+		lineageTag: 0cc90a79-f9de-4219-806c-4719b83256d9
+		summarizeBy: none
+		sourceColumn: ofestado
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofconvenio
+		dataType: int64
+		lineageTag: 8dc7adf2-60cf-4c13-9203-05581e145d21
+		summarizeBy: sum
+		sourceColumn: ofconvenio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofvendedor
+		dataType: int64
+		lineageTag: a54a59fe-6100-48fe-a061-e0b27411a384
+		summarizeBy: none
+		sourceColumn: ofvendedor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofusuario
+		dataType: string
+		lineageTag: 52e9c3bc-dc8b-4ed4-b139-4c8e13e84e3e
+		summarizeBy: none
+		sourceColumn: ofusuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdOferta = FORMAT([ofcentro],"00")&FORMAT([ofcodigo],"00000000")
+		lineageTag: 11133bc0-3e01-47af-92d6-2b458536dfec
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Ofertas = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ofcentro,ofcodigo,ofcliente,ofcencli,ofnombre,ofprovin,offechaoferta,offechavalidez,ofpedidocliente,ofestado,ofconvenio,ofvendedor,ofusuario#(lf)from oferta#(lf)where ofempresa=1#(lf)and year(offechaoferta)>=2018"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"ofcentro", Int64.Type}, {"ofcodigo", Int64.Type}, {"ofcencli", Int64.Type}, {"offechaoferta", type date}, {"offechavalidez", type date}, {"ofconvenio", Int64.Type}, {"ofvendedor", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_QueryRelationships = {"columnCount":13,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Ofertas/Tipo cambiado.{ofcentro,0}","Section1/Ofertas/Tipo cambiado.{ofcodigo,1}","Section1/Ofertas/Origen.{ofcliente,2}","Section1/Ofertas/Tipo cambiado.{ofcencli,3}","Section1/Ofertas/Origen.{ofnombre,4}","Section1/Ofertas/Origen.{ofprovin,5}","Section1/Ofertas/Tipo cambiado.{offechaoferta,6}","Section1/Ofertas/Tipo cambiado.{offechavalidez,7}","Section1/Ofertas/Origen.{ofpedidocliente,8}","Section1/Ofertas/Origen.{ofestado,9}","Section1/Ofertas/Tipo cambiado.{ofconvenio,10}","Section1/Ofertas/Tipo cambiado.{ofvendedor,11}","Section1/Ofertas/Origen.{ofusuario,12}"],"ColumnCount":13,"KeyColumnNames":[],"ColumnIdentities":["Section1/Ofertas/Tipo cambiado.{ofcentro,0}","Section1/Ofertas/Tipo cambiado.{ofcodigo,1}","Section1/Ofertas/Origen.{ofcliente,2}","Section1/Ofertas/Tipo cambiado.{ofcencli,3}","Section1/Ofertas/Origen.{ofnombre,4}","Section1/Ofertas/Origen.{ofprovin,5}","Section1/Ofertas/Tipo cambiado.{offechaoferta,6}","Section1/Ofertas/Tipo cambiado.{offechavalidez,7}","Section1/Ofertas/Origen.{ofpedidocliente,8}","Section1/Ofertas/Origen.{ofestado,9}","Section1/Ofertas/Tipo cambiado.{ofconvenio,10}","Section1/Ofertas/Tipo cambiado.{ofvendedor,11}","Section1/Ofertas/Origen.{ofusuario,12}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

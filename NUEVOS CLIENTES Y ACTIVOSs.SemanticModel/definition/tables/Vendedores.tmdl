@@ -1,0 +1,33 @@
+table Vendedores
+	lineageTag: dbc1ee44-6087-480b-b2f7-939f33df3736
+
+	column vecodigo
+		dataType: int64
+		lineageTag: 61be8152-211c-4364-a3da-d135b6eff6fe
+		summarizeBy: none
+		sourceColumn: vecodigo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column venombre
+		dataType: string
+		lineageTag: 3f2c9ca3-846b-4c49-b023-9c99b3efdd4a
+		summarizeBy: none
+		sourceColumn: venombre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Vendedores = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select vecodigo,venombre#(lf)from vended#(lf)where veempresa=1"])
+				in
+				    Origen
+
+	annotation PBI_QueryRelationships = {"columnCount":2,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Vendedores/Origen.{vecodigo,0}","Section1/Vendedores/Origen.{venombre,1}"],"ColumnCount":2,"KeyColumnNames":[],"ColumnIdentities":["Section1/Vendedores/Origen.{vecodigo,0}","Section1/Vendedores/Origen.{venombre,1}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

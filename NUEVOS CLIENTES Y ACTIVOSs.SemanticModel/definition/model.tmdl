@@ -1,0 +1,37 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Ofertas","OFlineas","Vendedores","Catego","Centros","MCANCentros","Facturas","contratos","contracn","Clientes"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Ofertas
+ref table OFlineas
+ref table Vendedores
+ref table Catego
+ref table Centros
+ref table DateTableTemplate_ebeeda04-6256-485b-bb31-b20832bdadd4
+ref table LocalDateTable_d4594326-cbae-45c7-a36a-353653c67496
+ref table LocalDateTable_00efc980-4fee-4b8a-a969-c6d399a86c36
+ref table Calendario
+ref table MCANCentros
+ref table LocalDateTable_dfb366fe-5938-417b-ab64-1d998bc894f8
+ref table Facturas
+ref table contratos
+ref table LocalDateTable_2cc0ea2b-2f2d-41a3-8c51-e8a2a1c02e36
+ref table LocalDateTable_139578cb-d8fd-4db2-9846-6855dcc468fd
+ref table contracn
+ref table LocalDateTable_6ebf005c-ba64-4434-9d52-6e5ff33f7cad
+ref table Clientes
+
+ref role Paqui
+
+ref cultureInfo es-ES
+
