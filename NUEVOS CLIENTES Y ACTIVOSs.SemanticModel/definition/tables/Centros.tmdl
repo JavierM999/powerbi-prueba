@@ -1,0 +1,44 @@
+table Centros
+	lineageTag: 08f50a83-696f-4882-8b94-f1ef805f91d2
+
+	column ceempresa
+		dataType: int64
+		lineageTag: 29b16e0f-e9b5-4359-a34f-f8d641cf78ef
+		summarizeBy: sum
+		sourceColumn: ceempresa
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cecentro
+		dataType: int64
+		lineageTag: 8c220bbd-be07-4346-8af5-e4a97908e581
+		summarizeBy: none
+		sourceColumn: cecentro
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cenombre
+		dataType: string
+		lineageTag: dc5d8cc2-9f30-4196-b2a3-134b75222ca7
+		summarizeBy: none
+		sourceColumn: cenombre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Centros = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ceempresa,cecentro,cenombre#(lf)from centros#(lf)where ceempresa=1"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"cecentro", Int64.Type}, {"ceempresa", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_QueryRelationships = {"columnCount":3,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Centros/Tipo cambiado.{ceempresa,0}","Section1/Centros/Tipo cambiado.{cecentro,1}","Section1/Centros/Origen.{cenombre,2}"],"ColumnCount":3,"KeyColumnNames":[],"ColumnIdentities":["Section1/Centros/Tipo cambiado.{ceempresa,0}","Section1/Centros/Tipo cambiado.{cecentro,1}","Section1/Centros/Origen.{cenombre,2}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

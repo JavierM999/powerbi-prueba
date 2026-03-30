@@ -1,0 +1,186 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "bd2646f97351a811ee00",
+  "position": {
+    "x": 516.30252100840335,
+    "y": 22.707749766573297,
+    "z": 4000,
+    "height": 598.76750700280115,
+    "width": 659.71988795518212,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Facturas"
+                    }
+                  },
+                  "Property": "Clientes Nuevos"
+                }
+              },
+              "queryRef": "Facturas.Clientes Nuevos",
+              "nativeQueryRef": "Clientes Nuevos"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Facturas"
+                    }
+                  },
+                  "Property": "fccliente"
+                }
+              },
+              "queryRef": "Sum(Facturas.fccliente)",
+              "nativeQueryRef": "fccliente1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Facturas"
+                    }
+                  },
+                  "Property": "clnombre"
+                }
+              },
+              "queryRef": "Facturas.clnombre",
+              "nativeQueryRef": "clnombre"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Facturas"
+                    }
+                  },
+                  "Property": "TFraCN"
+                }
+              },
+              "queryRef": "Facturas.TFraCN",
+              "nativeQueryRef": "TFraCN"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "MCANCentros"
+                  }
+                },
+                "Property": "Texto"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'CLIENTES NUEVOS'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

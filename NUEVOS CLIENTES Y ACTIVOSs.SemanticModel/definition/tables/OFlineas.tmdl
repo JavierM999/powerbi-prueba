@@ -1,0 +1,307 @@
+table OFlineas
+	lineageTag: 8975887f-66a2-44e6-a106-c682bf754889
+
+	measure 'Ofertas Aceptadas' = CALCULATE([Ofertas Totales],FILTER(Ofertas,Ofertas[ofestado]="A"))
+		formatString: 0
+		lineageTag: 0718bc9b-870b-4596-8e63-78818e801637
+
+	measure CoefHN = AVERAGE([oflcoefhora])
+		formatString: 0.000
+		lineageTag: 613424bc-07d1-40ac-b221-6d5a6192803a
+
+	measure CoefHN7 = AVERAGE([oflcoefhora7dias])
+		formatString: 0.000
+		lineageTag: 02f7faa0-1885-483e-9152-39bb5ca5d36b
+
+	measure CoefTmes = AVERAGE([oflcoefmes])
+		formatString: 0.000
+		lineageTag: d1e7c564-6480-41be-9e2d-5aa87bc248e3
+
+	measure CoefHNT = CALCULATE([CoefHN],DATESBETWEEN(OFlineas[offechaoferta],[fecini],[fecfin]))
+		formatString: 0.000
+		lineageTag: deb130f4-47ee-4f31-bea2-d6f09887948a
+
+	measure 'Ofertas Totales' = CALCULATE(DISTINCTCOUNT(OFlineas[ofcodigo]),FILTER(OFlineas,OFlineas[offechaoferta]>=[fecini]),FILTER(OFlineas,OFlineas[offechaoferta]<=[fecfin]))
+		formatString: 0
+		lineageTag: a415019e-45dc-4ee3-b63d-d1e42897749c
+
+	measure CoefHN7T = CALCULATE([CoefHN7],DATESBETWEEN(OFlineas[offechaoferta],[fecini],[fecfin]))
+		formatString: 0.000
+		lineageTag: 36ff6ef3-81a0-4ab7-bc18-22d1d623276d
+
+	measure CoefTmesT = CALCULATE([CoefTmes],DATESBETWEEN(OFlineas[offechaoferta],[fecini],[fecfin]))
+		formatString: 0.000
+		lineageTag: 899a4852-b746-49bc-b18a-0f6c31326bee
+
+	measure 'Of.Ac.AA' = CALCULATE(OFlineas[Ofertas Aceptadas],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: 0
+		lineageTag: 01244335-35d9-4c5c-9e04-9f2542c223e3
+
+	measure 'Of.Tot.AA' = CALCULATE(OFlineas[Ofertas Totales],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: 0
+		lineageTag: da58787e-1cbb-47fd-8c3a-188cb9ada0e7
+
+	measure 'Ofertas Totales Clientes' = CALCULATE([Ofertas Totales],FILTER(Ofertas,Ofertas[ofcliente]>0))
+		formatString: 0
+		lineageTag: bc761671-9acb-42d3-84be-3d7646ae5c8e
+
+	measure 'OfTot Prosp' = CALCULATE([Ofertas Totales],FILTER(Ofertas,Ofertas[ofcliente]=0))
+		formatString: 0
+		lineageTag: 5efd3f3b-e8cb-4fb7-873b-9f6e0daf6862
+
+	measure 'Ofertas Aceptadas Clientes' = CALCULATE([Ofertas Aceptadas],FILTER(Ofertas,Ofertas[ofcliente]>0))
+		formatString: 0
+		lineageTag: b1def14f-5902-4914-b57d-2365ce283f22
+
+	measure 'Ofertas Aceptadas Prospecto' = CALCULATE([Ofertas Aceptadas],FILTER(Ofertas,Ofertas[ofcliente]=0))
+		formatString: 0
+		lineageTag: 6b00dfc7-eaea-47f6-915c-0909d13d6b46
+
+	measure 'Ofertas TotCliTot' = IF([Ofertas Totales Clientes]>0,CALCULATE([Ofertas Totales Clientes],ALL(MCANCentros[Texto])),BLANK())
+		formatString: 0
+		lineageTag: 4c6ab95a-441f-47c5-a4a2-25973d5a4945
+
+	measure '% OfCli VSTotal' = DIVIDE([Ofertas Totales Clientes],[Ofertas TotCliTot])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 2aa83714-5ebf-437d-897b-ed9c86f2f269
+
+	measure 'Ofertas TotProsTot' = IF([OfTot Prosp]>0,CALCULATE([OfTot Prosp],ALL(MCANCentros[Texto])),BLANK())
+		formatString: 0
+		lineageTag: 2a05a8d5-8e75-4cf0-a9f1-69a52ca9e38d
+
+	measure '% OfPros VSTotal' = DIVIDE([OfTot Prosp],[Ofertas TotProsTot])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 95c0a244-6d84-4d6d-b286-cd6f6870fe7c
+
+	measure 'OfertasA TotCliTotA' = IF([Ofertas Aceptadas Clientes]>0,CALCULATE([Ofertas Aceptadas Clientes],ALL(MCANCentros[Texto])),BLANK())
+		formatString: 0
+		lineageTag: 9d01b820-ec12-42cf-a319-8f1365376f73
+
+	measure '% AOfCli VSTotalA' = DIVIDE([Ofertas Aceptadas Clientes],[OfertasA TotCliTotA])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: dbdb6d71-de8d-4778-beb3-068684c7b1ba
+
+	measure 'OfertasA TotProsTotA' = IF([Ofertas Aceptadas Prospecto]>0,CALCULATE([Ofertas Aceptadas Prospecto],ALL(MCANCentros[Texto])),BLANK())
+		formatString: 0
+		lineageTag: b30d8aca-66d4-4b65-8a53-31271c630014
+
+	measure '% AOfPros VSTotalA' = DIVIDE([Ofertas Aceptadas Prospecto],[OfertasA TotProsTotA])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 84c2fea6-2d44-4084-bb43-7c842a53b01b
+
+	measure 'Coef HoraN Clientes' = CALCULATE([CoefHN],FILTER(Ofertas,Ofertas[ofcliente]>0))
+		formatString: 0.000
+		lineageTag: 7a1a3d35-e886-4a75-a516-5010e05db791
+
+	measure 'CoefH Pros' = CALCULATE([CoefHN],FILTER(Ofertas,Ofertas[ofcliente]=0))
+		formatString: 0.000
+		lineageTag: 138a7cdf-a245-494f-afa8-fbe654d6b923
+
+	measure 'Coef HoraN<5 Clientes' = CALCULATE([CoefHN7],FILTER(Ofertas,Ofertas[ofcliente]>0))
+		formatString: 0.000
+		lineageTag: 685dbd08-adc6-471d-9d27-5e5ca79efe8c
+
+	measure 'Coef HoraN<5 Prospecto' = CALCULATE([CoefHN7],FILTER(Ofertas,Ofertas[ofcliente]=0))
+		formatString: 0.000
+		lineageTag: ade8050e-a7fc-48e1-9f1f-aaf0280b26b3
+
+	column ofcentro
+		dataType: int64
+		lineageTag: 032fe5dc-b546-4b5a-aa60-882f8704f05b
+		summarizeBy: sum
+		sourceColumn: ofcentro
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofcodigo
+		dataType: int64
+		lineageTag: 8dbc7098-214a-4337-ac03-800aba49033e
+		summarizeBy: sum
+		sourceColumn: ofcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflcatepuesto
+		dataType: int64
+		lineageTag: eb8f35e5-19d5-4c62-b0da-2faad6415072
+		summarizeBy: none
+		sourceColumn: oflcatepuesto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofestado
+		dataType: string
+		lineageTag: 23e78e0d-2f8d-4654-a0c1-917dd11d086a
+		summarizeBy: none
+		sourceColumn: ofestado
+
+		annotation SummarizationSetBy = Automatic
+
+	column offechaoferta
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 97b2f9ea-5394-483a-bd33-3e456082aa00
+		summarizeBy: none
+		sourceColumn: offechaoferta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column oflepigrafe
+		dataType: int64
+		lineageTag: 5f4dbba8-c6a2-4b76-b36a-6a11eb93e651
+		summarizeBy: sum
+		sourceColumn: oflepigrafe
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflporcmargen
+		dataType: double
+		lineageTag: 85b85896-7ae0-4a19-a367-ccc038b4671d
+		summarizeBy: sum
+		sourceColumn: oflporcmargen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofltarifahora
+		dataType: double
+		lineageTag: 7395e7b1-d6d2-46c1-b7b3-09725ed58d1c
+		summarizeBy: sum
+		sourceColumn: ofltarifahora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofltarifames
+		dataType: double
+		lineageTag: a5b50eb1-a836-4d0a-857e-12385dc61c74
+		summarizeBy: sum
+		sourceColumn: ofltarifames
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofltarifa7dias
+		dataType: double
+		lineageTag: 2effc3ad-d9ae-4e8d-a836-ae6ce50681bf
+		summarizeBy: sum
+		sourceColumn: ofltarifa7dias
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflsalariohora
+		dataType: double
+		lineageTag: 988b911a-0bdb-4279-a31a-9f8d029f8550
+		summarizeBy: sum
+		sourceColumn: oflsalariohora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflsalariomes
+		dataType: double
+		lineageTag: 193e2b0d-95e7-4cbf-89e9-957fa856e893
+		summarizeBy: sum
+		sourceColumn: oflsalariomes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflcoefhora
+		dataType: double
+		lineageTag: c2413d0b-600d-4589-b5c0-ec3c7770dd49
+		summarizeBy: sum
+		sourceColumn: oflcoefhora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflcoefhora7dias
+		dataType: double
+		lineageTag: 05c17a16-b38f-49f7-b780-99e3727bb0d0
+		summarizeBy: sum
+		sourceColumn: oflcoefhora7dias
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflcoefmes
+		dataType: double
+		lineageTag: 2c8b9c1e-02cf-4957-8ad2-6d8c198548dc
+		summarizeBy: sum
+		sourceColumn: oflcoefmes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflporcmargenhora
+		dataType: int64
+		lineageTag: e8e6eb2e-0ef0-44e2-acdc-b625af48b37d
+		summarizeBy: sum
+		sourceColumn: oflporcmargenhora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflporcmargenmes
+		dataType: double
+		lineageTag: 9eadf2b2-63a1-4479-b24c-f657b2dc03e8
+		summarizeBy: sum
+		sourceColumn: oflporcmargenmes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflporcmargen7dias
+		dataType: double
+		lineageTag: 025709ec-6ee6-4ac3-9354-73d2415f5b0a
+		summarizeBy: sum
+		sourceColumn: oflporcmargen7dias
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IdOfLineas = FORMAT([ofcentro],"00")&FORMAT([ofcodigo],"00000000")
+		lineageTag: 45dbc38e-fe8d-435c-af55-e76181d2b2a5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OFlineas = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ofcentro,ofcodigo,oflcatepuesto,ofestado,offechaoferta,oflepigrafe,oflporcmargen,ofltarifahora,ofltarifames,ofltarifa7dias,oflsalariohora,oflsalariomes,oflcoefhora,oflcoefhora7dias,oflcoefmes,oflcatesalario#(lf)#(tab)oflporcmargenhora,oflporcmargenmes,oflporcmargen7dias#(lf)from oferta INNER JOIN#(lf)                      oflineas ON oferta.ofempresa = oflineas.oflempresa AND oferta.ofcentro = oflineas.oflcentro AND oferta.ofcodigo = oflineas.oflcodigo#(lf)where oflempresa=1#(lf)and year(offechaoferta)>=2018"]),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(Origen,{{"offechaoferta", type date}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Tipo cambiado1",{{"ofcentro", Int64.Type}, {"ofcodigo", Int64.Type}, {"oflcatepuesto", Int64.Type}}),
+				    Redondeado = Table.TransformColumns(#"Tipo cambiado",{{"oflcoefhora", each Number.Round(_, 3), type number}})
+				in
+				    Redondeado
+
+	annotation PBI_QueryRelationships = {"columnCount":18,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/OFlineas/Tipo cambiado.{ofcentro,0}","Section1/OFlineas/Tipo cambiado.{ofcodigo,1}","Section1/OFlineas/Tipo cambiado.{oflcatepuesto,2}","Section1/OFlineas/Origen.{ofestado,3}","Section1/OFlineas/Tipo cambiado1.{offechaoferta,4}","Section1/OFlineas/Origen.{oflepigrafe,5}","Section1/OFlineas/Origen.{oflporcmargen,6}","Section1/OFlineas/Origen.{ofltarifahora,7}","Section1/OFlineas/Origen.{ofltarifames,8}","Section1/OFlineas/Origen.{ofltarifa7dias,9}","Section1/OFlineas/Origen.{oflsalariohora,10}","Section1/OFlineas/Origen.{oflsalariomes,11}","Section1/OFlineas/Redondeado.{oflcoefhora,12}","Section1/OFlineas/Origen.{oflcoefhora7dias,13}","Section1/OFlineas/Origen.{oflcoefmes,14}","Section1/OFlineas/Origen.{oflporcmargenhora,15}","Section1/OFlineas/Origen.{oflporcmargenmes,16}","Section1/OFlineas/Origen.{oflporcmargen7dias,17}"],"ColumnCount":18,"KeyColumnNames":[],"ColumnIdentities":["Section1/OFlineas/Tipo cambiado.{ofcentro,0}","Section1/OFlineas/Tipo cambiado.{ofcodigo,1}","Section1/OFlineas/Tipo cambiado.{oflcatepuesto,2}","Section1/OFlineas/Origen.{ofestado,3}","Section1/OFlineas/Tipo cambiado1.{offechaoferta,4}","Section1/OFlineas/Origen.{oflepigrafe,5}","Section1/OFlineas/Origen.{oflporcmargen,6}","Section1/OFlineas/Origen.{ofltarifahora,7}","Section1/OFlineas/Origen.{ofltarifames,8}","Section1/OFlineas/Origen.{ofltarifa7dias,9}","Section1/OFlineas/Origen.{oflsalariohora,10}","Section1/OFlineas/Origen.{oflsalariomes,11}","Section1/OFlineas/Redondeado.{oflcoefhora,12}","Section1/OFlineas/Origen.{oflcoefhora7dias,13}","Section1/OFlineas/Origen.{oflcoefmes,14}","Section1/OFlineas/Origen.{oflporcmargenhora,15}","Section1/OFlineas/Origen.{oflporcmargenmes,16}","Section1/OFlineas/Origen.{oflporcmargen7dias,17}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

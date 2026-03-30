@@ -1,0 +1,204 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "c2431fd1022b951d9b01",
+  "position": {
+    "x": 15.536881419234362,
+    "y": 0,
+    "z": 2000,
+    "height": 621.47525676937448,
+    "width": 584.42577030812333,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Calendario"
+                    }
+                  },
+                  "Property": "Semana"
+                }
+              },
+              "queryRef": "Calendario.Semana",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contracn"
+                    }
+                  },
+                  "Property": "Cli.Nuevos"
+                }
+              },
+              "queryRef": "contracn.Clientes NuevosC",
+              "nativeQueryRef": "Cli.Nuevos"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "OFlineas"
+                    }
+                  },
+                  "Property": "OfTot Prosp"
+                }
+              },
+              "queryRef": "OFlineas.Ofertas Totales Prospecto",
+              "nativeQueryRef": "OfTot Prosp"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "OFlineas"
+                    }
+                  },
+                  "Property": "CoefH Pros"
+                }
+              },
+              "queryRef": "OFlineas.Coef HoraN Prospecto",
+              "nativeQueryRef": "CoefH Pros"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Activos"
+                }
+              },
+              "queryRef": "contratos.AvWeek",
+              "nativeQueryRef": "AvWeek"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Activos2024"
+                }
+              },
+              "queryRef": "contratos.Activos2022",
+              "nativeQueryRef": "Activos2022"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "MCANCentros"
+                  }
+                },
+                "Property": "Texto"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "MCANCentros.Texto"
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "rowHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
