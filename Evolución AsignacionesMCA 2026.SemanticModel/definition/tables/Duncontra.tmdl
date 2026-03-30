@@ -1,0 +1,143 @@
+table Duncontra
+	lineageTag: 43af3b87-710c-4f1c-b8ec-dc3b9d0663a5
+
+	measure 'Dun Asignaciones' = IF(CALCULATE(COUNTROWS(Duncontra),FILTER(ALL(Duncontra[ctfechaini]),Duncontra[ctfechaini]<=[fecfin]),FILTER(ALL(Duncontra[ctfechafinreal]),  ISBLANK(Duncontra[ctfechafinreal])=TRUE() || Duncontra[ctfechafinreal]>=[fecini]))=BLANK(),0, CALCULATE(COUNTROWS(Duncontra),FILTER(ALL(Duncontra[ctfechaini]),Duncontra[ctfechaini]<=[fecfin]),FILTER(ALL(Duncontra[ctfechafinreal]),  ISBLANK(Duncontra[ctfechafinreal])=TRUE() || Duncontra[ctfechafinreal]>=[fecini])))
+		formatString: 0
+		lineageTag: a0563012-5a60-4960-a8db-ab78974c7bb3
+
+	measure 'Dun MedAsignac' = AVERAGEX(VALUES(Calendario[Date]),Duncontra[Dun Asignaciones])
+		lineageTag: 77235f8b-9e85-4f9b-82dc-dbca79ef2b1b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dun AsignacionesMP' = IF(CALCULATE(COUNTROWS(Duncontra),FILTER(ALL(Duncontra[ctfechaini]),Duncontra[ctfechaini]<=[fecfinmp]),FILTER(ALL(Duncontra[ctfechafinreal]),  ISBLANK(Duncontra[ctfechafinreal])=TRUE() || Duncontra[ctfechafinreal]>=[fecinimp]))=BLANK(),0,CALCULATE(COUNTROWS(Duncontra),FILTER(ALL(Duncontra[ctfechaini]),Duncontra[ctfechaini]<=[fecfinmp]),FILTER(ALL(Duncontra[ctfechafinreal]),  ISBLANK(Duncontra[ctfechafinreal])=TRUE() || Duncontra[ctfechafinreal]>=[fecinimp])))
+		formatString: 0
+		lineageTag: 46f65118-2621-40d0-97d1-39064972ef72
+
+		changedProperty = FormatString
+
+	measure 'Dun MedAsignacMP' = AVERAGEX(VALUES(Calendario[Date]),Duncontra[Dun AsignacionesMP])
+		formatString: 0.00
+		lineageTag: 61f90902-0c26-4637-8098-81d1875f9ce8
+
+		changedProperty = FormatString
+
+	measure '% DunMesAnter' = DIVIDE(Duncontra[Dun MedAsignac]-Duncontra[Dun MedAsignacMP],Duncontra[Dun AsignacionesMP])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 9ae64d3a-3112-4a6e-9cdc-368c5e4c1aff
+
+		changedProperty = FormatString
+
+	measure 'Dun TrabActivos' =
+			
+			CALCULATE (
+			        DISTINCTCOUNT(Duncontra[cttrabajador]),
+			        FILTER ( ALL ( Duncontra[ctfechaini] ), Duncontra[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( Duncontra[ctfechafinreal] ),
+			            ISBLANK ( Duncontra[ctfechafinreal] ) = TRUE ()
+			                || Duncontra[ctfechafinreal] >= [fecini]
+			        )
+			    )
+		formatString: 0
+		lineageTag: f0b3ca52-0da0-4424-88b9-b91925467ec1
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: fa2a3e56-cf49-4ba4-9042-9acb0d1c3279
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: c2ecfdeb-bbbb-4776-acfd-c05fb9d15a2f
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 3bc95d7a-6496-45fb-93e1-e4e3984894c3
+		summarizeBy: none
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c29db18-ec1f-41a9-9e64-db449487e821
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b9366ec-c3d3-41ac-921e-41c1926c3822
+		summarizeBy: sum
+		sourceColumn: ctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7dacb113-b460-4520-a268-ec6938e196b9
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 63513940-087d-4afe-a945-aaeccf24aa74
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctcatepuesto
+		dataType: int64
+		formatString: 0
+		lineageTag: b3e8e2c8-2d76-48a9-9a2d-c8f3c4406e2a
+		summarizeBy: none
+		sourceColumn: ctcatepuesto
+
+		annotation SummarizationSetBy = Automatic
+
+	column DConCenCli = FORMAT(Duncontra[ctcentro],"00")&FORMAT(Duncontra[ctcliente],"000000")
+		lineageTag: 81add63e-cd53-48b8-975f-97b5c341373a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Duncontra-b9a5f2b5-378b-440d-abb6-aaf7b0adc26f = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3004"),
+				    dbo_contra = Source{[Schema="dbo",Item="contra"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_contra, each [ctempresa] = 4),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"ctcentro", "ctcontrato", "cttrabajador", "ctcliente", "ctcencli", "ctfechaini", "ctfechafinreal", "ctcatepuesto"}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Removed Other Columns", each [ctfechafinreal] > #datetime(2018, 12, 31, 0, 0, 0) or [ctfechafinreal] = null),
+				    #"Filtered Rows3" = Table.SelectRows(#"Filtered Rows2", each true),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Filtered Rows3",{{"ctcentro", Int64.Type}, {"ctcencli", Int64.Type}, {"ctfechaini", type date}, {"ctfechafinreal", type date}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado", each ([ctcentro] <> 9999))
+				in
+				    #"Filas filtradas"
+
+	annotation PBI_ResultType = Table
+

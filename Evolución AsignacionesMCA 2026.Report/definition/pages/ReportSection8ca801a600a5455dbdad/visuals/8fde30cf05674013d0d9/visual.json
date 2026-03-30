@@ -1,0 +1,125 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "8fde30cf05674013d0d9",
+  "position": {
+    "x": 570.66250974279023,
+    "y": 117.72408417770849,
+    "z": 5000,
+    "height": 521.77708495713171,
+    "width": 506.81215900233821,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto",
+              "nativeQueryRef": "Texto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Min.Asignac Hab"
+                }
+              },
+              "queryRef": "contratos.Min.Asignac 2",
+              "nativeQueryRef": "Min.Asignac Hab"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "ActivosHoy"
+                }
+              },
+              "queryRef": "contratos.ActivosHoy",
+              "nativeQueryRef": "ActivosHoy"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "RecMin"
+                }
+              },
+              "queryRef": "contratos.RecMin",
+              "nativeQueryRef": "RecMin"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Min.Asignac"
+                }
+              },
+              "queryRef": "contratos.Min.Asignac",
+              "nativeQueryRef": "Min.Asignac"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "RecMinT"
+                }
+              },
+              "queryRef": "contratos.RecMinT",
+              "nativeQueryRef": "RecMinT"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "contratos"
+                  }
+                },
+                "Property": "Min.Asignac Hab"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

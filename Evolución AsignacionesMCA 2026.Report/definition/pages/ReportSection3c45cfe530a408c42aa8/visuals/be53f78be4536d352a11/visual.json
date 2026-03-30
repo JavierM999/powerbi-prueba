@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "be53f78be4536d352a11",
+  "position": {
+    "x": 63.921085080147968,
+    "y": 132.28113440197288,
+    "z": 1000,
+    "height": 81.676942046855729,
+    "width": 121.62762022194821,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "MedAsigAño"
+                }
+              },
+              "queryRef": "contratos.MedAsigAño"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

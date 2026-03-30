@@ -1,0 +1,78 @@
+table Clientes
+	lineageTag: d09ef8fb-672f-4729-8046-686cb657bb52
+
+	measure TotClientes = COUNTROWS(Clientes)
+		formatString: 0
+		lineageTag: f41758cc-a1d5-40d1-8bbc-1930fa474fcf
+
+	column clcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f23c3d4-4bbf-467b-962c-0aa06a529130
+		summarizeBy: none
+		sourceColumn: clcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 30927adc-7535-4c6e-8110-7079acc3471e
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnombre
+		dataType: string
+		lineageTag: e5235eb6-e630-4723-af15-2294919695bc
+		summarizeBy: none
+		sourceColumn: clnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: 8760fb8b-2609-4b44-bca1-d7e50311793e
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column cclcnae
+		dataType: string
+		lineageTag: 9b0a2149-537a-4ad1-ad1f-5879d7095e9f
+		summarizeBy: none
+		sourceColumn: cclcnae
+
+		annotation SummarizationSetBy = Automatic
+
+	column cclconvenio
+		dataType: int64
+		formatString: 0
+		lineageTag: fe040211-edcb-4485-a68a-f18b405d8307
+		summarizeBy: sum
+		sourceColumn: cclconvenio
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClCenCli = FORMAT(Clientes[clcentro],"00")&FORMAT(Clientes[clcodigo],"000000")
+		lineageTag: b6a24d73-d633-465d-885e-7db368f52320
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clientes-13f53dd0-d3e9-49f3-b5e8-b187a7ebbb96 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="Select distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clcifdni,min(cencli.cclcnae) as cclcnae,min(cencli.cclconvenio) as cclconvenio#(lf)from                       clientes inner join#(lf)        contra on clientes.clempresa=contra.ctempresa and clientes.clcentro=contra.ctcentro and clientes.clcodigo =contra.ctcliente inner join#(lf)#(tab)#(tab)cencli on contra.ctempresa=cencli.cclempresa and contra.ctcentro=cencli.cclcentro and contra.ctcliente =cencli.cclcodigo #(lf)#(tab)#(tab)            and contra.ctcencli=cencli.cclcentrocliente#(lf)where clientes.clempresa=01#(lf)and ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal)>=2019)#(lf)and clientes.clnombre not like '%fijo%'#(lf)group by clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clcifdni"]),
+				    #"Filas filtradas" = Table.SelectRows(Source, each true),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Filas filtradas",{{"clcentro", Int64.Type}, {"cclconvenio", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

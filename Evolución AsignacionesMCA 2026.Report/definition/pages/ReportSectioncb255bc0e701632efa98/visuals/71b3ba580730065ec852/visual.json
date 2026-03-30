@@ -1,0 +1,83 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "71b3ba580730065ec852",
+  "position": {
+    "x": 109.85074626865671,
+    "y": 163.58208955223881,
+    "z": 4000,
+    "height": 197.01492537313433,
+    "width": 368.95522388059703,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Duncontra"
+                    }
+                  },
+                  "Property": "Dun TrabActivos"
+                }
+              },
+              "queryRef": "Duncontra.Dun TrabActivos",
+              "nativeQueryRef": "Dun TrabActivos"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DunTrabaj"
+                    }
+                  },
+                  "Property": "trsexo"
+                }
+              },
+              "queryRef": "DunTrabaj.trsexo",
+              "nativeQueryRef": "trsexo"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Duncontra"
+                    }
+                  },
+                  "Property": "ctcentro"
+                }
+              },
+              "queryRef": "Sum(Duncontra.ctcentro)",
+              "nativeQueryRef": "ctcentro1"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Duncontra"
+                  }
+                },
+                "Property": "ctcentro"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

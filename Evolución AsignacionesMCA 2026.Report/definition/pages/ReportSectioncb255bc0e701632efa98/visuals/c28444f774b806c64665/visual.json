@@ -1,0 +1,149 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "c28444f774b806c64665",
+  "position": {
+    "x": 640,
+    "y": 185.07462686567163,
+    "z": 5000,
+    "height": 197.01492537313433,
+    "width": 368.95522388059703,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Duncontra"
+                    }
+                  },
+                  "Property": "Dun TrabActivos"
+                }
+              },
+              "queryRef": "Duncontra.Dun TrabActivos",
+              "nativeQueryRef": "Dun TrabActivos"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DunTrabaj"
+                    }
+                  },
+                  "Property": "trsexo"
+                }
+              },
+              "queryRef": "DunTrabaj.trsexo",
+              "nativeQueryRef": "trsexo"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Duncontra"
+                    }
+                  },
+                  "Property": "ctcentro"
+                }
+              },
+              "queryRef": "Sum(Duncontra.ctcentro)",
+              "nativeQueryRef": "ctcentro1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Duncontra"
+                    }
+                  },
+                  "Property": "ctcontrato"
+                }
+              },
+              "queryRef": "Sum(Duncontra.ctcontrato)",
+              "nativeQueryRef": "ctcontrato1"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Duncontra"
+                  }
+                },
+                "Property": "ctcentro"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1a5f6f369ca90ca592fb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Duncontra"
+              }
+            },
+            "Property": "ctcentro"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "Duncontra",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 0,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "d"
+                        }
+                      },
+                      "Property": "ctcentro"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "9999L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

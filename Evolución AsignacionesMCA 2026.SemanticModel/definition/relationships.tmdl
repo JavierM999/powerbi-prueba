@@ -1,0 +1,28 @@
+relationship e34aac5e-f742-47d5-9e57-b0baa433c076
+	fromColumn: Clientes.clcentro
+	toColumn: MCANCentros.Id
+
+relationship aaae74e3-371c-4bed-8f18-ed9fc0f7a081
+	fromColumn: contratos.ConCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 38efa6ad-4fb2-4926-b296-a19663b6d90e
+	fromColumn: contratos.cttrabajador
+	toColumn: Trabajadores.cttrabajador
+
+relationship d84b9cb9-108a-4563-bdb0-da11bbb0c00d
+	fromColumn: contratos.ctcatepuesto
+	toColumn: Categorias.cacodigo
+
+relationship 40398832-5ad9-49ab-8f9a-ad1ef34788da
+	fromColumn: Duncontra.cttrabajador
+	toColumn: DunTrabaj.cttrabajador
+
+relationship 71258a08-24c7-4dcd-a828-35f23aed707e
+	fromColumn: Duncontra.ctcatepuesto
+	toColumn: DunCatego.cacodigo
+
+relationship 6a8b93eb-4cc4-4964-91ea-198f6398c131
+	fromColumn: Duncontra.DConCenCli
+	toColumn: DunClien.DClCenCli
+

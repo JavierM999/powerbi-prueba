@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "85d0299f80782d595204",
+  "position": {
+    "x": 675.42871398278658,
+    "y": 165.53623549956342,
+    "z": 5000,
+    "height": 282.02469751777471,
+    "width": 215.60583759511039,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Asignaciones"
+                }
+              },
+              "queryRef": "contratos.Asignaciones",
+              "nativeQueryRef": "Asignaciones"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Altas"
+                }
+              },
+              "queryRef": "contratos.Altas",
+              "nativeQueryRef": "Altas"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

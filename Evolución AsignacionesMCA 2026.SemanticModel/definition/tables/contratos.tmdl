@@ -1,0 +1,713 @@
+table contratos
+	lineageTag: 39f2b47e-9dc7-4f37-80ea-707152183a69
+
+	measure Asignaciones =
+			
+			IF (
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			        = BLANK (),
+			    0,
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 2bfddafe-fc1d-4731-b770-2de30527b3d2
+
+	measure AsignacionesAA =
+			
+			IF (
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfinañan] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [feciniaa]
+			        )
+			    )
+			        = BLANK (),
+			    0,
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfinañan] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [feciniaa]
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: dd58c188-ec4a-4f28-b2c2-b257d8b4e410
+
+	measure AsignacionesMA = CALCULATE(COUNTROWS(contratos),FILTER(contratos,contratos[ctfechaini]<=[fecfinma]),FILTER(contratos,  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[fecinima]))
+		formatString: 0
+		lineageTag: fab39d0b-f140-4d3e-ba83-0012fc6e998a
+
+	measure AsignacionesAY = CALCULATE(COUNTROWS(contratos),FILTER(contratos,contratos[ctfechaini]<=[fecfinay]),FILTER(contratos,  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[feciniay]))
+		formatString: 0
+		lineageTag: a0c98a6b-6306-42eb-872a-e9189fa60c31
+
+	measure IncAsigAY = IF([Asignaciones]>0,CALCULATE(([Asignaciones]-[AsignacionesAY])/[AsignacionesAY]),BLANK())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: dda80e04-c4b9-4a7d-bfb1-89c68d5d385f
+
+	measure AsignacionesSP = CALCULATE(COUNTROWS(contratos),FILTER(contratos,contratos[ctfechaini]<=[fecfinsp]),FILTER(contratos,  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[fecinisp]))
+		formatString: 0
+		lineageTag: ee860ece-2395-46e4-b600-846d2f3a43ff
+
+	measure IncAsigSP = IF([Asignaciones]>0,CALCULATE(([Asignaciones]-[AsignacionesSP])/[AsignacionesSP]),BLANK())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 48a52cb5-5263-4d79-ab4b-958c1bb929eb
+
+	measure AsignaPD = CALCULATE([Asignaciones],PREVIOUSDAY(Calendario[Date]))
+		formatString: 0
+		lineageTag: 7857275b-dd00-4a22-a138-3a1cd46465e7
+
+	measure AsignacionesTG = CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecini]),FILTER(contratos,contratos[ctcliente]=160152),FILTER(contratos,contratos[ctcencli]=1))
+		formatString: 0
+		lineageTag: ce4267c1-8a2f-40e8-aaa2-a6bf9a2c4ac7
+
+	measure AsignaDef = [Asignaciones]-[AsignacionesTG]
+		formatString: 0
+		lineageTag: d39a2f88-d4ff-471a-9b6e-2bbe4f843676
+
+	measure AsignaDefAy = [AsignacionesAY]-[AsignacionesTGAY]
+		lineageTag: 446eb289-9ee1-4234-8717-a263a13d3da7
+
+	measure AsignacionesTGAY = CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<=[fecfinay]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[feciniay]),FILTER(contratos,contratos[ctcliente]=160152),FILTER(contratos,contratos[ctcencli]=1))
+		formatString: 0
+		lineageTag: e1d51423-d6cb-42c5-ad99-35ab4d71ab96
+
+	measure IncAsigAYDef = IF([AsignaDef]>0,CALCULATE(([AsignaDef]-[AsignaDefAy])/[AsignaDefAy]),BLANK())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 8cdefe13-9517-4d0e-be97-79fa83565cdf
+
+	measure Asigna3103 = CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<=DATE(2020,3,31)),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=DATE(2020,3,31)))
+		formatString: 0
+		lineageTag: 22d4b054-3580-45fa-9ee7-7100848ad0ba
+
+	measure %AñoAnt = ([Asignaciones]-[AsignacionesAA])/[AsignacionesAA]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 604fee14-6992-43b5-934e-e0b4e1ff20f2
+
+	measure AvWeek = AVERAGEX(VALUES(Calendario[Date]),[Asignaciones])
+		formatString: 0
+		lineageTag: 305a5362-7134-4f94-a276-6ed5eccbc05d
+
+	measure AvPasWeek = AVERAGEX(VALUES(Calendario[Date]),[AsignacionesSP])
+		formatString: 0
+		lineageTag: 102067a6-fc74-4484-b44c-05ec11c19e60
+
+	measure %SemAnt = ([AvWeek]-[AvPasWeek])/[AvPasWeek]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 435b2cd7-ff3e-4095-9684-576f47a98996
+
+	measure AvPasYear = AVERAGEX(VALUES(Calendario[Date]),[AsignacionesAA])
+		lineageTag: f48e6b61-a1fc-4ff5-8646-9f0c67d01d66
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure %AntYear = ([AvWeek]-[AvPasYear])/[AvPasYear]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 8bead12a-6748-4107-9691-36ca8d9083ce
+
+	measure Asignaciones2AA = IF(CALCULATE(COUNTROWS(contratos),FILTER(contratos,contratos[ctfechaini]<=[fecfin2añan]),FILTER(contratos,  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[fecini2aa]))=BLANK(),0,CALCULATE(COUNTROWS(contratos),FILTER(contratos,contratos[ctfechaini]<=[fecfin2añan]),FILTER(contratos,  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[fecini2aa])))
+		formatString: 0
+		lineageTag: 93048d31-cb46-4816-9b7c-50f243ead7a8
+
+	measure %Año2Ant = ([Asignaciones]-[Asignaciones2AA])/[Asignaciones2AA]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 40128343-6c0f-4998-825f-667b0126c289
+
+	measure MedAsigAño = CALCULATE(AVERAGEX(VALUES(Calendario[Date]),[Asignaciones]),ALL(Calendario[Mes (Número)]))
+		formatString: #,0.00
+		lineageTag: e6eee979-683c-4016-9a90-b03008383130
+
+		changedProperty = FormatString
+
+	measure AvPas2Year = AVERAGEX(VALUES(Calendario[Date]),[Asignaciones2AA])
+		formatString: 0
+		lineageTag: ed669cfa-3637-469c-8d1b-6d124b34ef3a
+
+	measure %Ant2Year = ([AvWeek]-[AvPas2Year])/[AvPas2Year]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 648c341b-73dd-43a8-9e54-5a87f5a18f3f
+
+	measure MedAsignac = AVERAGEX(VALUES(Calendario[Date]),[Asignaciones])
+		formatString: 0.00
+		lineageTag: f7811e58-ba3d-487a-aa8c-bce62196dd6b
+
+		changedProperty = FormatString
+
+	measure %SemAnter = (contratos[Asignaciones]-contratos[AsignacionesSP])/contratos[AsignacionesSP]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: af444276-e71f-4433-8e94-a6d1dfc5e7c2
+
+		changedProperty = FormatString
+
+	measure %Ayer = (contratos[Asignaciones]-contratos[AsignacionesAY])/contratos[AsignacionesAY]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 5b7abe26-5bae-44c5-8f90-5bbc3e6cdb25
+
+		changedProperty = FormatString
+
+	measure %MesAnter = DIVIDE([MedAsignac]-[MedAsignacMP],[MedAsignacMP])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 30b786d7-0fa9-4132-b195-0c20b18488c1
+
+		changedProperty = FormatString
+
+	measure AsignacionesMP = IF(CALCULATE(COUNTROWS(contratos),FILTER(ALL(contratos[ctfechaini]),contratos[ctfechaini]<=[fecfinmp]),FILTER(ALL(contratos[ctfechafinreal]),  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[fecinimp]))=BLANK(),0,CALCULATE(COUNTROWS(contratos),FILTER(ALL(contratos[ctfechaini]),contratos[ctfechaini]<=[fecfinmp]),FILTER(ALL(contratos[ctfechafinreal]),  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[fecinimp])))
+		formatString: 0
+		lineageTag: fa7d0e7b-45f2-43c2-8457-e10faca7fc34
+
+	measure RestMAMP = [MedAsignac]-[MedAsignacMP]
+		formatString: 0.00
+		lineageTag: 6edae70c-8d99-4bdd-8cba-f385d2f951fa
+
+		changedProperty = FormatString
+
+	measure Asignaciones3AA = IF(CALCULATE(COUNTROWS(contratos),FILTER(ALL(contratos[ctfechaini]),contratos[ctfechaini]<=[fecfin3an]),FILTER(ALL(contratos[ctfechafinreal]),  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[fecini3aa]))=BLANK(),0,CALCULATE(COUNTROWS(contratos),FILTER(ALL(contratos[ctfechaini]),contratos[ctfechaini]<=[fecfin3an]),FILTER(ALL(contratos[ctfechafinreal]),  ISBLANK(contratos[ctfechafinreal])=TRUE() || contratos[ctfechafinreal]>=[fecini3aa])))
+		formatString: 0
+		lineageTag: 7b44d79e-138b-4aab-a365-591df3be5f1e
+
+	measure %Ant3Year = ([AvWeek]-[AvPas2Year])/[AvPas2Year]
+		lineageTag: 1900aff1-ae6c-4279-8fee-3a0d633595de
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedAsignac3aa = AVERAGEX(VALUES(Calendario[Date]),[Asignaciones3AA])
+		formatString: 0.00
+		lineageTag: 13ce46b5-0df6-4528-9087-14659c6d9a8c
+
+		changedProperty = FormatString
+
+	measure %IncAsigAA = DIVIDE([MedAsignac]-[MedAsignacAA],[MedAsignacAA])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: f1c5f6c1-bc2f-4562-9b4b-2c1ae5479f7f
+
+		changedProperty = FormatString
+
+	measure 'Asignaciones AAnt' = IF(CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<= [fecfinañan]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[feciniaa]))=BLANK(),0, CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<=[fecfinañan]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[feciniaa])))
+		formatString: 0
+		lineageTag: dcc18823-a5ae-4fcf-91ee-4fa496b1b9e8
+
+	measure MedAsignacAA = AVERAGEX(VALUES(Calendario[Date]),[Asignaciones AAnt])
+		formatString: 0.00
+		lineageTag: eff7bb87-8a7a-4e87-bf79-2275645ff2c8
+
+		changedProperty = FormatString
+
+	measure MedAsignac2aa = AVERAGEX(VALUES(Calendario[Date]),[Asignaciones2AA])
+		formatString: 0.00
+		lineageTag: 5e8c9e0b-447d-4e97-8909-f1f32028a514
+
+		changedProperty = FormatString
+
+	measure %IncAsig19 = IF([MedAsignac3aa]=0, IF([MedAsignac]>0, 10, DIVIDE([MedAsignac]-[MedAsignac3aa],[MedAsignac3aa])),DIVIDE([MedAsignac]-[MedAsignac3aa],[MedAsignac3aa]))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 19cfa80a-dbce-4377-bed4-370e051b8962
+
+		changedProperty = FormatString
+
+	measure %Año3Ant = ([Asignaciones]-[Asignaciones3AA])/[Asignaciones3AA]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 781d82a7-f4a8-4048-82fe-f1540f4f34d4
+
+		changedProperty = FormatString
+
+	measure RMed22vs21 = [MedAsignac]-[MedAsignacAA]
+		formatString: 0.00
+		lineageTag: 3260ce44-5649-484e-bd7d-35fdf034678d
+
+		changedProperty = FormatString
+
+	measure MedAsignacMP = AVERAGEX(VALUES(Calendario[Date]),contratos[AsignacionesMP])
+		formatString: 0.00
+		lineageTag: 3d36e18f-f483-4d49-a28e-85920034b15d
+
+		changedProperty = FormatString
+
+	measure %IncAsig21 = IF([MedAsignacAA]=0, IF([MedAsignac]>0, 10, DIVIDE([MedAsignac]-[MedAsignacAA],[MedAsignacAA])),DIVIDE([MedAsignac]-[MedAsignacAA],[MedAsignacAA]))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: f564688a-22fe-4c0f-bd1a-84cd489fb977
+
+		changedProperty = FormatString
+
+	measure Crecimiento = ```
+			
+			VAR FAAA = [Asignaciones]
+			VAR FAAN = [AsignacionesAA]
+			VAR CHEK = FAAA & FAAN
+			RETURN 
+			     IF (CHEK,DIVIDE((FAAA-FAAN),FAAN))
+			```
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: fb205f54-3936-4c22-a3cb-237664a77da2
+
+		changedProperty = FormatString
+
+	measure 'Max.Asignac' =
+			
+			VAR fecha_inicio = [fecini]
+			VAR fecha_fin_ajustada = [fecfinay2]
+			RETURN
+			    CALCULATE (
+			        MAXX ( VALUES ( Calendario[Date] ), [Asignaciones] ),
+			        FILTER (
+			            ALL(Calendario),
+			            Calendario[Date] >= fecha_inicio
+			                && Calendario[Date] <= fecha_fin_ajustada
+			        )
+			    )
+		formatString: 0
+		lineageTag: d957e49c-5d5a-4468-8fa9-0ec425a8d153
+
+	measure 'Min.Asignac' =
+			
+			VAR fecha_inicio = [fecini]
+			VAR fecha_fin_ajustada = [fecfinay]
+			RETURN
+			    CALCULATE (
+			        MINX ( VALUES ( Calendario[Date] ), [Asignaciones] ),
+			        FILTER (
+			            Calendario,
+			            Calendario[Date] >= fecha_inicio
+			                && Calendario[Date] <= fecha_fin_ajustada
+			        )
+			    )
+		formatString: 0
+		lineageTag: c54b683a-2d08-4d8c-be5d-1676495d0acc
+
+	measure ActivosHoy =
+			
+			CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= TODAY()),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= TODAY()
+			        )
+			    )
+		formatString: 0
+		lineageTag: 3f40ba71-b659-4817-8777-70bab9172a04
+
+	measure 'Max.Asignac2' = ```
+			
+			VAR fecha_inicio = [fecini]
+			VAR fecha_fin_ajustada = [fecfinay2]
+			VAR fecha_seleccionada = SELECTEDVALUE(Calendario[Date])
+			RETURN
+			    CALCULATE (
+			        MAXX ( VALUES ( Calendario[Date] ), [Asignaciones] ),
+			        FILTER (
+			            ALL(Calendario),  // Elimina el filtro de fecha de la segmentación
+			            Calendario[Date] >= fecha_inicio
+			                && Calendario[Date] <= fecha_fin_ajustada
+			                && Calendario[Date] <> fecha_seleccionada  // Ignora la fecha seleccionada
+			        )
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: a92d6b9f-737f-4643-8846-1411f4a124d1
+
+	measure RecMax = IF([ActivosHoy]>[Max.Asignac],1,BLANK())
+		formatString: 0
+		lineageTag: 6f126fab-8703-4abd-9960-c609b18a3b55
+
+	measure RecMin = IF([ActivosHoy]<[Min.Asignac Hab],1,BLANK())
+		formatString: 0
+		lineageTag: cd3e0cfe-132c-4da6-825c-46b00adee294
+
+	measure 'Min.Asignac Hab' = ```
+			
+			VAR fecha_inicio = [fecini]
+			VAR fecha_fin_ajustada = [fecfinay]
+			RETURN
+			    CALCULATE (
+			        MINX ( VALUES ( Calendario[Date] ), [Asignaciones] ),
+			        FILTER (
+			            Calendario,
+			            Calendario[Date] >= fecha_inicio
+			                && Calendario[Date] <= fecha_fin_ajustada
+			        ),
+			        FILTER(Calendario,Calendario[Día Semana (Número)]<6) 
+			    )
+			```
+		formatString: 0
+		lineageTag: 8857f036-5558-491e-bc79-c82f2463887d
+
+	measure RecMinT = IF([ActivosHoy]<[Min.Asignac],1,BLANK())
+		formatString: 0
+		lineageTag: aee2e8e3-d583-4f7e-8ade-4b4fd4fbd2f1
+
+	measure TrabActivos =
+			
+			CALCULATE (
+			        DISTINCTCOUNT(contratos[cttrabajador]),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+		formatString: 0
+		lineageTag: f25273ec-469c-4914-b68c-ea18ecc855c7
+
+	measure 'Horas Realizadas' =
+			
+			VAR result = sumx (
+			    CALCULATETABLE(
+			      ADDCOLUMNS(
+			        SUMMARIZE(Contratos,Contratos[ctcentro],Contratos[ctcliente],Contratos[ctcontrato],Contratos[cthorassemana],Contratos[ctfechaini],Contratos[ctfechafinreal]),
+			    "fini",IF(Contratos[ctfechaini]<[fecini],[fecini],Contratos[ctfechaini]),
+			    "ffin",IF(ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecfin],[fecfin],Contratos[ctfechafinreal])),
+			    FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecini])),
+			        DIVIDE((DATEDIFF([fini],[ffin],DAY)+1),7)*Contratos[cthorassemana])
+			RETURN result
+		formatString: #,0.00
+		lineageTag: ec2e49ff-4422-4d01-8538-9334286e4b46
+
+	measure Altas = ```
+			
+			CALCULATE (
+			        COUNTROWS ( Contratos ), 
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] >= [fecini] ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] )
+			    )
+			```
+		formatString: #,0
+		lineageTag: d8e1887e-0345-4c06-93cc-6aa200c2b095
+
+	measure Bajas = ```
+			
+			CALCULATE (
+			        COUNTROWS ( Contratos ), 
+			        FILTER ( ALL ( contratos[ctfechafinreal] ), contratos[ctfechafinreal] >= [fecini] ),
+			        FILTER ( ALL ( contratos[ctfechafinreal] ), Contratos[ctfechafinreal] <= [fecfin] )
+			    )
+			```
+		formatString: 0
+		lineageTag: de7e07bf-a3e8-4ff8-9295-2581e8b89a32
+
+	measure 'Max Asignaciones' = MAXX ( ALL ( Calendario[Date] ), [Asignaciones] )
+		formatString: 0
+		lineageTag: e6f2c238-8062-45ce-aea1-8f7052c88eea
+
+	measure 'Max.Asignac3' = ```
+			
+			VAR fecha_inicio = [fecini]
+			VAR fecha_fin_ajustada = [fecfinay2]
+			RETURN
+			    CALCULATE (
+			        MAXX ( VALUES ( Calendario[Date] ), [Asignaciones] ),
+			        FILTER (
+			            ALL(Calendario),  // Elimina el filtro de fecha de la segmentación
+			            Calendario[Date] >= fecha_inicio
+			                && Calendario[Date] <= fecha_fin_ajustada
+			               
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: a556c109-ad4c-47d0-9b8f-252f2f49547d
+
+	measure AsignacionesAnt = ```
+			
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: 155fa654-bee0-47d3-abff-10e91afdf3be
+
+	measure 'Trabajadores Nuevos' = ```
+			
+			VAR FechaInicioPeriodo = [fecini]           
+			VAR FechaFinPeriodo = [fecfin]              
+			VAR FechaInicioHistorico = DATE(YEAR(FechaInicioPeriodo) - 3, MONTH(FechaInicioPeriodo), DAY(FechaInicioPeriodo))
+			VAR FechaFinHistorico = FechaInicioPeriodo - 1
+			
+			-- Lista completa de trabajadores (desde la tabla principal)
+			VAR ListaTrabajadores = VALUES(Trabajadores[cttrabajador])
+			
+			-- Filtrar trabajadores con contratos activos en el período actual
+			VAR Trabajadores_Activos_Periodo = 
+			    FILTER(
+			        ListaTrabajadores,
+			        CALCULATE(
+			            COUNTROWS(Contratos),
+			            FILTER(
+			                ALL(Contratos),
+			                Contratos[cttrabajador] = EARLIER(Trabajadores[cttrabajador]) &&
+			                Contratos[ctfechaini] <= FechaFinPeriodo &&
+			                (ISBLANK(Contratos[ctfechafinreal]) || Contratos[ctfechafinreal] >= FechaInicioPeriodo)
+			            )
+			        ) > 0
+			    )
+			
+			-- Filtrar trabajadores con contratos activos en el histórico
+			VAR Trabajadores_Historico = 
+			    FILTER(
+			        ListaTrabajadores,
+			        CALCULATE(
+			            COUNTROWS(Contratos),
+			            FILTER(
+			                ALL(Contratos),
+			                Contratos[cttrabajador] = EARLIER(Trabajadores[cttrabajador]) &&
+			                Contratos[ctfechaini] <= FechaFinHistorico &&
+			                (ISBLANK(Contratos[ctfechafinreal]) || Contratos[ctfechafinreal] >= FechaInicioHistorico)
+			            )
+			        ) > 0
+			    )
+			
+			-- Excluir los que ya estaban en el histórico
+			VAR Nuevos_Trabajadores = 
+			    EXCEPT(Trabajadores_Activos_Periodo, Trabajadores_Historico)
+			
+			RETURN
+			COUNTROWS(Nuevos_Trabajadores)
+			
+			
+			```
+		formatString: 0
+		lineageTag: d2ad31f5-c38c-4c55-a8a5-7beb7ed02bbb
+
+	measure EsTrabajadorNuevo = ```
+			
+			VAR FechaInicioPeriodo = [fecini]           
+			VAR FechaFinPeriodo = [fecfin]              
+			VAR FechaInicioHistorico = DATE(YEAR(FechaInicioPeriodo) - 3, MONTH(FechaInicioPeriodo), DAY(FechaInicioPeriodo))
+			
+			VAR TrabajadorActual = SELECTEDVALUE(Contratos[cttrabajador])
+			
+			-- ¿Está activo en el período seleccionado?
+			VAR ActivoEnPeriodo = 
+			    CALCULATE(
+			        COUNTROWS(Contratos),
+			        FILTER(
+			            ALL(Contratos),
+			            Contratos[cttrabajador] = TrabajadorActual &&
+			            Contratos[ctfechaini] <= FechaFinPeriodo &&
+			            (ISBLANK(Contratos[ctfechafinreal]) || Contratos[ctfechafinreal] >= FechaInicioPeriodo)
+			        )
+			    ) > 0
+			
+			-- ¿Tuvo contratos en los 3 años anteriores?
+			VAR TieneHistorico = 
+			    CALCULATE(
+			        COUNTROWS(Contratos),
+			        FILTER(
+			            ALL(Contratos),
+			            Contratos[cttrabajador] = TrabajadorActual &&
+			            Contratos[ctfechaini] <= FechaInicioPeriodo - 1 &&
+			            (ISBLANK(Contratos[ctfechafinreal]) || Contratos[ctfechafinreal] >= FechaInicioHistorico)
+			        )
+			    ) > 0
+			
+			RETURN
+			IF(ActivoEnPeriodo && NOT TieneHistorico, 1, BLANK())
+			
+			```
+		formatString: 0
+		lineageTag: 6fcdc12e-3a96-4ce2-aefc-4d15a19ab4e6
+
+	measure Filtro_Nuevos = ```
+			
+			VAR FechaInicioPeriodo = [fecini]           
+			VAR FechaFinPeriodo = [fecfin]              
+			VAR FechaInicioHistorico = DATE(YEAR(FechaInicioPeriodo) - 3, MONTH(FechaInicioPeriodo), DAY(FechaInicioPeriodo))
+			VAR FechaFinHistorico = FechaInicioPeriodo - 1
+			
+			VAR TrabajadorActual = SELECTEDVALUE(Trabajadores[cttrabajador])
+			
+			VAR ActivoEnPeriodo = 
+			    CALCULATE(
+			        COUNTROWS(Contratos),
+			        FILTER(
+			            ALL(Contratos),
+			            Contratos[cttrabajador] = TrabajadorActual &&
+			            Contratos[ctfechaini] <= FechaFinPeriodo &&
+			            (ISBLANK(Contratos[ctfechafinreal]) || Contratos[ctfechafinreal] >= FechaInicioPeriodo)
+			        )
+			    ) > 0
+			
+			VAR TieneHistorico = 
+			    CALCULATE(
+			        COUNTROWS(Contratos),
+			        FILTER(
+			            ALL(Contratos),
+			            Contratos[cttrabajador] = TrabajadorActual &&
+			            Contratos[ctfechaini] <= FechaFinHistorico &&
+			            (ISBLANK(Contratos[ctfechafinreal]) || Contratos[ctfechafinreal] >= FechaInicioHistorico)
+			        )
+			    ) > 0
+			
+			RETURN
+			IF(ActivoEnPeriodo && NOT TieneHistorico, 1, BLANK())
+			
+			```
+		formatString: 0
+		lineageTag: 0b1a7ddc-e747-4779-bc03-ad267932aa07
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a9b851b-ed87-4169-a5c1-d11ca7bbde2c
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: 74bffa55-b009-4edf-b21c-06e98492b1d8
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 933b149c-2ce3-4095-8731-05fa530b80d1
+		summarizeBy: none
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8a4030d4-5387-4e95-b4db-baaf4772144b
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b8e7c23c-0399-49b7-83eb-16ce3715190f
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 700a8d30-7f09-4be7-b7b4-d51dedd540db
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: 814f0bff-1bad-479d-abb7-074d60e6387b
+		summarizeBy: sum
+		sourceColumn: ctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConCenCli = FORMAT(contratos[ctcentro],"00")&FORMAT(contratos[ctcliente],"000000")
+		lineageTag: 60fd0412-2e59-459e-8d09-e499a61e35af
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcatepuesto
+		dataType: int64
+		formatString: 0
+		lineageTag: 5947bfb9-11fd-4793-8880-9c62a56494b4
+		summarizeBy: none
+		sourceColumn: ctcatepuesto
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttipcon
+		dataType: int64
+		formatString: 0
+		lineageTag: 88d24c99-4103-467f-b785-4e0249b604e0
+		summarizeBy: sum
+		sourceColumn: cttipcon
+
+		annotation SummarizationSetBy = Automatic
+
+	column titipo
+		dataType: string
+		lineageTag: d3bb1a25-0135-41b7-98da-56ed67ac54e2
+		summarizeBy: none
+		sourceColumn: titipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column cthorassemana
+		dataType: double
+		lineageTag: c4e34f5f-aa06-4b0e-8fe8-f8103e5b4e13
+		summarizeBy: sum
+		sourceColumn: cthorassemana
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TParcial = IF(contratos[cthorassemana]<40,"P","C")
+		lineageTag: b732e62e-4af6-43aa-bc0b-93e581b1c398
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConCenCon = FORMAT(contratos[ctcentro],"00")&FORMAT(contratos[ctcontrato],"00000000")
+		lineageTag: c5d6ea9c-16ba-47a3-8941-f81ce6a67086
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition contratos-67e98fba-6cc8-42fb-8842-c8054df79a1a = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ctcentro,ctcontrato,cttrabajador,ctcliente,ctcencli,cttipcon,ctfechaini,ctfechafinreal,ctcatepuesto,cthorassemana#(lf)from contra inner join#(lf)#(tab)clientes on contra.ctempresa=clientes.clempresa and contra.ctcentro=clientes.clcentro and contra.ctcliente=clientes.clcodigo#(lf)where contra.ctempresa=1#(lf)and ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal)>=2021)#(lf)and clientes.clnombre not like '%fijo%'"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Source,{{"ctcentro", Int64.Type}, {"ctcencli", Int64.Type}, {"cttipcon", Int64.Type}, {"ctfechaini", type date}, {"ctfechafinreal", type date}}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Tipo cambiado", {"cttipcon"}, TipContra, {"ticontrato"}, "TipContra", JoinKind.LeftOuter),
+				    #"Se expandió TipContra" = Table.ExpandTableColumn(#"Consultas combinadas", "TipContra", {"titipo"}, {"titipo"})
+				in
+				    #"Se expandió TipContra"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

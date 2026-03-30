@@ -1,0 +1,141 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "23c5e809627602a6d7fc",
+  "position": {
+    "x": 57.936575292087468,
+    "y": 99.650909502390448,
+    "z": 2000,
+    "height": 318.65116410648108,
+    "width": 628.03247616622821,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Calendario"
+                    }
+                  },
+                  "Property": "Año"
+                }
+              },
+              "queryRef": "Sum(Calendario.Año)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "IntContra"
+                    }
+                  },
+                  "Property": "IntAsig"
+                }
+              },
+              "queryRef": "IntContra.IntAsig"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "IntContra"
+                    }
+                  },
+                  "Property": "IntMedAsig"
+                }
+              },
+              "queryRef": "IntContra.IntMedAsig"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "IntContra"
+                    }
+                  },
+                  "Property": "IntTrabaj"
+                }
+              },
+              "queryRef": "IntContra.IntTrabaj"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "IntContra"
+                    }
+                  },
+                  "Property": "IntTraMAsig"
+                }
+              },
+              "queryRef": "IntContra.IntTraMAsig"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a206e1cd1b672daace8e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "IntContra"
+              }
+            },
+            "Property": "IntMedAsig"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "i",
+              "Entity": "IntContra",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "i"
+                        }
+                      },
+                      "Property": "IntMedAsig"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

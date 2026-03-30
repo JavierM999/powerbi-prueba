@@ -1,0 +1,59 @@
+table DunTrabaj
+	lineageTag: 4e985278-9669-4d02-82a8-e8ee6804acf5
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 71791e81-dfde-4a61-b3e5-093ce6105a00
+		summarizeBy: none
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column trsexo
+		dataType: string
+		lineageTag: 046fa9b6-f466-4811-8172-4441afb3a96f
+		summarizeBy: none
+		sourceColumn: trsexo
+
+		annotation SummarizationSetBy = Automatic
+
+	column trfechanac
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e031be06-b59c-4c6c-88a0-d6a5c552a4a5
+		summarizeBy: none
+		sourceColumn: trfechanac
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column trnacionalidad
+		dataType: string
+		lineageTag: b4b8c4a2-8e2f-4d9b-9b2e-c2aeaf63478f
+		summarizeBy: none
+		sourceColumn: trnacionalidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column trdiscapacidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 6560da80-d8d6-4461-9543-b4cc8ed54a39
+		summarizeBy: sum
+		sourceColumn: trdiscapacidad
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DunTrabaj-303ed933-69bb-4c39-9a8b-2c662492ac0c = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3004", [Query="SELECT     distinct contra.cttrabajador,trabajador.trsexo,trabajador.trfechanac,trabajador.trnacionalidad,#(lf)            trdiscapacidad#(lf)FROM         contra INNER JOIN#(lf)                      trabajador ON contra.ctempresa = trabajador.trempresa AND contra.cttrabajador =trabajador.trtrabajador inner join#(lf)#(tab)#(tab)#(tab)#(tab)#(tab)  centros on contra.ctempresa=centros.ceempresa and contra.ctcentro=centros.cecentro#(lf)WHERE ctempresa=04#(lf)and     ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal) <= 2030)#(lf)and ctcentro <> 9999"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Source,{{"trfechanac", type date}, {"trdiscapacidad", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,128 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "db0ebf3102779174fa8a",
+  "position": {
+    "x": 64.116788321167888,
+    "y": 40.992700729927009,
+    "z": 2000,
+    "height": 564.43795620437959,
+    "width": 383.64963503649636,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Calendario"
+                    }
+                  },
+                  "Property": "Año"
+                }
+              },
+              "queryRef": "Sum(Calendario.Año)"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Calendario"
+                    }
+                  },
+                  "Property": "Mes (Corto)"
+                }
+              },
+              "queryRef": "Calendario.Mes (Corto)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "NonoContra"
+                    }
+                  },
+                  "Property": "NonoAsig"
+                }
+              },
+              "queryRef": "NonoContra.NonoAsig"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "NonoContra"
+                    }
+                  },
+                  "Property": "NonoMedAsig"
+                }
+              },
+              "queryRef": "NonoContra.NonoMedAsig"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "d0a45de4e39fbf3c5d0b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "NonoContra"
+              }
+            },
+            "Property": "NonoMedAsig"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "n",
+              "Entity": "NonoContra",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "n"
+                        }
+                      },
+                      "Property": "NonoMedAsig"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

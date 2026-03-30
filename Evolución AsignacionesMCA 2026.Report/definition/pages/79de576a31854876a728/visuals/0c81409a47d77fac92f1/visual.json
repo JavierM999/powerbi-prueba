@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "0c81409a47d77fac92f1",
+  "position": {
+    "x": 376.77008750994429,
+    "y": 154.78122513922037,
+    "z": 5000,
+    "height": 149.68973747016707,
+    "width": 252.53778838504374,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Trabajadores Nuevos"
+                }
+              },
+              "queryRef": "contratos.Trabajadores Nuevos",
+              "nativeQueryRef": "Trabajadores Nuevos"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "contratos"
+                  }
+                },
+                "Property": "Trabajadores Nuevos"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

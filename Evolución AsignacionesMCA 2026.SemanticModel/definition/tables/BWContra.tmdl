@@ -1,0 +1,105 @@
+table BWContra
+	lineageTag: b9f99ae0-d303-4045-b701-57c206412b3d
+
+	measure BWAsig = IF(CALCULATE(COUNTROWS(BWContra),FILTER(BWContra,BWContra[ctfechaini]<=[fecfin]),FILTER(BWContra,  ISBLANK(BWContra[ctfechafinreal])=TRUE() || BWContra[ctfechafinreal]>=[fecini]))=BLANK(),0, CALCULATE(COUNTROWS(BWContra),FILTER(BWContra,BWContra[ctfechaini]<=[fecfin]),FILTER(BWContra,  ISBLANK(BWContra[ctfechafinreal])=TRUE() || BWContra[ctfechafinreal]>=[fecini])))
+		formatString: 0
+		lineageTag: c4fe529a-bbe3-4ec6-8fb2-b352e1f17654
+
+	measure BWMedAsig = AVERAGEX(VALUES(Calendario[Date]),BWContra[BWAsig])
+		formatString: 0.00
+		lineageTag: 7795b704-fc4a-4c07-91d1-5ab854ef1981
+
+		changedProperty = FormatString
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: b3046f73-f7c9-4b9e-9ab0-4b15ee6e1a57
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: 2421043c-f1cc-4d78-81e3-c24ebb1f0969
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f529fe4-201e-4766-972d-299fe1f90005
+		summarizeBy: sum
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 29414c53-d658-46ea-a726-4a92919a465f
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f194e5f-ee9c-4c38-8066-c82891daa6dd
+		summarizeBy: sum
+		sourceColumn: ctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f1bacb6a-372c-45ab-b66c-6548df8208a9
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5711a969-edcc-48c3-aa76-3f306d87111b
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctcatepuesto
+		dataType: int64
+		formatString: 0
+		lineageTag: dae0368a-237c-47d3-a5e2-3d20e2cf9a50
+		summarizeBy: sum
+		sourceColumn: ctcatepuesto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BWContra-c20fcec5-5d82-4b60-9283-9e18016d670b = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001"),
+				    dbo_contra = Source{[Schema="dbo",Item="contra"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_contra, each [ctempresa] = 17),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"ctcentro", "ctcontrato", "cttrabajador", "ctcliente", "ctcencli", "ctfechaini", "ctfechafinreal", "ctcatepuesto"}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Removed Other Columns", each [ctfechafinreal] > #datetime(2018, 12, 31, 0, 0, 0) or [ctfechafinreal] = null),
+				    #"Filtered Rows3" = Table.SelectRows(#"Filtered Rows2", each true),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Filtered Rows3",{{"ctcentro", Int64.Type}, {"ctcencli", Int64.Type}, {"ctfechaini", type date}, {"ctfechafinreal", type date}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+

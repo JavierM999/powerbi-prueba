@@ -1,0 +1,97 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "7ee2241c0562ab100d7b",
+  "position": {
+    "x": 121.97218710493046,
+    "y": 126.52338811630845,
+    "z": 4000,
+    "height": 176.58659924146647,
+    "width": 367.73704171934259,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajadores"
+                    }
+                  },
+                  "Property": "trsexo"
+                }
+              },
+              "queryRef": "Trabajadores.trsexo",
+              "nativeQueryRef": "trsexo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "TrabActivos"
+                }
+              },
+              "queryRef": "contratos.TrabActivos",
+              "nativeQueryRef": "TrabActivos"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "TParcial"
+                }
+              },
+              "queryRef": "contratos.TParcial",
+              "nativeQueryRef": "TParcial"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Horas Realizadas"
+                }
+              },
+              "queryRef": "contratos.Horas Realizadas",
+              "nativeQueryRef": "Horas Realizadas"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "contratos"
+                  }
+                },
+                "Property": "TParcial"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

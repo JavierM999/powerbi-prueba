@@ -1,0 +1,48 @@
+table TipContra
+	lineageTag: 481db9aa-0b87-4a57-8166-1d9753c1233c
+
+	column ticontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: 704c9f84-b188-4a5d-9449-4223b36d134c
+		summarizeBy: sum
+		sourceColumn: ticontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticontofic
+		dataType: int64
+		formatString: 0
+		lineageTag: 07007bd3-9f8b-4bd3-9f0d-3c53d4fe60a8
+		summarizeBy: sum
+		sourceColumn: ticontofic
+
+		annotation SummarizationSetBy = Automatic
+
+	column tinombre
+		dataType: string
+		lineageTag: c38efe1e-6441-4950-9911-6545d6ad87b6
+		summarizeBy: none
+		sourceColumn: tinombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column titipo
+		dataType: string
+		lineageTag: 6e5774b1-fbf0-41df-853b-e30444538390
+		summarizeBy: none
+		sourceColumn: titipo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipContra = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ticontrato,ticontofic,tinombre,titipo#(lf)from tipcon"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"ticontrato", Int64.Type}, {"ticontofic", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

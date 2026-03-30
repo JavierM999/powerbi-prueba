@@ -1,0 +1,97 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b992eca2ac3230ac4c51",
+  "position": {
+    "x": 54.925373134328353,
+    "y": 118.20895522388059,
+    "z": 4000,
+    "height": 521.79104477611941,
+    "width": 380.8955223880597,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto",
+              "nativeQueryRef": "Texto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Max.Asignac"
+                }
+              },
+              "queryRef": "contratos.Max.Asignac",
+              "nativeQueryRef": "Max.Asignac"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "ActivosHoy"
+                }
+              },
+              "queryRef": "contratos.ActivosHoy",
+              "nativeQueryRef": "ActivosHoy"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "RecMax"
+                }
+              },
+              "queryRef": "contratos.Record",
+              "nativeQueryRef": "Record"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "contratos"
+                  }
+                },
+                "Property": "ActivosHoy"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

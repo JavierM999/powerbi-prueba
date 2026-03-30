@@ -1,0 +1,18 @@
+table Tabla_Fechas
+	lineageTag: 25daeccc-a26b-4fe9-b374-9183ce6b058d
+
+	column Value
+		formatString: General Date
+		lineageTag: 5c43c59c-50d2-4fff-9256-bbbd34062db8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Tabla_Fechas = calculated
+		mode: import
+		source = GENERATESERIES(DATE(YEAR(TODAY()),1,1), TODAY() - 1, 1)
+
+	annotation PBI_Id = 987ec615a9b24a6398269337a6b5d43d
+

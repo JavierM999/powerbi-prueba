@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ReportSection23d192f53594ec000b80",
+  "displayName": "Asignaciones x Cliente",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

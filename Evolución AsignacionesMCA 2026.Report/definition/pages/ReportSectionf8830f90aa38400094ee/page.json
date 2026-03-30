@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ReportSectionf8830f90aa38400094ee",
+  "displayName": "Evolución Datos",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "pageBinding": {
+    "name": "Pod8",
+    "type": "Default",
+    "parameters": []
+  }
+}

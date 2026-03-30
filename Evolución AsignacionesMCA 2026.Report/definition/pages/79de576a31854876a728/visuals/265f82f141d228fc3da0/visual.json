@@ -1,0 +1,69 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "265f82f141d228fc3da0",
+  "position": {
+    "x": 745.39379474940336,
+    "y": 117.10421638822594,
+    "z": 6000,
+    "height": 503.03898170246617,
+    "width": 350.29435163086714,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajadores"
+                    }
+                  },
+                  "Property": "cttrabajador"
+                }
+              },
+              "queryRef": "Trabajadores.cttrabajador",
+              "nativeQueryRef": "cttrabajador"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Filtro_Nuevos"
+                }
+              },
+              "queryRef": "contratos.Filtro_Nuevos",
+              "nativeQueryRef": "Filtro_Nuevos"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Trabajadores"
+                  }
+                },
+                "Property": "cttrabajador"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
