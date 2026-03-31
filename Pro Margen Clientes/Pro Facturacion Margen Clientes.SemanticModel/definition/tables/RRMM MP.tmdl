@@ -1,0 +1,166 @@
+table 'RRMM MP'
+	lineageTag: 8c8f410d-97a0-4986-ac24-ac9c6a5c6341
+
+	measure TFraRRMMMP = SUM('RRMM MP'[IMPORTE])
+		formatString: #,0.00
+		lineageTag: 49cf21e0-739d-4033-8ee7-a2b06122cb1e
+
+	column Del
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ee4243a-1de8-4418-8bf2-998f1ac9d754
+		summarizeBy: sum
+		sourceColumn: Del
+
+		annotation SummarizationSetBy = Automatic
+
+	column NIF
+		dataType: string
+		lineageTag: 648fa2ed-41d4-4f3b-a074-e98c4f0aa6f6
+		summarizeBy: none
+		sourceColumn: NIF
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Apellidos y Nombre'
+		dataType: string
+		lineageTag: 58fc161b-9e37-48c1-8251-77f76821469c
+		summarizeBy: none
+		sourceColumn: Apellidos y Nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Puesto
+		dataType: string
+		lineageTag: 00c17787-2dea-4755-bac8-5793b3de1fb1
+		summarizeBy: none
+		sourceColumn: Puesto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d582e1af-93a8-4fd4-92af-2a592caa587e
+		summarizeBy: none
+		sourceColumn: Fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IMPORTE
+		dataType: double
+		lineageTag: ee13bb74-3f71-4f9a-8fa7-76ce64a73035
+		summarizeBy: sum
+		sourceColumn: IMPORTE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FACTURA
+		dataType: string
+		lineageTag: 5302da1f-4557-48c6-9e9f-1bd3c5cf4ec8
+		summarizeBy: none
+		sourceColumn: FACTURA
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRUEBAS
+		dataType: string
+		lineageTag: cb5e2cd6-5529-41b8-93a4-26b71ce5d122
+		summarizeBy: none
+		sourceColumn: PRUEBAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 194409c6-5bfd-4127-85bb-d6aca3d191e0
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 55eb5ebc-6de1-48ac-ad7b-f92bb925cb87
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinContra
+		dataType: double
+		lineageTag: 6f56e574-4825-4453-a20c-1060f931d94f
+		summarizeBy: sum
+		sourceColumn: MinContra
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column clcifdni
+		dataType: string
+		lineageTag: 9161fa46-b1aa-45c8-99aa-6380d8ee095c
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column RMmicentro
+		dataType: int64
+		formatString: 0
+		lineageTag: c8670232-93ca-4fcf-8602-fa30f5029f8e
+		summarizeBy: sum
+		sourceColumn: RMmicentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: dafa4f22-9f87-4ec8-9662-73d14e3201d9
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column RMMPCenCli = FORMAT('RRMM MP'[RMmicentro],"00")&FORMAT('RRMM MP'[clcodigo],"000000")
+		lineageTag: 18f00101-8706-4a5a-bd73-d03a2b7060dc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'RRMM MP' = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents("\\10.10.138.5\Excels PBIs\CartasS de Aptitud.xlsx"), null, true),
+				    #"RRMM MP_Sheet" = Origen{[Item="RRMM MP",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"RRMM MP_Sheet", [PromoteAllScalars=true]),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Encabezados promovidos",{{"FECHA", "FECHA.1"}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Columnas con nombre cambiado",{{"Del", Int64.Type}, {"NIF", type text}, {"Apellidos y Nombre", type text}, {"Puesto", type text}, {"USUARIA", type text}, {"Aptitud", type text}, {"Fecha", type date}, {"IMPORTE", type number}, {"FACTURA", type text}, {"PRUEBAS", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"FECHA.1", "FACTURA_1", "PRUEBAS_2", "FACTURA_3", "Column15", "Column16"}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Columnas quitadas", {"NIF"}, contratos, {"trnif"}, "contratos", JoinKind.LeftOuter),
+				    #"Se expandió contratos" = Table.ExpandTableColumn(#"Consultas combinadas", "contratos", {"ctcentro", "ctcliente", "ctcontrato", "ctfechaini", "ctfechafinreal"}, {"ctcentro", "ctcliente", "ctcontrato", "ctfechaini", "ctfechafinreal"}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Se expandió contratos", "cfecinimia", each Date.AddDays([ctfechaini],-10)),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Personalizada agregada",{{"cfecinimia", type date}, {"ctfechaini", type date}, {"ctfechafinreal", type date}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado1", each ([Fecha] >= [cfecinimia] and ([Fecha] <= [ctfechafinreal]or [ctfechafinreal] = null ))),
+				    #"Filas agrupadas" = Table.Group(#"Filas filtradas", {"Del", "NIF", "Apellidos y Nombre", "Puesto", "Fecha", "IMPORTE", "FACTURA", "PRUEBAS", "ctcentro", "ctcliente"}, {{"MinContra", each List.Min([ctcontrato]), type nullable number}}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Filas agrupadas", {"ctcentro", "ctcliente"}, Clientes, {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes" = Table.ExpandTableColumn(#"Consultas combinadas1", "Clientes", {"clcifdni"}, {"clcifdni"}),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Se expandió Clientes", "RMmicentro", each if ((Date.Year([Fecha])=2024 and Date.Month([Fecha])>2) or Date.Year([Fecha])>2024) and[ctcentro]=71 then 22 else [ctcentro]),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Personalizada agregada1",{{"RMmicentro", Int64.Type}}),
+				    #"Consultas combinadas2" = Table.NestedJoin(#"Tipo cambiado2", {"RMmicentro", "clcifdni"}, Clientes, {"clcentro", "clcifdni"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes1" = Table.ExpandTableColumn(#"Consultas combinadas2", "Clientes", {"clcodigo"}, {"clcodigo"})
+				in
+				    #"Se expandió Clientes1"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

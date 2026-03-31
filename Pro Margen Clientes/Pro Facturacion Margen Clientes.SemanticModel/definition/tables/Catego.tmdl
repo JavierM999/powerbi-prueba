@@ -1,0 +1,35 @@
+table Catego
+	lineageTag: 82ba6d30-12ad-496a-8eb2-7e2e4e7844ca
+
+	column cacodigo
+		dataType: int64
+		lineageTag: 47ca023f-e291-4475-8abd-6c84970ebcec
+		summarizeBy: none
+		sourceColumn: cacodigo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column canombre
+		dataType: string
+		lineageTag: bfa6023a-af57-468c-bdd2-b0b28c7bdacb
+		summarizeBy: none
+		sourceColumn: canombre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Catego = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select cacodigo,canombre#(lf)from catego"])
+				in
+				    Origen
+
+	annotation PBI_QueryRelationships = {"columnCount":2,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Catego/Origen.{cacodigo,0}","Section1/Catego/Origen.{canombre,1}"],"ColumnCount":2,"KeyColumnNames":[],"ColumnIdentities":["Section1/Catego/Origen.{cacodigo,0}","Section1/Catego/Origen.{canombre,1}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

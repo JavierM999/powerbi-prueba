@@ -1,0 +1,113 @@
+table Clientes
+	lineageTag: 0209bfca-e979-4162-8e1e-2a3dca76ea89
+
+	column clcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: d71b72d2-dd54-4a32-b8f5-5cbb1aa0010e
+		summarizeBy: sum
+		sourceColumn: clcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 74cc5f1f-db2d-47d1-9985-aa7c9739232b
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnombre
+		dataType: string
+		lineageTag: 50f7866d-d2d7-48c6-9ec9-c7196569fde2
+		summarizeBy: none
+		sourceColumn: clnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnomfis
+		dataType: string
+		lineageTag: 361c2f77-7c29-45b7-b0d6-cea11a9bebb9
+		summarizeBy: none
+		sourceColumn: clnomfis
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: a4196289-5dce-40c2-8f9b-c58b9f4a207a
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClCenCli = FORMAT(Clientes[clcentro],"00")&FORMAT(Clientes[clcodigo],"000000")
+		lineageTag: 74fc5374-585b-4de0-8f6a-35f9bb534c07
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column clgrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 582ce6b3-a31e-4aed-9f34-8dfffa2daea1
+		summarizeBy: sum
+		sourceColumn: clgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clsubgrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: d3b7bc0f-d750-4b5e-936c-7f9ddba756ac
+		summarizeBy: sum
+		sourceColumn: clsubgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClUniGruS = FORMAT(Clientes[clgrupo],"0000")&FORMAT(Clientes[clsubgrupo],"0000")
+		lineageTag: e1a84f7b-eb66-4cab-8be4-3b5bd6b94118
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column gedescripcion
+		dataType: string
+		lineageTag: 244d094b-c9a1-46ee-9acd-2c2ecbbd5b06
+		summarizeBy: none
+		sourceColumn: gedescripcion
+
+		annotation SummarizationSetBy = Automatic
+
+	column MCSucursal
+		dataType: int64
+		formatString: 0
+		lineageTag: ec5e6323-8868-4f71-b5be-9ab4e1194b25
+		summarizeBy: none
+		sourceColumn: MCSucursal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clientes-0d23cb8a-2b6a-4e5b-97c9-7b402bb70b65 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)FROM         clientes INNER JOIN#(lf)                      contra ON clientes.clempresa = contra.ctempresa and clientes.clcentro=contra.ctcentro and clientes.clcodigo=contra.ctcliente#(lf)where ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal)>=2022)#(lf)and clientes.clempresa=1#(lf)and clientes.clnombre not like '%fijo%'#(lf)#(lf)#(lf)union#(lf)SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)from facturas INNER JOIN#(lf)                      clientes ON facturas.fcempresa=clientes.clempresa and facturas.fccentro=clientes.clcentro  and  facturas.fccliente = clientes.clcodigo#(lf)where year(facturas.fcfecha)>=2022#(lf)and facturas.fcempresa=01#(lf)and clientes.clnombre not like '%fijo%'#(lf)#(lf)union#(lf)SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)FROM         clientes#(lf)where clempresa=1#(lf)and clcentro=22#(lf)AND (clcodigo=220437 or clcodigo=220438 or clcodigo=220439 or clcodigo=220382 or clcodigo>=220454)#(lf)union#(lf)SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)FROM         clientes#(lf)where clempresa=1#(lf)and clcentro=16#(lf)AND (clcodigo=160242 or clcodigo=160228 or clcodigo=160236)"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"clcentro", Int64.Type},  {"clgrupo", Int64.Type}, {"clsubgrupo", Int64.Type}}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Changed Type",{"clgrupo", "clsubgrupo"},GruposEmp,{"gegrupo", "gesubgrupo"},"GruposEmp",JoinKind.LeftOuter),
+				    #"Se expandió GruposEmp" = Table.ExpandTableColumn(#"Consultas combinadas", "GruposEmp", {"gedescripcion"}, {"GruposEmp.gedescripcion"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Se expandió GruposEmp",{{"GruposEmp.gedescripcion", "gedescripcion"}}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Columnas con nombre cambiado", {"clcentro"}, MCANCentros, {"Id"}, "MCANCentros", JoinKind.LeftOuter),
+				    #"Se expandió MCANCentros" = Table.ExpandTableColumn(#"Consultas combinadas1", "MCANCentros", {"Sucursal"}, {"MCANCentros.Sucursal"}),
+				    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Se expandió MCANCentros",{{"MCANCentros.Sucursal", "MCSucursal"}})
+				in
+				    #"Columnas con nombre cambiado1"
+
+	annotation PBI_QueryRelationships = {"columnCount":9,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Clientes/Changed Type.{clcentro,0}","Section1/Clientes/Source.{clcodigo,1}","Section1/Clientes/Source.{clnombre,2}","Section1/Clientes/Source.{clnomfis,3}","Section1/Clientes/Source.{clcifdni,4}","Section1/Clientes/Changed Type.{clvendedor,5}","Section1/Clientes/Changed Type.{clgrupo,7}","Section1/Clientes/Changed Type.{clsubgrupo,8}","Section1/GruposEmp/Origen.{gedescripcion,2}"],"ColumnCount":9,"KeyColumnNames":[],"ColumnIdentities":["Section1/Clientes/Changed Type.{clcentro,0}","Section1/Clientes/Source.{clcodigo,1}","Section1/Clientes/Source.{clnombre,2}","Section1/Clientes/Source.{clnomfis,3}","Section1/Clientes/Source.{clcifdni,4}","Section1/Clientes/Changed Type.{clvendedor,5}","Section1/Clientes/Changed Type.{clgrupo,7}","Section1/Clientes/Changed Type.{clsubgrupo,8}","Section1/GruposEmp/Origen.{gedescripcion,2}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

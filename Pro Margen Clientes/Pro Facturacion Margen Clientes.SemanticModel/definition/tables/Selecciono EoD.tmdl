@@ -1,0 +1,21 @@
+table 'Selecciono EoD'
+	lineageTag: 5d68b78d-da99-4103-bd4e-2111f48eea81
+
+	column Ambito
+		lineageTag: 4dfcc14d-fc89-4372-8a62-2f3f409715ce
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Selecciono EoD-a1f0543e-1ee1-4598-b96d-1f198e8bfb74' = calculated
+		mode: import
+		source =
+				
+				{
+				    "Empresa",
+				    "Delegación"
+				}
+
+	annotation PBI_Id = 107684dc8c65483189e558cc4abdf7fc
+

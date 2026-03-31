@@ -1,0 +1,59 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["estadi","Catego","Clientes","GruposEmp","Facturas","TMargen","VKpei","CNHistorR","contratos","MCANCentros","Rappels","Epis","HistorN01","Ofertas","OFlineas","Trabajadores","RRMMQUIRON23","CnHistor","RRMMQUIRON24","RRMM MP","RRMM PREVAE","RRMMQUIRON25"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table estadi
+ref table Catego
+ref table DateTableTemplate_95447e02-314a-4169-85d3-39dd65bf753a
+ref table Clientes
+ref table GruposEmp
+ref table Calendario
+ref table Facturas
+ref table TMargen
+ref table VKpei
+ref table CNHistorR
+ref table LocalDateTable_0d2b1942-11b2-4640-97c1-3f874657e0e8
+ref table contratos
+ref table LocalDateTable_0702f593-7c21-4127-a0e3-33dd33b75b67
+ref table LocalDateTable_a70b479b-b2d2-4a77-b433-1c15951b113c
+ref table MCANCentros
+ref table LocalDateTable_a55274b3-16bb-47c6-ab9e-be44d9e22044
+ref table Rappels
+ref table LocalDateTable_42e32745-9348-415e-9089-0df40fb24785
+ref table Epis
+ref table 'Selecciono EoD'
+ref table HistorN01
+ref table Ofertas
+ref table LocalDateTable_34dfd877-e3ba-44b1-a381-98f3f5becb90
+ref table LocalDateTable_1f49e0ec-106f-43a5-b555-df88f09d0977
+ref table OFlineas
+ref table LocalDateTable_b48a78c4-fde4-4541-8238-2c1e5eb0f545
+ref table Trabajadores
+ref table LocalDateTable_5464f4e1-b0a2-4dc4-b84b-77f803c019a2
+ref table RRMMQUIRON23
+ref table CnHistor
+ref table RRMMQUIRON24
+ref table 'RRMM MP'
+ref table 'RRMM PREVAE'
+ref table LocalDateTable_efacd82c-63fc-41fd-8a22-6a764a0d734f
+ref table RRMMQUIRON25
+
+ref role Central
+ref role Paqui
+ref role Antonio
+ref role Jael
+ref role Lorena
+ref role Mario
+
+ref cultureInfo es-ES
+

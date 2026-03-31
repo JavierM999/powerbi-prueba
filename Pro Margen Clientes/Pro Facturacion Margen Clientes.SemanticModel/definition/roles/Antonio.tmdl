@@ -1,0 +1,9 @@
+role Antonio
+	modelPermission: read
+
+	tablePermission MCANCentros = [Sucursal] == 17 || [Sucursal] == 18 || [Sucursal] == 36 || [Sucursal] == 40 || [Sucursal] == 42 || [Sucursal] == 19 || [Sucursal] == 14 || [Sucursal] == 34 || [Sucursal] == 22 || [Sucursal] == 8
+
+	tablePermission Clientes = ([MCSucursal] == 19 && [clcodigo] == 190406) || ([MCSucursal] == 14 && [clcodigo] == 140355) || ([MCSucursal] == 34 && [clcodigo] == 340241) || ([clcodigo] == 340242 && [MCSucursal] == 34) || ([clcodigo] == 340233 && [MCSucursal] == 34) || [MCSucursal] == 36 || [MCSucursal] == 40 || [MCSucursal] == 42 || [MCSucursal] == 17 || [MCSucursal] == 18 || ([clcodigo] == 80285 && [MCSucursal] == 8) || ([clcodigo] == 80284 && [MCSucursal] == 8) || ([clcodigo] == 220476 && [MCSucursal] == 22)
+
+	annotation PBI_Id = ef82803aa72643e8859df9a895a88d9b
+

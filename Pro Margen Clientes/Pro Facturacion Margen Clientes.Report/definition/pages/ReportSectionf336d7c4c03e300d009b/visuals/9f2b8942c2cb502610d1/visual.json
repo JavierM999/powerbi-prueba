@@ -1,0 +1,339 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "9f2b8942c2cb502610d1",
+  "position": {
+    "x": 122.83870967741936,
+    "y": 98.064516129032256,
+    "z": 0,
+    "height": 552.258064516129,
+    "width": 978.58064516129036,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistorR"
+                    }
+                  },
+                  "Property": "TotFraCN3"
+                }
+              },
+              "queryRef": "CNHistor.TotFraCN3",
+              "displayName": "Facturación"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistorR"
+                    }
+                  },
+                  "Property": "AcumFraCN3"
+                }
+              },
+              "queryRef": "CNHistor.AcumFraCN3",
+              "nativeQueryRef": "Acumulado",
+              "displayName": "Acumulado"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistorR"
+                    }
+                  },
+                  "Property": "%Pareto1N"
+                }
+              },
+              "queryRef": "CNHistor.%Pareto1N",
+              "nativeQueryRef": "%Pareto",
+              "displayName": "%Pareto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistorR"
+                    }
+                  },
+                  "Property": "TotFraCN3MA"
+                }
+              },
+              "queryRef": "CNHistor.TotFraCN3MA",
+              "nativeQueryRef": "Facturación MA",
+              "displayName": "Facturación MA"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistorR"
+                    }
+                  },
+                  "Property": "CN3 Margen1 %"
+                }
+              },
+              "queryRef": "CNHistor.CN3 Margen1 %",
+              "displayName": "Margen %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistorR"
+                    }
+                  },
+                  "Property": "CN3 Margen1 MA %"
+                }
+              },
+              "queryRef": "CNHistor.CN3 Margen1 MA %",
+              "nativeQueryRef": "MargenMA %",
+              "displayName": "MargenMA %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistorR"
+                    }
+                  },
+                  "Property": "RankFraCN3"
+                }
+              },
+              "queryRef": "CNHistor.RankFraCN3",
+              "nativeQueryRef": "Ranking Fra",
+              "displayName": "Ranking Fra"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistorR"
+                    }
+                  },
+                  "Property": "RankMargen"
+                }
+              },
+              "queryRef": "CNHistor.RankMargen",
+              "nativeQueryRef": "Ranking Margen",
+              "displayName": "Ranking Margen"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HistorN01"
+                    }
+                  },
+                  "Property": "CosteAbsen€"
+                }
+              },
+              "queryRef": "HistorN01.CosteAbsen€",
+              "nativeQueryRef": "CosteAbsen€"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HistorN01"
+                    }
+                  },
+                  "Property": "% ABS"
+                }
+              },
+              "queryRef": "HistorN01.% ABS",
+              "nativeQueryRef": "% ABS"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CNHistorR"
+                  }
+                },
+                "Property": "RankFraCN3"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'MARGEN CN3'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0.2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "49aa92d6333b3ceee446",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MCANCentros"
+              }
+            },
+            "Property": "Sucursal"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MCANCentros",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "And": {
+                  "Left": {
+                    "Comparison": {
+                      "ComparisonKind": 3,
+                      "Left": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "m"
+                            }
+                          },
+                          "Property": "Sucursal"
+                        }
+                      },
+                      "Right": {
+                        "Literal": {
+                          "Value": "99D"
+                        }
+                      }
+                    }
+                  },
+                  "Right": {
+                    "Comparison": {
+                      "ComparisonKind": 1,
+                      "Left": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "m"
+                            }
+                          },
+                          "Property": "Sucursal"
+                        }
+                      },
+                      "Right": {
+                        "Literal": {
+                          "Value": "0D"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "Filterb2f2f8653bda5e926367",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendario"
+              }
+            },
+            "Property": "Año"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+table Trabajadores
+	lineageTag: 2c09a34f-57d9-4f65-b27b-8e847c8cba27
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: ee16ffea-bc73-45e0-94fa-7d96f899723b
+		summarizeBy: sum
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnombrecompleto
+		dataType: string
+		lineageTag: 4af5e66f-5cb4-4103-940d-3aa235b9abdd
+		summarizeBy: none
+		sourceColumn: trnombrecompleto
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnif
+		dataType: string
+		lineageTag: 5ba707e7-d64f-4b45-8ed5-7f972147aaad
+		summarizeBy: none
+		sourceColumn: trnif
+
+		annotation SummarizationSetBy = Automatic
+
+	column trsexo
+		dataType: string
+		lineageTag: a04f91dd-559a-4956-ac06-370eef3ecde2
+		summarizeBy: none
+		sourceColumn: trsexo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Trabajadores = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="SELECT     distinct contra.cttrabajador,trabajador.trnombrecompleto,trabajador.trnif,trabajador.trsexo#(lf)FROM         contra INNER JOIN#(lf)                      trabajador ON contra.ctempresa = trabajador.trempresa AND contra.cttrabajador =trabajador.trtrabajador #(lf)WHERE ctempresa=01#(lf)and     ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal) >= 2022)"]),
+				    #"Filas filtradas" = Table.SelectRows(Source, each ([trnif] <> null))
+				in
+				    #"Filas filtradas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

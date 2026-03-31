@@ -1,0 +1,154 @@
+table Ofertas
+	lineageTag: c288514e-f45f-4366-9c6f-7bb233fb100b
+
+	column ofcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 984b08fb-c6cb-4508-8112-be84397010ef
+		summarizeBy: sum
+		sourceColumn: ofcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: fe44b39e-d084-4d24-b0e8-69189a8b4ed1
+		summarizeBy: sum
+		sourceColumn: ofcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 38ccd402-1720-4a78-861a-941d99743db7
+		summarizeBy: sum
+		sourceColumn: ofcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a29f45c-6c2f-4cf7-8495-7302c2ec9e1c
+		summarizeBy: sum
+		sourceColumn: ofcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofnombre
+		dataType: string
+		lineageTag: 244b7e5f-445d-4927-85be-37189b9d83f0
+		summarizeBy: none
+		sourceColumn: ofnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofprovin
+		dataType: string
+		lineageTag: b83d3d03-9031-4c5c-833c-f3c84f0a21cc
+		summarizeBy: none
+		sourceColumn: ofprovin
+
+		annotation SummarizationSetBy = Automatic
+
+	column offechaoferta
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bb18cc5a-f45b-4823-aef3-eada27b0e3d1
+		summarizeBy: none
+		sourceColumn: offechaoferta
+
+		variation Variación
+			isDefault
+			relationship: c945a88f-3c4d-4285-b36f-f8ad7bc2ba7b
+			defaultHierarchy: LocalDateTable_34dfd877-e3ba-44b1-a381-98f3f5becb90.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column offechavalidez
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 69be641a-834c-4e71-a01f-99a812c98875
+		summarizeBy: none
+		sourceColumn: offechavalidez
+
+		variation Variación
+			isDefault
+			relationship: f52fd9d0-87aa-4ca9-b03b-7db72aa1ea8a
+			defaultHierarchy: LocalDateTable_1f49e0ec-106f-43a5-b555-df88f09d0977.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ofpedidocliente
+		dataType: string
+		lineageTag: 7aa49fbf-92ca-407e-856b-e240281d7610
+		summarizeBy: none
+		sourceColumn: ofpedidocliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofestado
+		dataType: string
+		lineageTag: cfd60465-bca3-4361-9325-32fec24c3efb
+		summarizeBy: none
+		sourceColumn: ofestado
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofconvenio
+		dataType: int64
+		formatString: 0
+		lineageTag: afeb1c0d-edd4-43cb-8547-3decdcc97053
+		summarizeBy: sum
+		sourceColumn: ofconvenio
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofvendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: c28ac1c1-2527-4b05-b75c-36f1c2886460
+		summarizeBy: sum
+		sourceColumn: ofvendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofusuario
+		dataType: string
+		lineageTag: 6149c512-b67e-4b1d-a97d-028d87e0c0f4
+		summarizeBy: none
+		sourceColumn: ofusuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdOferta = FORMAT([ofcentro],"00")&FORMAT([ofcodigo],"00000000")
+		lineageTag: f8f9ee09-efe4-44c2-ba70-c10198210425
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column OfeCenCli = FORMAT(Ofertas[ofcentro],"00")&FORMAT(Ofertas[ofcliente],"000000")
+		lineageTag: 4a5e9508-32c6-4c1e-82d5-35e4d9d8ef15
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Ofertas = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ofcentro,ofcodigo,ofcliente,ofcencli,ofnombre,ofprovin,offechaoferta,offechavalidez,ofpedidocliente,ofestado,ofconvenio,ofvendedor,ofusuario#(lf)from oferta#(lf)where ofempresa=1#(lf)and year(offechaoferta)>=2021"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"ofcentro", Int64.Type}, {"ofcodigo", Int64.Type}, {"ofcencli", Int64.Type}, {"offechaoferta", type date}, {"offechavalidez", type date}, {"ofconvenio", Int64.Type}, {"ofvendedor", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

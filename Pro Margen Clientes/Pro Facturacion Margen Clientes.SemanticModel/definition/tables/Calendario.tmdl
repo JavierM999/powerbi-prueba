@@ -1,0 +1,210 @@
+table Calendario
+	lineageTag: 06c20f18-36c9-4a86-8907-4dfb68c45a63
+
+	measure fecini = FIRSTDATE(Calendario[Date])
+		formatString: Short Date
+		lineageTag: ef99a635-07e3-420d-a8cb-6a5db44d551a
+
+	measure fecfin = LASTDATE(Calendario[Date])
+		formatString: General Date
+		lineageTag: 0fcdbffb-2b08-4a90-a817-a4fea3e4db55
+
+	measure fecfinma = DATE(YEAR([fecfin]),MONTH([fecfin]),DAY([fecini]))-1
+		formatString: Short Date
+		lineageTag: 99d070c2-f2bc-4e42-93df-e558f84f9cdc
+
+	measure feciniaa = DATE(YEAR([fecini])-1,MONTH([fecini]),DAY([fecini]))
+		formatString: General Date
+		lineageTag: 4c67edea-31f5-4b5b-b237-691bcb2894d7
+
+	measure fecinima = DATE(YEAR([fecini]),MONTH([fecini])-1,DAY([fecini]))
+		formatString: Short Date
+		lineageTag: b3533c1c-4dd7-44e7-a5be-0dad5f110882
+
+	measure fecininy = DATE(YEAR([fecini])+1,MONTH([fecini]),DAY([fecini]))
+		formatString: General Date
+		lineageTag: 162166b0-1484-4846-817b-3fde013cfdc7
+
+	measure fecfinny = DATE(YEAR([fecfin])+1,MONTH([fecfin])+1,DAY([fecini]))-1
+		formatString: General Date
+		lineageTag: bfd7fb6d-0f74-4532-b6e0-8c1b805fcfaa
+
+	measure fecfinaa = DATE(YEAR([fecfin])-1,MONTH([fecfin])+1,DAY([fecini]))-1
+		formatString: General Date
+		lineageTag: 4397ecec-09ec-4d3f-802d-fe8ac792b06a
+
+	measure CtaMeses = MONTH([fecini])-1
+		formatString: 0
+		lineageTag: 59207fff-1763-4fdb-8f6e-d6b43491c2b0
+
+	measure fecinianyo = DATE(YEAR([fecini]),1,1)
+		formatString: General Date
+		lineageTag: cc94c3bd-3991-4a4d-937a-8680a1b58122
+
+	column Date
+		formatString: Short Date
+		lineageTag: b8e2b263-1230-42a9-acee-81b60ec6d38e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variación
+			isDefault
+			relationship: dfdd2f86-cdca-41ed-9047-75f60f307279
+			defaultHierarchy: LocalDateTable_efacd82c-63fc-41fd-8a22-6a764a0d734f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		lineageTag: 32bbae5f-96dc-476a-ad81-ef44a3e252bb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DateKey]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Año
+		formatString: 0
+		lineageTag: 753dfdd5-c83d-4097-9b91-cf4033dbb756
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Año]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes (Número)'
+		lineageTag: baaf436f-65c4-43e0-ae38-4e4e7f770b5e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mes (Número)]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Año/Mes
+		lineageTag: a428245d-28bd-471f-be30-688d105b7f3f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Año/Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes (Corto)'
+		lineageTag: e54d36ec-67d9-4ed2-9467-5b4b02b7bb41
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mes (Corto)]
+		sortByColumn: 'Mes (Número)'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes
+		lineageTag: aafaa5e8-8450-4811-8cb5-fabd0a1b0012
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Día
+		formatString: 0
+		lineageTag: 9fa64b1d-789e-47c7-a794-50d1ec48ec6c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Día]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Semana
+		lineageTag: 40847e82-d10f-4bbb-9db6-d5fdd519effd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana ISO'
+		lineageTag: 58c96f8e-32ba-40d6-8476-1f2026bfad93
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Semana ISO]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Año ISO'
+		formatString: 0
+		lineageTag: 92b35c1a-7f35-4096-bd19-8080a20cb396
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Año ISO]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Día Semana (Número)'
+		formatString: 0
+		lineageTag: 1ce5e671-d780-47b6-9256-cab671ec76ec
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Día Semana (Número)]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekDay
+		lineageTag: a10e6951-00db-48be-a8db-276757a73ff9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekDay]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekDayShort
+		lineageTag: 4e17381c-4a0f-4479-bce4-bc6dffe38675
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekDayShort]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		lineageTag: 787b08f8-c2ae-4a17-af83-ae92a2624ca4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trimestre Año'
+		lineageTag: 05bbb341-f0de-498c-9f38-38e82f345d98
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trimestre Año]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendario-7df6252b-1911-43e6-801f-7b182b204d18 = calculated
+		mode: import
+		source = ```
+				
+				ADDCOLUMNS (
+				CALENDAR (DATE(YEAR(TODAY()) - 2, 1, 1), DATE(YEAR(TODAY()), 12, 31)),
+				"DateKey", FORMAT([Date], "YYYYMMDD"),
+				"Año", YEAR([Date]),
+				"Mes (Número)", FORMAT([Date], "MM"),
+				"Año/Mes", FORMAT([Date], "YYYY/MM"),
+				"Mes (Corto)", UPPER(FORMAT([Date], "MMM")),
+				"Mes", REPLACE(FORMAT([Date], "MMMM"), 1, 1, UPPER(LEFT(FORMAT([Date], "MMMM"), 1))),
+				"Día", DAY([Date]),
+				"Semana", "S" & FORMAT(WEEKNUM([Date], 2), "00"),
+				"Semana ISO", "S" & FORMAT(WEEKNUM([Date], 21), "00"),
+				"Año ISO", IF(WEEKNUM([Date], 21) < 5 && WEEKNUM([Date], 2) > 50,
+				     YEAR([Date]) + 1,
+				     IF(WEEKNUM([Date], 21) > 50 && WEEKNUM([Date], 2) < 5, 
+				         YEAR([Date]) - 1, 
+				          YEAR([Date]))),
+				"Día Semana (Número)", WEEKDAY([Date], 2),
+				"WeekDay", FORMAT([Date], "dddd"),
+				"WeekDayShort", FORMAT([Date], "ddd"),
+				"Trimestre", "T" & FORMAT([Date], "Q"),
+				"Trimestre Año", FORMAT ([Date], "YYYY") & "/T" & FORMAT ([Date], "Q")
+				)
+				```
+

@@ -1,0 +1,154 @@
+table Epis
+	lineageTag: 712fef76-a52e-4dd6-b81f-2c6ac35ce04c
+
+	measure Epis = SUM(Epis[mvtotal])
+		formatString: #,0.00
+		lineageTag: cbd1ba35-54e9-48fa-b675-79133dc5a8a3
+
+	measure EpisMA = CALCULATE(Epis[Epis],PARALLELPERIOD ( FIRSTDATE(Calendario[Date]), -1, MONTH ))
+		formatString: #,0.00
+		lineageTag: 39411ee7-89c5-4593-9b40-a3d5bc1fdcf0
+
+	column mvsucursal
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ec2eeff-a16e-4b33-8450-938005a6d538
+		summarizeBy: sum
+		sourceColumn: mvsucursal
+
+		annotation SummarizationSetBy = Automatic
+
+	column mventidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f1ba14c-c38e-4d19-8583-183265da917f
+		summarizeBy: sum
+		sourceColumn: mventidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvarticulo
+		dataType: string
+		lineageTag: 04dd241a-441f-40aa-a191-60690bed4308
+		summarizeBy: none
+		sourceColumn: mvarticulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvfecha
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 80918e04-3343-4e2f-8265-0a803d5bc896
+		summarizeBy: none
+		sourceColumn: mvfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column mvcantid
+		dataType: double
+		lineageTag: a60d1721-9d8b-4b50-b847-ecf4c9e4b103
+		summarizeBy: sum
+		sourceColumn: mvcantid
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mvprecio
+		dataType: double
+		lineageTag: 64b5387b-8a23-46d0-920d-10ac0fe1e67e
+		summarizeBy: sum
+		sourceColumn: mvprecio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mvtotal
+		dataType: double
+		lineageTag: 3966d5c4-a75e-4e7e-a6a2-5542100b49b3
+		summarizeBy: sum
+		sourceColumn: mvtotal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EpiCenCli = FORMAT(Epis[SupCentrooo],"00")&FORMAT(Epis[ClienMiooo],"000000")
+		lineageTag: a7147f13-fc0d-4751-8fbf-0c2759b50d61
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: c16e6141-b78b-43b2-b635-35915bf14327
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column epicentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 096e446b-f4db-409e-90a5-25fd8cb85231
+		summarizeBy: sum
+		sourceColumn: epicentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 546d4ba7-d467-4ac3-8dac-777076785df7
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienMiooo
+		dataType: int64
+		formatString: 0
+		lineageTag: 5afae9c8-ba03-4ad3-b7c0-9aed8c893e04
+		summarizeBy: sum
+		sourceColumn: ClienMiooo
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupCentrooo
+		dataType: int64
+		formatString: 0
+		lineageTag: cb0ec723-c950-4713-b0bc-9d2900b98441
+		summarizeBy: sum
+		sourceColumn: SupCentrooo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Epis-1bad07c4-6d76-40fe-85e6-b24b887796d1 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="SELECT mvsucursal,mventidad,mvarticulo,mvfecha,mvcantid,mvprecio#(lf) From aes001.dbo.movtos LEFT OUTER JOIN#(lf)         aes001.dbo.articulos on mvarticulo=arcodigo#(lf) where mvempresa = 1 and year(mvfecha) >=2023#(lf) and mvestablecimiento IS NULL and mvtipodoc='ES' and aresepi='S'"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"mvsucursal", Int64.Type}, {"mvfecha", type date}}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado", "mvtotal", each [mvcantid]*[mvprecio]),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Personalizada agregada",{{"mvtotal", type number}}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Tipo cambiado1", {"mvsucursal", "mventidad"}, Clientes, {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes" = Table.ExpandTableColumn(#"Consultas combinadas", "Clientes", {"clcifdni"}, {"clcifdni"}),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Se expandió Clientes", "epicentro", each if ((Date.Year([mvfecha])=2024 and Date.Month([mvfecha])>2) or Date.Year([mvfecha])>2024) and [mvsucursal]=71 then 22 else [mvsucursal]),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Personalizada agregada1", {"epicentro", "clcifdni"}, Clientes, {"clcentro", "clcifdni"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes1" = Table.ExpandTableColumn(#"Consultas combinadas1", "Clientes", {"clcodigo"}, {"clcodigo"}),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Se expandió Clientes1",{{"epicentro", Int64.Type}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado2", each true),
+				    #"Personalizada agregada2" = Table.AddColumn(#"Filas filtradas", "ClienMiooo", each if Date.Year([mvfecha])=2024 then (if [clcodigo]= 60492 then 160242 else (if [clcodigo]= 60378 then 160225 else (if [clcodigo]= 60280 then 160224 else (if [clcodigo]= 60422 then 160230 else (if [clcodigo]= 60461 then 160230 else (if [clcodigo]= 60306 then 160228 else (if [clcodigo]= 60449 then 160226 else (if [clcodigo]= 60292 then 160227 else (if [clcodigo]= 60433 then 160231 else (if [clcodigo]= 60388 then 160236 else [clcodigo])))))))))) else [clcodigo]),
+				    #"Tipo cambiado3" = Table.TransformColumnTypes(#"Personalizada agregada2",{{"ClienMiooo", Int64.Type}}),
+				    #"Personalizada agregada3" = Table.AddColumn(#"Tipo cambiado3", "SupCentrooo", each if [ClienMiooo]=160228 or [ClienMiooo]=160230 or[ClienMiooo]=160227 or[ClienMiooo]=160231 or[ClienMiooo]=160236 or[ClienMiooo]=160226 or[ClienMiooo]=160224 or[ClienMiooo]=160225 or[ClienMiooo]=160242 then 16 else [epicentro]),
+				    #"Tipo cambiado4" = Table.TransformColumnTypes(#"Personalizada agregada3",{{"SupCentrooo", Int64.Type}})
+				in
+				    #"Tipo cambiado4"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

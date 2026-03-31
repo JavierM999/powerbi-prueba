@@ -1,0 +1,60 @@
+table MCANCentros
+	lineageTag: 07a9bd81-fcc7-48c8-a9b8-9e018dccd40c
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 36ed1c99-9d89-41a9-b49a-1d354df445c2
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sucursal
+		dataType: int64
+		formatString: 0
+		lineageTag: 4771c58a-0897-4d66-acfa-e86ae3dbf67d
+		summarizeBy: sum
+		sourceColumn: Sucursal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Texto
+		dataType: string
+		lineageTag: cfb9923d-f06c-4297-8242-d627fb6b5171
+		summarizeBy: none
+		sourceColumn: Texto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre
+		dataType: string
+		lineageTag: 0b0e8c34-8c75-4167-b3ca-cb2e39b283c2
+		summarizeBy: none
+		sourceColumn: Nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Delegado
+		dataType: string
+		lineageTag: 339244af-71de-4901-a69a-6fadc341a122
+		summarizeBy: none
+		sourceColumn: Delegado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MCANCentros-053cef28-6bec-403f-b097-75f117c20834 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\10.10.138.5\Excels PBIs\MCA Oficinas.xlsx"), null, true),
+				    #"Columna duplicada" = Source{[Item="Hoja1",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"Columna duplicada", [PromoteAllScalars=true]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"Id", Int64.Type}, {"Sucursal", Int64.Type}, {"Texto", type text}, {"Nombre", type text}, {"Delegado", type text}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

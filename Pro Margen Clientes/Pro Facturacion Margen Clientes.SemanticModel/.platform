@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Pro Facturacion Margen Clientes"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "740b80d1-9435-49b1-9797-6b3c945a0a6d"
+  }
+}

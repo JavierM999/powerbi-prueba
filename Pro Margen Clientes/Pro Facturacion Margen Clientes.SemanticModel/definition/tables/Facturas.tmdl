@@ -1,0 +1,167 @@
+table Facturas
+	lineageTag: 7d927752-aa61-43c3-a59c-1e52a29bdee8
+
+	measure TotFra = CALCULATE(SUM(Facturas[fcbruto]),FILTER(Facturas,Facturas[fcfecha]>=[fecini]),FILTER(Facturas,Facturas[fcfecha]<=[fecfin]))
+		lineageTag: ae6f19c5-fbf3-4fe2-9177-38d840a36d1b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Abonos = CALCULATE([TotFra],FILTER(Facturas,Facturas[fcbruto]<0))
+		lineageTag: 3ad6a2eb-197b-4278-b3a2-ee0d5ddbb291
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Fra.Año Act' = CALCULATE([TotFraf],FILTER(Facturas,Facturas[fcfecha]>=[fecini]),FILTER(Facturas,Facturas[fcfecha]<=[fecfin]))
+		lineageTag: a6796435-3e1b-4625-abd1-b9528823b44a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotFraf = SUM(Facturas[fcbruto])
+		lineageTag: e421ca23-3ac3-46b8-9cab-99d52fa1a621
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Clientes Nuevos' = ```
+			
+			IF(NOT(MIN(Calendario[Date]) > CALCULATE(MAX(Facturas[fcfecha]), ALL(Facturas))),
+			    VAR primeraFecha = FIRSTDATE(Calendario[Date])
+			    VAR tabla = FILTER(
+			                        ALL(Calendario),
+			                        Calendario[Date] >= DATEADD(primeraFecha, -5, YEAR) && Calendario[Date] <= MAX(Calendario[Date]) 
+			                    )
+			    RETURN
+			    COUNTROWS(
+			        FILTER(
+			            ADDCOLUMNS(
+			                CALCULATETABLE(
+			                    VALUES(Facturas[FaCenCli]),
+			                    tabla
+			                ),
+			                "FechaPrimFactura", CALCULATE(MIN(Facturas[fcfecha]), tabla)
+			            ),
+			            [FechaPrimFactura] >= primeraFecha
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: c2e3c11c-5c68-426f-a492-b8a23d282280
+
+	column fccentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 750c89c5-8ac0-4139-bcbe-78c55182773f
+		summarizeBy: sum
+		sourceColumn: fccentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcdocum
+		dataType: int64
+		formatString: 0
+		lineageTag: 965a4184-142a-466a-a83c-451505678428
+		summarizeBy: sum
+		sourceColumn: fcdocum
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c4b362af-9d41-485d-8f8f-23e17148dad7
+		summarizeBy: none
+		sourceColumn: fcfecha
+
+		variation Variación
+			isDefault
+			relationship: b0554f1b-95dd-42b7-97e4-17ae18dbbb36
+			defaultHierarchy: LocalDateTable_a55274b3-16bb-47c6-ab9e-be44d9e22044.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fccliente
+		dataType: int64
+		formatString: 0
+		lineageTag: c353f49b-42f7-4bba-afaa-ccb1ff5e93b1
+		summarizeBy: sum
+		sourceColumn: fccliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column fccencli
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e5b8b01-0a26-41e2-bef3-ce67a70116dc
+		summarizeBy: sum
+		sourceColumn: fccencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcvendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: e2734113-3bc2-4614-8f98-713e12782ed6
+		summarizeBy: sum
+		sourceColumn: fcvendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcbruto
+		dataType: double
+		lineageTag: b53dcbda-9acb-4b2f-9b2a-f1c93ff52578
+		summarizeBy: sum
+		sourceColumn: fcbruto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FaCenCli = FORMAT(Facturas[fccentro],"00")&FORMAT(Facturas[fccliente],"000000")
+		lineageTag: 051d8723-ad5b-4c61-8040-ea254d2bfcd5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: 316dafd3-dacd-497d-9a7c-51964fa9e2fb
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcserie
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b02deb1-f6f9-4568-8e32-087711d7e69e
+		summarizeBy: sum
+		sourceColumn: fcserie
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcano
+		dataType: int64
+		formatString: 0
+		lineageTag: a96871ef-43dd-410c-a484-472b45ae5929
+		summarizeBy: sum
+		sourceColumn: fcano
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Facturas-c01737f6-a4a1-4606-bc78-dcc2b8045978 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select fccentro,fcserie,fcano,fcdocum,fcfecha,fccliente,fccencli,fcvendedor,clientes.clcifdni,fcbruto #(lf)from facturas inner join#(lf)#(tab)clientes on facturas.fcempresa=clientes.clempresa and facturas.fccentro=clientes.clcentro and facturas.fccliente=clientes.clcodigo#(lf)where fcempresa=1#(lf)and fcano>=2021"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"fccentro", Int64.Type}, {"fcfecha", type date}, {"fccencli", Int64.Type}, {"fcserie", Int64.Type}, {"fcano", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_QueryRelationships = {"columnCount":8,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Facturas/Tipo cambiado.{fccentro,0}","Section1/Facturas/Origen.{fcdocum,1}","Section1/Facturas/Tipo cambiado.{fcfecha,2}","Section1/Facturas/Origen.{fccliente,3}","Section1/Facturas/Tipo cambiado.{fccencli,4}","Section1/Facturas/Origen.{fcvendedor,5}","Section1/Facturas/Origen.{clcifdni,6}","Section1/Facturas/Origen.{fcbruto,7}"],"ColumnCount":8,"KeyColumnNames":[],"ColumnIdentities":["Section1/Facturas/Tipo cambiado.{fccentro,0}","Section1/Facturas/Origen.{fcdocum,1}","Section1/Facturas/Tipo cambiado.{fcfecha,2}","Section1/Facturas/Origen.{fccliente,3}","Section1/Facturas/Tipo cambiado.{fccencli,4}","Section1/Facturas/Origen.{fcvendedor,5}","Section1/Facturas/Origen.{clcifdni,6}","Section1/Facturas/Origen.{fcbruto,7}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

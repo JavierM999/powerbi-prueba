@@ -1,0 +1,7 @@
+role Paqui
+	modelPermission: read
+
+	tablePermission MCANCentros = [Sucursal] == 1 || [Sucursal] == 3 || [Sucursal] == 33 || [Sucursal] == 15 || [Sucursal] == 9 || [Sucursal] == 12 || [Sucursal] == 45
+
+	annotation PBI_Id = 564173db4237499ea1a21a247b2f44d2
+

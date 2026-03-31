@@ -1,0 +1,218 @@
+table RRMMQUIRON25
+	lineageTag: a5564143-588f-4fc2-b674-5d1f7586c143
+
+	measure TFraRRMM5 = SUM(RRMMQUIRON25[TotFra5])
+		lineageTag: b1c01e80-378a-4468-bd55-39dc6f42c86a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Del
+		dataType: int64
+		formatString: 0
+		lineageTag: aa4f91cb-abc3-4a9f-8a6b-766bede8e557
+		summarizeBy: sum
+		sourceColumn: Del
+
+		annotation SummarizationSetBy = Automatic
+
+	column DNI/NIE
+		dataType: string
+		lineageTag: 85448a8c-6005-4836-9a8a-7d380a738179
+		summarizeBy: none
+		sourceColumn: DNI/NIE
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre
+		dataType: string
+		lineageTag: 07b44b3f-440a-4be3-a3db-5e576440660b
+		summarizeBy: none
+		sourceColumn: Nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column CentrodeTrabajo
+		dataType: string
+		lineageTag: 7b480b96-c4f5-45cf-a5d8-a4cc14f5e71e
+		summarizeBy: none
+		sourceColumn: CentrodeTrabajo
+
+		annotation SummarizationSetBy = Automatic
+
+	column PuestodeTrabajo
+		dataType: string
+		lineageTag: 5e1e070d-cdef-453e-8731-2147ac647a8b
+		summarizeBy: none
+		sourceColumn: PuestodeTrabajo
+
+		annotation SummarizationSetBy = Automatic
+
+	column FechaReconocimiento
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fe1e61bd-321f-44f7-8fb8-c7a3061b7bc5
+		summarizeBy: none
+		sourceColumn: FechaReconocimiento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Vigencia(meses)
+		dataType: int64
+		formatString: 0
+		lineageTag: 218d2458-eceb-4678-9505-305b8f439153
+		summarizeBy: sum
+		sourceColumn: Vigencia(meses)
+
+		annotation SummarizationSetBy = Automatic
+
+	column GradoAptitud
+		dataType: string
+		lineageTag: 734efd2c-ff83-4f6b-868f-ab91dbab0c49
+		summarizeBy: none
+		sourceColumn: GradoAptitud
+
+		annotation SummarizationSetBy = Automatic
+
+	column Importe
+		dataType: double
+		lineageTag: 3b4fcf64-cf90-4900-b50d-6d69801b98c0
+		summarizeBy: sum
+		sourceColumn: Importe
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Factura
+		dataType: int64
+		formatString: 0
+		lineageTag: f6c19303-df4c-48ff-b1cd-52ac3e81ffcf
+		summarizeBy: sum
+		sourceColumn: Factura
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImporteAnaliticas
+		dataType: double
+		lineageTag: f338e4ca-646c-4821-861e-7aa6f32e5657
+		summarizeBy: sum
+		sourceColumn: ImporteAnaliticas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Factura_1
+		dataType: int64
+		formatString: 0
+		lineageTag: c8ff8bb2-5be2-468b-906f-3f4a04fbb4ca
+		summarizeBy: sum
+		sourceColumn: Factura_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 626aa020-6cd8-47d9-a9a2-76c00d00e3ba
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: a59967db-2c11-42ab-b395-b7b322844406
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinContra
+		dataType: double
+		lineageTag: d14edc72-2d44-4108-a861-8daa5cfd41ad
+		summarizeBy: sum
+		sourceColumn: MinContra
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column clcifdni
+		dataType: string
+		lineageTag: d21464e9-a049-4089-982e-d0764786d576
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column RMmicentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 69ffb2fa-d86b-4af6-8c9f-5a1529679d6a
+		summarizeBy: sum
+		sourceColumn: RMmicentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 97b87e92-2269-4f47-81ed-60a8ec24b684
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column RevCenCon5 = FORMAT(RRMMQUIRON25[ctcentro],"00")&FORMAT(RRMMQUIRON25[MinContra],"00000000")
+		lineageTag: 69ae11f5-8de2-4a92-8dfc-0f7ec87d4477
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column RRMMCenCli5 = FORMAT(RRMMQUIRON25[RMmicentro],"00")&FORMAT(RRMMQUIRON25[clcodigo],"000000")
+		lineageTag: 8eadb81c-dc0f-4dd0-9108-2df4b8a61b7f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotFra5 = RRMMQUIRON25[Importe]+RRMMQUIRON25[ImporteAnaliticas]
+		formatString: 0.00
+		lineageTag: 8cf9266a-ecbc-4ecb-89db-128b0ab124d9
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RRMMQUIRON25 = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents("\\10.10.138.5\Excels PBIs\CartasS de Aptitud.xlsx"), null, true),
+				    #"RRMM QUIRON 25_Sheet" = Origen{[Item="RRMM QUIRON 25",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"RRMM QUIRON 25_Sheet", [PromoteAllScalars=true]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"Del", Int64.Type}, {"DNI/NIE", type text}, {"Nombre", type text}, {"Contrato", Int64.Type}, {"RazónSocialdelcontrato", type text}, {"CentrodeTrabajo", type text}, {"PuestodeTrabajo", type text}, {"TipodeReconocimiento", type text}, {"FechaReconocimiento", type date}, {"FechaVigencia", type date}, {"Vigencia(meses)", Int64.Type}, {"GradoAptitud", type text}, {"TipoLimitación", type text}, {"Importe", type number}, {"Factura", Int64.Type}, {"ImporteAnaliticas", type number}, {"Factura_1", Int64.Type}}),
+				    #"Otras columnas quitadas" = Table.SelectColumns(#"Tipo cambiado",{"Del", "DNI/NIE", "Nombre", "CentrodeTrabajo", "PuestodeTrabajo", "FechaReconocimiento", "Vigencia(meses)", "GradoAptitud", "Importe", "Factura", "ImporteAnaliticas", "Factura_1"}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Otras columnas quitadas", {"DNI/NIE"}, contratos, {"trnif"}, "contratos", JoinKind.FullOuter),
+				    #"Se expandió contratos" = Table.ExpandTableColumn(#"Consultas combinadas", "contratos", {"ctcentro", "ctcontrato", "ctcliente", "ctfechaini", "ctfechafinreal"}, {"ctcentro", "ctcontrato", "ctcliente", "ctfechaini", "ctfechafinreal"}),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Se expandió contratos",{{"ctfechaini", type date}, {"ctfechafinreal", type date}}),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Tipo cambiado1", "cfecinimia", each Date.AddDays([ctfechaini],-10)),
+				    #"Tipo cambiado3" = Table.TransformColumnTypes(#"Personalizada agregada1",{{"cfecinimia", type date}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado3", each ([FechaReconocimiento] >= [cfecinimia] and ([FechaReconocimiento] <= [ctfechafinreal]or [ctfechafinreal] = null ))),
+				    #"Filas agrupadas" = Table.Group(#"Filas filtradas", {"Del", "DNI/NIE", "Nombre", "CentrodeTrabajo", "PuestodeTrabajo", "FechaReconocimiento", "Vigencia(meses)", "GradoAptitud", "Importe", "Factura", "ImporteAnaliticas", "Factura_1", "ctcentro"}, {{"MinContra", each List.Min([ctcontrato]), type nullable number}, {"ctcliente", each List.Min([ctcliente]), type nullable number}}),
+				    #"Tipo cambiado4" = Table.TransformColumnTypes(#"Filas agrupadas",{{"ctcliente", Int64.Type}}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Tipo cambiado4", {"ctcentro", "ctcliente"}, Clientes, {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes" = Table.ExpandTableColumn(#"Consultas combinadas1", "Clientes", {"clcifdni"}, {"clcifdni"}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Se expandió Clientes", "RMmicentro", each if ((Date.Year([FechaReconocimiento])=2024 and Date.Month([FechaReconocimiento])>2) or Date.Year([FechaReconocimiento])>2024) and[ctcentro]=71 then 22 else [ctcentro]),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Personalizada agregada",{{"RMmicentro", Int64.Type}}),
+				    #"Consultas combinadas2" = Table.NestedJoin(#"Tipo cambiado2", {"RMmicentro", "clcifdni"}, Clientes, {"clcentro", "clcifdni"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes1" = Table.ExpandTableColumn(#"Consultas combinadas2", "Clientes", {"clcodigo"}, {"clcodigo"})
+				in
+				    #"Se expandió Clientes1"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

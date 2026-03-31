@@ -1,0 +1,326 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 991.42994350282447,
+            "y": 74.0483050847456
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1358.2045197740117,
+            "y": 1078.3471751412426
+          },
+          "nodeIndex": "Catego",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 463.87207425343013,
+            "y": 478.39737691686861
+          },
+          "nodeIndex": "Clientes",
+          "nodeLineageTag": "0209bfca-e979-4162-8e1e-2a3dca76ea89",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 549.96158192090343,
+            "y": 942.23361581920881
+          },
+          "nodeIndex": "contratos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1168.013640032284,
+            "y": 474.97154963680384
+          },
+          "nodeIndex": "estadi",
+          "nodeLineageTag": "568dd92e-c9a9-4eda-b237-74d6adde6f14",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 1730.7420500403548,
+            "y": 755.57445520581132
+          },
+          "nodeIndex": "Facturas",
+          "nodeLineageTag": "7d927752-aa61-43c3-a59c-1e52a29bdee8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 249.2175141242933,
+            "y": 1050.6601694915253
+          },
+          "nodeIndex": "GruposEmp",
+          "nodeLineageTag": "e1a19fb1-a9c0-4e36-905e-3cc7505a2399",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1372.5999999999995,
+            "y": 897.18333333333339
+          },
+          "nodeIndex": "TMargen",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1678.401519484748,
+            "y": 404.89761904761889
+          },
+          "nodeIndex": "VKpei",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "MCANCentros",
+          "nodeLineageTag": "07a9bd81-fcc7-48c8-a9b8-9e018dccd40c",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 34.232203389830374,
+            "y": 403.75
+          },
+          "nodeIndex": "Rappels",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1311.5857142857142,
+            "y": 85.178571428571445
+          },
+          "nodeIndex": "Epis",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 2074.6,
+            "y": 3.75
+          },
+          "nodeIndex": "Selecciono EoD",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 681.32514124293778
+          },
+          "nodeIndex": "HistorN01",
+          "nodeLineageTag": "c781ca45-7952-42c3-8920-a2b8dbb26ab8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 2065.7963680387411,
+            "y": 461.563236481033
+          },
+          "nodeIndex": "Ofertas",
+          "nodeLineageTag": "c288514e-f45f-4366-9c6f-7bb233fb100b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 2659.7963680387411,
+            "y": 471.56323648103296
+          },
+          "nodeIndex": "OFlineas",
+          "nodeLineageTag": "14047987-caa8-4df1-9568-43cb803c5827",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 2622.6594027441483,
+            "y": 832.61085552865188
+          },
+          "nodeIndex": "Trabajadores",
+          "nodeLineageTag": "2c09a34f-57d9-4f65-b27b-8e847c8cba27",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 1694.4747312088568,
+            "y": 1072.9918079096046
+          },
+          "nodeIndex": "RRMMQUIRON23",
+          "nodeLineageTag": "58eb4c8a-8656-413f-9163-dff1d72d5be5",
+          "size": {
+            "height": 361.42857142857133,
+            "width": 228.28571428571422
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 469.50952380952367,
+            "y": 0
+          },
+          "nodeIndex": "CNHistorR",
+          "nodeLineageTag": "dd24aa01-a552-41f7-8279-6d6ffc76f59d",
+          "size": {
+            "height": 255.6357142857143,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 796.23086037993721,
+            "y": 409.72804681194515
+          },
+          "nodeIndex": "CnHistor",
+          "nodeLineageTag": "9be963e9-d816-426e-a96c-221b6f8c0e9f",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 2076.2307441224966,
+            "y": 1177.4482849071831
+          },
+          "nodeIndex": "RRMMQUIRON24",
+          "nodeLineageTag": "a86c307a-99d6-4ca7-b7d3-17b8d31dc99b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 2340.4630347054081,
+            "y": 754.5574757869249
+          },
+          "nodeIndex": "RRMM MP",
+          "nodeLineageTag": "8c8f410d-97a0-4986-ac24-ac9c6a5c6341",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 995.46303470540761,
+            "y": 923.72414245359153
+          },
+          "nodeIndex": "RRMM PREVAE",
+          "nodeLineageTag": "80aef20c-3a87-4b52-ae26-63ab01d7c53f",
+          "size": {
+            "height": 421.66666666666674,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 2377.1297013720741,
+            "y": 1102.0574757869247
+          },
+          "nodeIndex": "RRMMQUIRON25",
+          "nodeLineageTag": "a5564143-588f-4fc2-b674-5d1f7586c143",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 23
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 60,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

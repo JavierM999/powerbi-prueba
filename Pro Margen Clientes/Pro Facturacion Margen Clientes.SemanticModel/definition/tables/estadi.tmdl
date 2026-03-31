@@ -1,0 +1,413 @@
+table estadi
+	lineageTag: 568dd92e-c9a9-4eda-b237-74d6adde6f14
+
+	measure Tfra = SUM(estadi[SImpFra])
+		formatString: 0.00
+		lineageTag: 2e7bc2e8-a5f8-4b79-b0f4-1819ccd6ff79
+
+	measure 'Fra.Año Act.NV' = CALCULATE([Tfra],FILTER(estadi,estadi[esfecha]>=[fecini]),FILTER(estadi,estadi[esfecha]<=[fecfin]))
+		formatString: #,0.00
+		lineageTag: 6d925f0a-3d29-49b9-af6e-174d2fd8632e
+
+	measure 'Fra.Año Ant.' = CALCULATE([Tfra],FILTER(estadi,estadi[esfecha]>=[feciniaa]),FILTER(estadi,estadi[esfecha]<=[fecfinaa]))
+		formatString: #,0.00
+		lineageTag: debdefc3-db2c-4edd-9575-a904d49b541b
+
+	measure 'Variación €' = IF(HASONEVALUE(Calendario[Año]),[Fra.Año Act.NV]-[Fra.Año Ant.],BLANK())
+		formatString: #,0.00
+		lineageTag: 764cc9c6-7b24-4ba3-b1f1-30e2b0eed074
+
+	measure 'VariacionMR %' = IF(HASONEVALUE(Calendario[Año]),IF([Fra.AñoMR]>0,if([Fra.AAntMR]>0,([Fra.AñoMR]-[Fra.AAntMR])/[Fra.AAntMR],1),blank()),BLANK())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 750f681e-d91a-4c09-95af-1da5dd32dc7b
+
+	measure esSumCosSalP = CALCULATE(SUM(estadi[SCosSal])+SUM(estadi[SIndem]),FILTER(estadi,estadi[esfecha]>=[fecini]),FILTER(estadi,estadi[esfecha]<=[fecfin]))
+		formatString: 0.00
+		lineageTag: d23848e1-ddfb-4eb6-928c-f19f1e430f0c
+
+	measure esSumCosSSP = CALCULATE(SUM(estadi[SCosSs]),FILTER(estadi,estadi[esfecha]>=[fecini]),FILTER(estadi,estadi[esfecha]<=[fecfin]))
+		formatString: 0.00
+		lineageTag: d2ef220f-0671-4804-b537-b2d4f87fee01
+
+	measure 'Margen €' = [Fra.Año Act.NV]-([esSumCosSalP]+[esSumCosSSP])
+		formatString: #,0.00
+		lineageTag: e4ff8fc5-e5d6-4389-a9c2-6707c68f41ea
+
+	measure 'Margen %' = IF([Fra.Año Act.NV]>0,1-(([esSumCosSalP]+[esSumCosSSP])/[Fra.Año Act.NV]),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 80835021-04df-4571-968e-4280edcc5a15
+
+	measure 'Clientes Act.' = CALCULATE(DISTINCTCOUNT(estadi[escliente]),FILTER(estadi,estadi[esfecha]>=[fecini]),FILTER(estadi,estadi[esfecha]<=[fecfin]))
+		formatString: #,0
+		lineageTag: 99598f99-bfee-46d6-8b49-37ad4fdcc435
+
+	measure TCoef = SUM(estadi[SCosSal])
+		formatString: 0.00
+		lineageTag: beced530-3418-4141-b198-1788f65c0525
+
+	measure CostoSalario = CALCULATE([TCoef],FILTER(estadi,estadi[esfecha]>=[fecini]),FILTER(estadi,estadi[esfecha]<=[fecfin]))
+		formatString: #,0.00
+		lineageTag: 7b9f4be3-1b45-408e-b00d-997a4b04a37b
+
+	measure Coeficiente = [Fra.Año Act.NV]/[CostoSalario]
+		formatString: 0.0000
+		lineageTag: 12a15b59-48dd-45b7-8b4a-7cf6cb9c2992
+
+	measure esSumCosSalPaa = CALCULATE(SUM(estadi[SCosSal]) + SUM(estadi[SIndem]) ,FILTER(estadi,estadi[esfecha]>=[feciniaa]),FILTER(estadi,estadi[esfecha]<=[fecfinaa]))
+		formatString: 0.00
+		lineageTag: 12d2c32e-1c3b-4cb0-ab6d-cf465f2785b1
+
+	measure esSumCosSSPaa = CALCULATE(SUM(estadi[SCosSs]),FILTER(estadi,estadi[esfecha]>=[feciniaa]),FILTER(estadi,estadi[esfecha]<=[fecfinaa]))
+		formatString: 0.00
+		lineageTag: 070da7e6-755b-43be-9351-74758b9e2c78
+
+	measure 'Margenaa %' = IF([Fra.Año Ant.]>0,1-(([esSumCosSalPaa]+[esSumCosSSPaa])/[Fra.Año Ant.]),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: b780828c-8f1e-4233-9dd4-9714bca34552
+
+	measure 'MargenAA €' = [Fra.Año Ant.]-([esSumCosSalPaa]+[esSumCosSSPaa])
+		formatString: #,0.00
+		lineageTag: 82cdcdec-9532-47dd-9d83-084a0e922a7b
+
+	measure CostoSalarioAA = CALCULATE([TCoef],FILTER(estadi,estadi[esfecha]>=[feciniaa]),FILTER(estadi,estadi[esfecha]<=[fecfinaa]))
+		formatString: 0.00
+		lineageTag: b4628c10-b43d-45c5-81b7-9c17c5de6972
+
+	measure CoeficienteAA = [Fra.Año Ant.]/[CostoSalarioAA]
+		formatString: 0.0000
+		lineageTag: 582dcde7-fa8c-4a36-b4e9-b5de07c88d6d
+
+	measure 'Clientes Act.AA' = CALCULATE(DISTINCTCOUNT(estadi[escliente]),FILTER(estadi,estadi[esfecha]>=[feciniaa]),FILTER(estadi,estadi[esfecha]<=[fecfinaa]))
+		formatString: 0
+		lineageTag: c1f6e262-e5eb-4bf8-974e-495a652e9961
+
+	measure AllFraAñoAct = CALCULATE([Fra.Año Act.NV],ALL(MCANCentros[Sucursal]),ALL(MCANCentros[Texto]),ALL(MCANCentros[Id]))
+		formatString: #,0.00
+		lineageTag: 1d54d517-09aa-4057-88ab-7cbc71bca3fb
+
+	measure '%Fact.A' = ([Fra.Año Act.NV]/[AllFraAñoAct])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: c95638cb-15e0-49c0-a89a-2e070ab58c69
+
+	measure 'Fra Mes Ant' = CALCULATE([Tfra],FILTER(estadi,estadi[esfecha]>=[fecinima]),FILTER(estadi,estadi[esfecha]<=[fecfinma]))
+		formatString: #,0.00
+		lineageTag: da735d7b-d1d2-4759-b395-79728af1ed94
+
+	measure '% Dif.Mes Ant' = ([Fra.Año Act.NV]-[Fra Mes Ant])/[Fra.Año Act.NV]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 026bcebe-2240-41ae-8856-17b0025a47d3
+
+	measure 'Fra.Año Ant.Cli' = IF([Fra.Año Act.NV]>0,CALCULATE([Tfra],FILTER(estadi,estadi[esfecha]>=[feciniaa]),FILTER(estadi,estadi[esfecha]<=[fecfinaa])),BLANK())
+		lineageTag: 33fca848-fbdc-4148-a56a-fc6dcf9cfb59
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Variación € Cli' = IF([Fra.Año Act.NV]>0,[Fra.Año Act.NV]-[Fra.Año Ant.],BLANK())
+		lineageTag: f4b76c70-4d15-4a6e-8923-ed54a9ac0b27
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MargenAA € Cli' = IF([Fra.Año Act.NV]>0,[Fra.Año Ant.Cli]-([esSumCosSalPaa]+[esSumCosSSPaa]),BLANK())
+		formatString: 0.00
+		lineageTag: aaeb763a-8e8f-489a-aa98-b352f4d740a1
+
+	measure 'Margenaa % Cli' = IF([Fra.Año Act.NV]>0,IF([Fra.Año Ant.Cli]>0,1-(([esSumCosSalPaa]+[esSumCosSSPaa])/[Fra.Año Ant.Cli]),blank()),BLANK())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 0aa36a57-8475-4e3c-bf7a-0b94e49533c0
+
+	measure 'Coste NExternos' = ```
+			[esSumCosSalP]+[esSumCosSSP] 
+			```
+		formatString: #,0.00
+		lineageTag: ba83c624-1965-409e-b531-446cf6cf8475
+
+	measure 'Obj.Margen Bruto' = 0.09
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		lineageTag: 09664f4c-3645-47ad-83f9-691f3768c513
+
+	measure FraACentro = CALCULATE([Fra.Año Act.NV],ALL(Clientes[clcodigo]),ALL(Clientes[clnombre]))
+		lineageTag: 3c2949ad-6cde-4222-bf6f-9224c0b6573e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure CostesSal = [esSumCosSalP] + [esSumCosSSP]
+		formatString: #,0.00
+		lineageTag: 72e544ba-43f1-4033-815a-1e9c5649e48c
+
+	measure 'Fra.AñoMR' = CALCULATE([Fra.Año Act.NV]-[TotRapp]+Rappels[RapNYear])
+		formatString: #,0.00
+		lineageTag: 5d93d969-0630-4b1b-81d7-f8fb03cc2e3f
+
+	measure 'MargenMR €' = [Fra.AñoMR]-([esSumCosSalP]+[esSumCosSSP])
+		lineageTag: daf76153-dc6b-4d30-b24f-5fc23055c102
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MargenMR %' = IF([Fra.AñoMR]>0,1-(([esSumCosSalP]+[esSumCosSSP])/[Fra.AñoMR]),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: ac1670d7-f2b3-4dbb-b70a-145b029803c5
+
+	measure 'Fra.Año DEF' = [Fra.Año Act.NV]-[TotRapp]+Rappels[RapNYear]
+		lineageTag: 0f72176f-4b04-4fe8-8aa2-743c63a4c146
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Fra.AAntMR' = CALCULATE([Fra.AñoMR],SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: e5bc98bb-5756-4900-b2a1-05daa9176577
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Mar1 = [CN3 Margen1 %]*100
+		formatString: 0.00
+		lineageTag: 412666f4-cc19-4017-8154-dfbd6dc8a6d9
+
+	measure 'Margen1 MA' = CALCULATE([MargenMR %],DATEADD(Calendario[Date],-1 ,MONTH))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: eb958f86-45c0-4932-8202-f3ffb82c3079
+
+	measure Mar2 = [CN3 Margen2 %]*100
+		lineageTag: f718e882-d947-4864-bf97-840f0da7240f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Mar3 = [CN3 Margen3 %]*100
+		lineageTag: 5c29cd00-b090-441c-a854-f4c9a5e05a3a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Fra.MAntMR' = CALCULATE([Fra.AñoMR],DATEADD(Calendario[Date],-1,MONTH))
+		lineageTag: e299ef1a-03a8-41d0-bee1-c14ac7b3e073
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Mar4 = [CN3 Margen4 %]*100
+		lineageTag: ef6bc420-d747-44eb-aafd-dafac6d735f8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Max CoefHN' = MAX(estadi[Moflcoefhora])
+		formatString: 0.000
+		lineageTag: 7108563e-66a3-48cf-b07d-9bfeddd2f23d
+
+		changedProperty = FormatString
+
+	measure 'Margen CN3 €' = [TotFraCN3]-([esSumCosSalP]+[esSumCosSSP]+Epis[Epis]+[TFraRRMM])
+		formatString: #,0.00
+		lineageTag: 45b9ef53-320f-48b3-b84a-5c3c902720a5
+
+	measure esSumCosSalPMA = CALCULATE(SUM(estadi[SCosSal]) + SUM(estadi[SIndem]) ,FILTER(estadi,estadi[esfecha]>=[fecinima]),FILTER(estadi,estadi[esfecha]<=[fecfinma]))
+		lineageTag: 00d5efd1-ad3b-4849-9817-cca1ef24cff8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure esSumCosSSPMA = CALCULATE(SUM(estadi[SCosSs]),FILTER(estadi,estadi[esfecha]>=[fecinima]),FILTER(estadi,estadi[esfecha]<=[fecfinma]))
+		lineageTag: 0867b528-2b50-42a9-8cea-02979b8de86d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column escentro
+		dataType: int64
+		lineageTag: 776eb0ba-aac7-4a49-be67-f1c530b73aa6
+		summarizeBy: sum
+		sourceColumn: escentro
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column escliente
+		dataType: int64
+		lineageTag: f0e88433-8024-4bd2-a430-ab96449cc443
+		summarizeBy: sum
+		sourceColumn: escliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column esanyo
+		dataType: int64
+		lineageTag: 326a2d30-5506-418f-88a4-8d2d9f9d65b8
+		summarizeBy: sum
+		sourceColumn: esanyo
+
+		annotation SummarizationSetBy = Automatic
+
+	column esmes
+		dataType: int64
+		lineageTag: 349cdafe-270c-4085-8c84-017efad64329
+		summarizeBy: sum
+		sourceColumn: esmes
+
+		annotation SummarizationSetBy = Automatic
+
+	column esfecha
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9485ae54-eedf-442a-b0bd-1073e635f357
+		dataCategory: Date
+		summarizeBy: none
+		sourceColumn: esfecha
+
+		variation Variación
+			isDefault
+			relationship: ce3c1381-a7d8-4cab-a16e-1383509bc2d4
+			defaultHierarchy: LocalDateTable_0d2b1942-11b2-4640-97c1-3f874657e0e8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SImpFra
+		dataType: double
+		lineageTag: 07b46168-929c-4cbb-b3b8-61ee3cc8c103
+		summarizeBy: sum
+		sourceColumn: SImpFra
+
+		annotation SummarizationSetBy = Automatic
+
+	column SCosSal
+		dataType: double
+		lineageTag: 7341d237-6ee7-4700-ae3c-ae230e27be32
+		summarizeBy: sum
+		sourceColumn: SCosSal
+
+		annotation SummarizationSetBy = Automatic
+
+	column SCosSs
+		dataType: double
+		lineageTag: d70c18db-b7bd-4902-a524-4c5adb67ea2d
+		summarizeBy: sum
+		sourceColumn: SCosSs
+
+		annotation SummarizationSetBy = Automatic
+
+	column EsCenCli = FORMAT(estadi[SupeCentroo],"00")&FORMAT(estadi[ClientMioo],"000000")
+		lineageTag: 044b06ab-2262-44cb-b6d8-4b37ff01e1b9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SIndem
+		dataType: double
+		lineageTag: 6bf0beaf-6415-4c1f-bf22-3061d4e513b8
+		summarizeBy: sum
+		sourceColumn: SIndem
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column escontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: 59644f67-2127-4055-a9ca-66db95a73782
+		summarizeBy: sum
+		sourceColumn: escontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column EstCenCon = FORMAT(estadi[escentro],"00")&FORMAT(estadi[escontrato],"00000000")
+		lineageTag: e45d87fd-f401-4909-9579-85951e1552d3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cctcatesalario
+		dataType: int64
+		formatString: 0
+		lineageTag: 00757bfa-dfc0-4791-948c-5c0ee235ada9
+		summarizeBy: sum
+		sourceColumn: Cctcatesalario
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: ea56c8e0-cef7-44bf-b842-185fcf8815f7
+		summarizeBy: sum
+		sourceColumn: Cctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: a3f0faef-af58-4317-81f9-a4411c89a4ec
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 8cb86fa9-0f02-4059-b533-84e8787b84d6
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column esmicentro
+		dataType: int64
+		formatString: 0
+		lineageTag: eef1717d-4d28-4db1-904c-7f3dfbbd2968
+		summarizeBy: sum
+		sourceColumn: esmicentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientMioo
+		dataType: int64
+		formatString: 0
+		lineageTag: 6fc5cb5a-d811-48ff-9929-6a01baeb31e1
+		summarizeBy: sum
+		sourceColumn: ClientMioo
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupeCentroo
+		dataType: int64
+		formatString: 0
+		lineageTag: 2940c089-eccd-485d-b72f-9792dab11d75
+		summarizeBy: sum
+		sourceColumn: SupeCentroo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition estadi = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001"),
+				    dbo_estadi = Source{[Schema="dbo",Item="estadi"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_estadi, each [esempresa] = 1),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each [escentro] >= 1 and [escentro] <= 87),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows1",{"escentro", "escliente", "escontrato", "esanyo", "esmes", "esimportefac", "escostosalario", "escostoss", "esindemniz"}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Removed Other Columns", each [esanyo] >= 2023),
+				    #"Added Custom" = Table.AddColumn(#"Filtered Rows2", "esfecha", each Date.FromText("01/"&Number.ToText([esmes])&"/"&Number.ToText([esanyo]))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"esfecha", type date}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Changed Type",{"escentro", "escliente", "esanyo", "esmes", "esfecha", "esimportefac", "escostosalario", "escostoss"}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Reordered Columns", {"escentro", "escontrato"}, contratos, {"ctcentro", "ctcontrato"}, "contratos", JoinKind.LeftOuter),
+				    #"Se expandió contratos" = Table.ExpandTableColumn(#"Consultas combinadas", "contratos", {"ctcencli", "ctcatesalario"}, {"contratos.ctcencli", "contratos.ctcatesalario"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Se expandió contratos",{{"contratos.ctcatesalario", "Cctcatesalario"}, {"contratos.ctcencli", "Cctcencli"}}),
+				    #"Grouped Rows" = Table.Group(#"Columnas con nombre cambiado", {"escentro", "escliente", "esanyo", "esmes", "esfecha", "escontrato", "Cctcatesalario", "Cctcencli"}, {{"SImpFra", each List.Sum([esimportefac]), type nullable number}, {"SCosSal", each List.Sum([escostosalario]), type nullable number}, {"SCosSs", each List.Sum([escostoss]), type nullable number}, {"SIndem", each List.Sum([esindemniz]), type nullable number}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Grouped Rows",{{"esanyo", Int64.Type}, {"esmes", Int64.Type}, {"escentro", Int64.Type}}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Tipo cambiado", {"escentro", "escliente"}, Clientes, {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes" = Table.ExpandTableColumn(#"Consultas combinadas1", "Clientes", {"clcifdni"}, {"clcifdni"}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Se expandió Clientes", "esmicentro", each if (([esanyo]=2024 and [esmes]>2) or [esanyo]>2024) and [escentro]=71 then 22 else [escentro]),
+				    #"Consultas combinadas2" = Table.NestedJoin(#"Personalizada agregada", {"esmicentro", "clcifdni"}, Clientes, {"clcentro", "clcifdni"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes1" = Table.ExpandTableColumn(#"Consultas combinadas2", "Clientes", {"clcodigo"}, {"clcodigo"}),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Se expandió Clientes1",{{"esmicentro", Int64.Type}}),
+				    #"Duplicados quitados" = Table.Distinct(#"Tipo cambiado1", {"escentro", "escliente", "esanyo", "esmes", "esfecha", "escontrato", "Cctcatesalario", "Cctcencli", "SImpFra", "SCosSal", "SCosSs", "SIndem", "clcifdni", "esmicentro"}),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Duplicados quitados", "ClientMioo", each if[esanyo]=2024 then (if [clcodigo]= 60492 then 160242 else (if [clcodigo]= 60378 then 160225 else (if [clcodigo]= 60280 then 160224 else (if [clcodigo]= 60422 then 160230 else (if [clcodigo]= 60461 then 160230 else (if [clcodigo]= 60306 then 160228 else (if [clcodigo]= 60449 then 160226 else (if [clcodigo]= 60292 then 160227 else (if [clcodigo]= 60433 then 160231 else (if [clcodigo]= 60388 then 160236 else [clcodigo])))))))))) else [clcodigo]),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Personalizada agregada1",{{"ClientMioo", Int64.Type}}),
+				    #"Personalizada agregada2" = Table.AddColumn(#"Tipo cambiado2", "SupeCentroo", each if [ClientMioo]=160228 or [ClientMioo]=160230 or[ClientMioo]=160227 or[ClientMioo]=160231 or[ClientMioo]=160236 or[ClientMioo]=160226 or[ClientMioo]=160224 or[ClientMioo]=160225 or[ClientMioo]=160242 then 16 else [esmicentro]),
+				    #"Tipo cambiado3" = Table.TransformColumnTypes(#"Personalizada agregada2",{{"SupeCentroo", Int64.Type}})
+				in
+				    #"Tipo cambiado3"
+
+	annotation PBI_QueryRelationships = {"columnCount":9,"keyColumnNames":["escentro","escliente","esanyo","esmes","esfecha"],"queryRelationships":[],"columnIdentities":["Section1/estadi/Grouped Rows.{escentro,0}","Section1/estadi/Grouped Rows.{escliente,1}","Section1/estadi/Grouped Rows.{esanyo,2}","Section1/estadi/Grouped Rows.{esmes,3}","Section1/estadi/Grouped Rows.{esfecha,4}","Section1/estadi/Grouped Rows.{SImpFra,5}","Section1/estadi/Grouped Rows.{SCosSal,6}","Section1/estadi/Grouped Rows.{SCosSs,7}","Section1/estadi/Grouped Rows.{SIndem,8}"],"ColumnCount":9,"KeyColumnNames":["escentro","escliente","esanyo","esmes","esfecha"],"ColumnIdentities":["Section1/estadi/Grouped Rows.{escentro,0}","Section1/estadi/Grouped Rows.{escliente,1}","Section1/estadi/Grouped Rows.{esanyo,2}","Section1/estadi/Grouped Rows.{esmes,3}","Section1/estadi/Grouped Rows.{esfecha,4}","Section1/estadi/Grouped Rows.{SImpFra,5}","Section1/estadi/Grouped Rows.{SCosSal,6}","Section1/estadi/Grouped Rows.{SCosSs,7}","Section1/estadi/Grouped Rows.{SIndem,8}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

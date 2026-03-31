@@ -1,0 +1,189 @@
+table contratos
+	lineageTag: 56dbfa82-3c8c-4223-bbdb-bedd38da07e3
+
+	measure Asignaciones = CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecini]))
+		formatString: 0
+		lineageTag: f28c91a0-9520-431f-98f7-f13da62e8078
+
+	measure AvWeek = AVERAGEX(VALUES(Calendario[Date]),[Asignaciones])
+		formatString: 0
+		lineageTag: f75fd6b1-aa30-4852-a28f-b2be6396c0a4
+
+	measure FraXAsig = [TotFraCN3]/[AvWeek]
+		formatString: #,0.00
+		lineageTag: c811df0c-e4f9-4a08-8a74-0d492c013c8c
+
+	measure 'AvLastWeek nochuta' = CALCULATE(AVERAGEX(VALUES(Calendario[Date]),[AsignaAnyoMA]))
+		formatString: 0
+		lineageTag: b33aab6d-8a4c-4adb-9858-bf36b8a1219c
+
+	measure AsignaAnyoMA = CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<=[fecfinma]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecinianyo]))
+		formatString: 0
+		lineageTag: dc55f370-26e5-4701-ba83-95ff336d479b
+
+	measure AvAnyoWeek = CALCULATE(AVERAGEX(VALUES(Calendario[Date]),[Asignaciones]),ALL(Calendario[Mes (Número)]))
+		formatString: 0.00
+		lineageTag: e66f913c-4c24-45d3-8b76-a9ee2921e756
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: d6001522-eb75-4b7e-aea7-952b06230f50
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: ac997417-3c23-4e62-bc7a-8a1f8d4e72ee
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 62eda9dc-3f83-4dfd-a75e-66b1e2491391
+		summarizeBy: sum
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c19deb1-bbc6-4834-85f3-b3ac9475307b
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: ff73d309-9e1a-488f-b8f2-997478e92d13
+		summarizeBy: sum
+		sourceColumn: ctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b0ee4d3a-a95f-4ed9-9032-3347c5ee6473
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		variation Variación
+			isDefault
+			relationship: c842fdd2-b57b-44ba-a610-d4049298863e
+			defaultHierarchy: LocalDateTable_0702f593-7c21-4127-a0e3-33dd33b75b67.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 32fce6c8-fc29-4d1e-b6dd-54b78d8830a1
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		variation Variación
+			isDefault
+			relationship: 659525f7-f912-409f-abe0-3c39354e75f6
+			defaultHierarchy: LocalDateTable_a70b479b-b2d2-4a77-b433-1c15951b113c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConCenCli = FORMAT(contratos[ctcentro],"00")&FORMAT(contratos[ctcliente],"000000")
+		lineageTag: de7edf14-5ce0-44f0-81d4-6e5f81aef571
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcatepuesto
+		dataType: int64
+		formatString: 0
+		lineageTag: eb6e6873-bcba-4b5d-bc0f-fec1c356696d
+		summarizeBy: sum
+		sourceColumn: ctcatepuesto
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcatesalario
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f9efee1-1d58-4a60-bd89-3ca339c42f5b
+		summarizeBy: none
+		sourceColumn: ctcatesalario
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConCenCon = FORMAT(contratos[ctcentro],"00")&FORMAT(contratos[ctcontrato],"00000000")
+		lineageTag: a14664b8-8c92-49b8-ac5a-f348122aeda2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Contounido2 = FORMAT(Contratos[ctcentro],"00")&FORMAT(Contratos[ctcontrato],"00000000")&FORMAT(contratos[cttrabajador],"00000000")
+		lineageTag: c4969910-709a-4abd-8a46-940491b4a6ed
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnif
+		dataType: string
+		lineageTag: 6247f3c4-19da-47a5-bd94-118981a64a70
+		summarizeBy: none
+		sourceColumn: trnif
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfecfinrmia = IF(contratos[ctfechafinreal]=BLANK(),TODAY(),contratos[ctfechafinreal])
+		formatString: General Date
+		lineageTag: 882a100b-7275-4b40-9c04-d7d6f4ec68a8
+		summarizeBy: none
+
+		variation Variación
+			isDefault
+			relationship: d60d3db6-7762-4637-aa02-b345db60d90f
+			defaultHierarchy: LocalDateTable_5464f4e1-b0a2-4dc4-b84b-77f803c019a2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column cthorasdia
+		dataType: double
+		lineageTag: 77a94fdf-cb11-4035-a332-f68978e73ab1
+		summarizeBy: sum
+		sourceColumn: cthorasdia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cthorassemana
+		dataType: double
+		lineageTag: 98148d97-af8b-4838-a8ea-2743570b3fa2
+		summarizeBy: sum
+		sourceColumn: cthorassemana
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition contratos-fae9dbf6-6c52-4dc5-9f89-294c0bf13929 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ctcentro,ctcliente,ctcencli,ctcontrato,cttrabajador,ctfechaini,ctfechafinreal,cthorasdia,cthorassemana,ctcatepuesto,ctcatesalario,trnif#(lf)from contra inner join#(lf)#(tab)clientes on contra.ctempresa=clientes.clempresa and contra.ctcentro=clientes.clcentro and contra.ctcliente=clientes.clcodigo inner join#(lf)#(tab)trabajador on contra.ctempresa=trabajador.trempresa and contra.cttrabajador=trabajador.trtrabajador#(lf)where contra.ctempresa=1#(lf)and ((ctfechafinreal is null) or (year(ctfechafinreal)>=2021))#(lf)and clientes.clnombre not like '%fijo%'"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Source,{{"ctcentro", Int64.Type}, {"ctcencli", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

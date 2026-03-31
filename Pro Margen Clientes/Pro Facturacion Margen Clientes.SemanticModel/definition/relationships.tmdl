@@ -1,0 +1,182 @@
+relationship ba84b54a-c01e-4e0f-b426-ab194e4aabdb
+	fromColumn: Clientes.ClUniGruS
+	toColumn: GruposEmp.GEUniGruS
+
+relationship ce3c1381-a7d8-4cab-a16e-1383509bc2d4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: estadi.esfecha
+	toColumn: LocalDateTable_0d2b1942-11b2-4640-97c1-3f874657e0e8.Date
+
+relationship c842fdd2-b57b-44ba-a610-d4049298863e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contratos.ctfechaini
+	toColumn: LocalDateTable_0702f593-7c21-4127-a0e3-33dd33b75b67.Date
+
+relationship 659525f7-f912-409f-abe0-3c39354e75f6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contratos.ctfechafinreal
+	toColumn: LocalDateTable_a70b479b-b2d2-4a77-b433-1c15951b113c.Date
+
+relationship 071fbc7b-f59c-42e5-a4d8-d5cbdf9d9ba7
+	fromColumn: contratos.ConCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship b0554f1b-95dd-42b7-97e4-17ae18dbbb36
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Facturas.fcfecha
+	toColumn: LocalDateTable_a55274b3-16bb-47c6-ab9e-be44d9e22044.Date
+
+relationship 3fb7110b-b1f5-4806-a5e6-96078cb78257
+	fromColumn: Rappels.RPCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 00622659-1cc9-40f5-a3b8-fa294fb69fde
+	fromColumn: contratos.ctcatesalario
+	toColumn: Catego.cacodigo
+
+relationship f7cc4586-f532-49c7-9b81-9a8679243b83
+	fromColumn: estadi.EsCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 78c12cd9-60a0-42ff-a79b-c2deb22767ed
+	isActive: false
+	fromColumn: estadi.Cctcatesalario
+	toColumn: Catego.cacodigo
+
+relationship 7595b32d-0de2-46fa-b3f4-fdb36ea4b7ac
+	fromColumn: Rappels.cpdcatesalario
+	toColumn: Catego.cacodigo
+
+relationship 75b153f0-7f99-4737-93ee-ef49d3ffa818
+	fromColumn: Facturas.FaCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship dedf0562-0d78-4608-9135-7213a03767a2
+	fromColumn: CNHistorR.CNHCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 35c18cfb-e9cf-4847-948d-b34f301bd43a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CNHistorR.hifechamd
+	toColumn: LocalDateTable_42e32745-9348-415e-9089-0df40fb24785.Date
+
+relationship 44746ed9-4399-4d0f-aece-e47f6f265c2b
+	fromColumn: Clientes.MCSucursal
+	toColumn: MCANCentros.Id
+
+relationship 409fa89f-5ff3-403a-b606-90cac10c5bbb
+	fromColumn: Epis.EpiCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 78195c3f-5e8d-4e29-9c54-b4ad36aef1e5
+	isActive: false
+	fromColumn: HistorN01.Ccontratounido2
+	toColumn: contratos.Contounido2
+
+relationship c945a88f-3c4d-4285-b36f-f8ad7bc2ba7b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Ofertas.offechaoferta
+	toColumn: LocalDateTable_34dfd877-e3ba-44b1-a381-98f3f5becb90.Date
+
+relationship f52fd9d0-87aa-4ca9-b03b-7db72aa1ea8a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Ofertas.offechavalidez
+	toColumn: LocalDateTable_1f49e0ec-106f-43a5-b555-df88f09d0977.Date
+
+relationship 8ae6a0df-4a72-4fb7-b461-a85c76cc03d8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OFlineas.offechaoferta
+	toColumn: LocalDateTable_b48a78c4-fde4-4541-8238-2c1e5eb0f545.Date
+
+relationship f3e5f7e1-cdf8-48d1-9e1a-25caaebf6e51
+	fromColumn: OFlineas.IdOfLineas
+	toColumn: Ofertas.IdOferta
+
+relationship da0b8062-b203-4fb5-b241-5cf588a1fcde
+	fromColumn: Ofertas.OfeCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship d60d3db6-7762-4637-aa02-b345db60d90f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contratos.ctfecfinrmia
+	toColumn: LocalDateTable_5464f4e1-b0a2-4dc4-b84b-77f803c019a2.Date
+
+relationship 722035cd-fc60-4bd1-8d47-7f3e2f27582a
+	fromColumn: RRMMQUIRON23.RevCenCon
+	toColumn: contratos.ConCenCon
+
+relationship 676475a1-b417-47ce-866a-8491ffbffe12
+	fromColumn: CnHistor.hiseccion
+	toColumn: MCANCentros.Id
+
+relationship 2348ff73-f9e8-4802-8fb6-c21ce5e34a8b
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: RRMMQUIRON24.RevCenCon4
+	toColumn: contratos.ConCenCon
+
+relationship 5fd1f8eb-d279-4131-a4dd-1f4196e34e80
+	fromColumn: HistorN01.HisCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 47824097-7607-4c01-806b-1e5f5dcd2725
+	fromColumn: RRMMQUIRON24.RRMMCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship ea6e4ec2-0c97-b4ff-2ca9-ec5cbfa3868d
+	fromColumn: 'RRMM MP'.RMMPCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 9a80314c-76e9-44e6-06a7-875d02096c8a
+	fromColumn: 'RRMM PREVAE'.RMPreCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship dfdd2f86-cdca-41ed-9047-75f60f307279
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Date
+	toColumn: LocalDateTable_efacd82c-63fc-41fd-8a22-6a764a0d734f.Date
+
+relationship 370f82d9-07f9-49d1-b13c-ed47ab343ad7
+	fromColumn: Rappels.mvfecha
+	toColumn: Calendario.Date
+
+relationship b5e896b2-0491-4f44-9baf-5f52ec66271f
+	fromColumn: CNHistorR.FecAbCargo
+	toColumn: Calendario.Date
+
+relationship 39031e75-4b95-4642-a621-4aa7241ebb00
+	fromColumn: Epis.mvfecha
+	toColumn: Calendario.Date
+
+relationship f7cad2e4-8836-4d0e-ba5c-db491296fa46
+	fromColumn: HistorN01.FechaH
+	toColumn: Calendario.Date
+
+relationship f8011de7-9b70-4725-95ad-d3e90f10f7e4
+	fromColumn: RRMMQUIRON23.FechaReconocimiento
+	toColumn: Calendario.Date
+
+relationship 3f9de409-6e2f-470c-ad68-3d2c42fa99b1
+	fromColumn: CnHistor.hifechamd
+	toColumn: Calendario.Date
+
+relationship 8b2b9ce7-0810-48a5-a38a-a1f89c693b60
+	fromColumn: RRMMQUIRON24.FechaReconocimiento
+	toColumn: Calendario.Date
+
+relationship aac8d7ec-2a7e-7852-5d4a-ada5c5e35773
+	fromColumn: 'RRMM MP'.Fecha
+	toColumn: Calendario.Date
+
+relationship 95ef0859-ae2b-605a-488a-93c2bd89e16c
+	fromColumn: 'RRMM PREVAE'.FECHA
+	toColumn: Calendario.Date
+
+relationship 165c38ce-d78d-b06c-1962-433a9b0c088f
+	fromColumn: RRMMQUIRON25.FechaReconocimiento
+	toColumn: Calendario.Date
+
+relationship 519c0896-cfbe-0f59-b2ab-3ca5d05fb172
+	fromColumn: RRMMQUIRON25.RRMMCenCli5
+	toColumn: Clientes.ClCenCli
+

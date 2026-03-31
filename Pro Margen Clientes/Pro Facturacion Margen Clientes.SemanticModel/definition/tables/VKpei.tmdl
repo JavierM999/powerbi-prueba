@@ -1,0 +1,147 @@
+table VKpei
+	lineageTag: acbbe7cb-82b7-48e2-a568-eeb00e7aca7d
+
+	measure Vmin = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="min")
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: e28d9bad-b0bb-438d-abea-cbf1ea08049f
+
+	measure Vmax = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="max")
+		formatString: 0
+		lineageTag: 07976143-27bc-4d2b-ba61-bad5b10f07c1
+
+	measure tastart = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="tstart")
+		formatString: 0
+		lineageTag: eff305af-c438-4ed5-a762-3e2e24302805
+
+	measure taend = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="tend")
+		formatString: 0
+		lineageTag: 822c35e7-401e-4071-b365-5e61e2a5fc14
+
+	measure taast = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="astart")
+		formatString: 0
+		lineageTag: b8004221-87c2-45e6-914d-d8083f604860
+
+	measure taaend = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="aend")
+		formatString: 0
+		lineageTag: 0df00375-3ee8-4b1f-b6b0-1a484db2831a
+
+	measure taaend2 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="aend2")
+		formatString: 0
+		lineageTag: b84679d5-f271-4a20-b8f3-f2610173324a
+
+	measure taast2 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="astart2")
+		lineageTag: df441865-f981-48d2-8b5a-8b8f1e5e8988
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure taend2 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="tend2")
+		lineageTag: ed4832c6-cf21-4723-b23a-16f1b688d956
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure tastart2 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="tstart2")
+		lineageTag: ad4112a4-e331-468a-b12e-efde3a6a99db
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Vmax2 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="max2")
+		lineageTag: 54e4f37e-188c-44cc-8c8e-0968f3789b68
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Vmin2 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="min2")
+		lineageTag: 55893093-bf27-4468-8710-4274ba564fce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Vmin3 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="min3")
+		lineageTag: 796e2ea6-2aac-457f-90e2-002c1b3cd618
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure taaend3 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="aend3")
+		lineageTag: 990454ed-db30-4053-85b4-da6afec626e1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure taast3 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="astart3")
+		lineageTag: 56f4a87a-c045-4e01-b4d5-0bb7923a5353
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure taend3 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="tend3")
+		lineageTag: 00e13458-c195-4723-9bb7-e2eeebe316c5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure tastart3 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="tstart3")
+		lineageTag: eeed303a-4a62-497e-96fb-6c3dfecded70
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Vmax3 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="max3")
+		lineageTag: 13f95751-f891-458f-8d0b-6b9759d0c003
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Vmin4 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="min4")
+		formatString: 0
+		lineageTag: c2fec27a-c393-4824-b06c-b8f699d2deca
+
+	measure Vmax4 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="max4")
+		lineageTag: fc3f1e1c-d960-4a44-b28c-aaa9050e71eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure tastart4 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="tstart4")
+		lineageTag: b06cf882-42ac-4287-b223-8e242c1b780d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure taend4 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="tsend4")
+		lineageTag: d35d6aa2-c61e-44f2-a242-50e26ea8d59c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure taast4 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="astart4")
+		lineageTag: 741d9e8b-7e9a-42bd-90d5-b6c12ee93d04
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure taaend4 = CALCULATE(MIN(VKpei[Importe]),VKpei[Nombre]="aend4")
+		lineageTag: 2a601b35-523e-4ee2-a20f-95646bd81678
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Nombre
+		dataType: string
+		lineageTag: 6da3204a-7be2-4604-bf68-5074837daf23
+		summarizeBy: none
+		sourceColumn: Nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Importe
+		dataType: double
+		formatString: 0.0
+		lineageTag: 449b198b-39c4-49d3-a177-ab3a1c7557df
+		summarizeBy: sum
+		sourceColumn: Importe
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VKpei-e4584e15-04b1-4a50-a5aa-2eb5042bc7b4 = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("VZA7EsIwDETv4lpF/AnJXTIpNAMFBSnABcdnZdmWKN9qPx4fR3g9r0AhLuEkAH8F1gb1U/ldwbvi47qbk8exox7VicoEuNE+SgVj7Ky9IhWyap/g6bB278dABq60jYHcXkbb4hZEy90iCz7C02EL3o+FAky2IOj/Rc9DQby0eHL15a9+Bs4f", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Nombre = _t, Importe = _t]),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(Origen,{{"Importe", type number}})
+				in
+				    #"Tipo cambiado1"
+
+	annotation PBI_QueryRelationships = {"columnCount":2,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/VKpei/Origen.{Nombre,0}","Section1/VKpei/Tipo cambiado1.{Importe,1}"],"ColumnCount":2,"KeyColumnNames":[],"ColumnIdentities":["Section1/VKpei/Origen.{Nombre,0}","Section1/VKpei/Tipo cambiado1.{Importe,1}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

@@ -1,0 +1,126 @@
+table Rappels
+	lineageTag: 051e3a55-3d3f-4136-90c9-06f934fab633
+
+	measure RapAAnt = CALCULATE([RapAEnt],PREVIOUSYEAR(Calendario[Date]))
+		lineageTag: 73da30ad-c2ac-4329-8ed3-8989658ff615
+
+	measure RapAEnt = CALCULATE([TotRapp],ALL(Calendario[Mes (Número)]))
+		lineageTag: 45729ae9-5ebe-48c3-8177-c405c9a6406d
+
+	measure RapFfinny = DATEADD(LASTDATE(Calendario[Date]),1,YEAR)
+		formatString: General Date
+		lineageTag: df8143d4-eb5b-4b5b-90ed-828092118c82
+
+	measure RapFininy = DATEADD(FIRSTDATE(Calendario[Date]),1,YEAR)
+		formatString: General Date
+		lineageTag: 03baabbe-7174-47bb-b542-c760030f75f9
+
+	measure RapNYear = CALCULATE(SUM(Rappels[Totfra]), PARALLELPERIOD(Calendario[Date],+12,MONTH))
+		lineageTag: eddb98b0-0112-4ccd-810a-e03008628ce5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotRapp = SUM(Rappels[Totfra])
+		lineageTag: 07d7fea5-70c3-4615-bcf4-e477df06167c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TRapNYear = CALCULATE([TotRapp],DATESBETWEEN(Rappels[mvfecha],DATEADD(FIRSTDATE(Calendario[Date]),+1,YEAR),DATEADD(LASTDATE(Calendario[Date]),+1,YEAR)))
+		lineageTag: 37f70b4b-ebef-4697-9731-a2c2ffab9afa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mvcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 350caa1f-2594-4831-b6c7-0985b5981a61
+		summarizeBy: sum
+		sourceColumn: mvcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: e56be123-ee6b-4245-ab60-e5a129b97ea5
+		summarizeBy: sum
+		sourceColumn: mvcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvcpd
+		dataType: int64
+		formatString: 0
+		lineageTag: f1be90e9-6787-425d-8468-34895d3eab45
+		summarizeBy: sum
+		sourceColumn: mvcpd
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1e5874bf-0c2b-40ea-b6cd-ee809b979eaa
+		summarizeBy: none
+		sourceColumn: mvfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column mvconcepto
+		dataType: int64
+		formatString: 0
+		lineageTag: 6504fc23-abc5-4799-93cc-00315b633959
+		summarizeBy: sum
+		sourceColumn: mvconcepto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Totfra
+		dataType: double
+		lineageTag: 11945131-597b-4488-b3de-f66770d8628b
+		summarizeBy: sum
+		sourceColumn: Totfra
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RPCenCli = FORMAT(Rappels[mvcentro],"00")&FORMAT(Rappels[mvcliente],"000000")
+		lineageTag: 27fc34f2-1d08-4c32-b93f-51d0d27a27cb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: 108d891d-522d-49af-88ff-af73415fd4c0
+		summarizeBy: sum
+		sourceColumn: mvcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column cpdcatesalario
+		dataType: int64
+		formatString: 0
+		lineageTag: 95e5bce6-e615-4aaa-b387-4dd6e06689fb
+		summarizeBy: none
+		sourceColumn: cpdcatesalario
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Rappels-85319eaf-0bc1-4cce-aeb1-7195b9bd26c4 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select mvcentro,mvcliente,mvcencli,mvcpd,cpdcatesalario,mvfecha ,mvconcepto, (mvunidad*mvprecio) as Totfra#(lf)from movtos inner join#(lf)      cpd on mvempresa=cpdempresa and mvcentro=cpdcentro and mvcliente=cpdcliente and mvcpd=cpd.cpdcodigo#(lf)where mvempresa=1#(lf)and year(mvfecha) >= 2023#(lf)and (movtos.mvconcepto=5780 or movtos.mvconcepto=1155)#(lf)order by mvcentro,mvcliente,mvcencli,mvcpd"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"mvcentro", Int64.Type}, {"mvfecha", type date}, {"mvcencli", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

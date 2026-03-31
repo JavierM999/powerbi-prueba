@@ -1,0 +1,93 @@
+table CnHistor
+	lineageTag: 9be963e9-d816-426e-a96c-221b6f8c0e9f
+
+	measure 'Servicos de Selección' = CALCULATE((CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7050010000,CnHistor[hicuenta]<= 7050019999)))
+		formatString: #,0.00
+		lineageTag: ddfdecfb-1513-4de1-bf9d-711efa2ded87
+
+	column hidelegacion
+		dataType: int64
+		formatString: 0
+		lineageTag: 977fa619-98e7-4f05-95cb-e15a7266f30a
+		summarizeBy: sum
+		sourceColumn: hidelegacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiseccion
+		dataType: double
+		lineageTag: 27fcf10f-e73b-425d-828f-2db2322723e6
+		summarizeBy: none
+		sourceColumn: hiseccion
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column hicuenta
+		dataType: int64
+		formatString: 0
+		lineageTag: b3d94195-004b-40b7-8858-aca6f452cc5a
+		summarizeBy: sum
+		sourceColumn: hicuenta
+
+		annotation SummarizationSetBy = Automatic
+
+	column hidocum
+		dataType: string
+		lineageTag: c88c5510-577d-46b2-a2b0-03205c7736a1
+		summarizeBy: none
+		sourceColumn: hidocum
+
+		annotation SummarizationSetBy = Automatic
+
+	column hitipo
+		dataType: string
+		lineageTag: 0f8d26b0-3c0e-4cb5-9fba-c51a8a7499bf
+		summarizeBy: none
+		sourceColumn: hitipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column hifechamd
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 27dceaf2-5c02-4bc3-8f2a-e640f5d12ab3
+		summarizeBy: none
+		sourceColumn: hifechamd
+
+		annotation SummarizationSetBy = Automatic
+
+	column importe
+		dataType: double
+		lineageTag: 383ecf48-c453-427e-ae5b-92705c27f96a
+		summarizeBy: sum
+		sourceColumn: importe
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MiImport = IF([hitipo]="D",[importe]*-1,[importe])
+		lineageTag: 296a4292-5d27-4ee0-b36a-0facb5307e7d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition CnHistor = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "n4db003", [Query=" select hidelegacion,hiseccion,hicuenta,hidocum,hitipo, hifechamd,sum(hiimporte) as importe#(lf)  from cnhistor#(lf)  Where hifechamd>='01/01/2021'#(lf) and hiconcep<> 'Asiento Regularización'#(lf)  group by hidelegacion,hiseccion,hicuenta,hidocum,hitipo, hifechamd"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"hicuenta", Int64.Type}}),
+				    #"Valor reemplazado" = Table.ReplaceValue(#"Tipo cambiado",96,99,Replacer.ReplaceValue,{"hiseccion"}),
+				    #"Valor reemplazado1" = Table.ReplaceValue(#"Valor reemplazado",97,98,Replacer.ReplaceValue,{"hiseccion"})
+				in
+				    #"Valor reemplazado1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

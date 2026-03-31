@@ -1,0 +1,188 @@
+table RRMMQUIRON23
+	excludeFromModelRefresh
+	lineageTag: 58eb4c8a-8656-413f-9163-dff1d72d5be5
+
+	measure TFraRRMM = SUM(RRMMQUIRON23[TotFra])
+		formatString: #,0.00
+		lineageTag: 7ed20902-0474-4fc1-919b-0bcb2b72d6e0
+
+	measure TotRevis = COUNTROWS('RRMMQUIRON23')
+		formatString: #,0
+		lineageTag: d4459644-f348-4c70-bc4b-f9c40ea1ac75
+
+	measure 'TFraRRMM MA' = CALCULATE([TFraRRMM],PARALLELPERIOD ( FIRSTDATE(Calendario[Date]), -1, MONTH ))
+		formatString: #,0.00
+		lineageTag: de0125e8-fd09-40e0-8741-ae9ac20a9f56
+
+	column Del
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c22abee-e594-4455-86bf-3680151fcd9b
+		summarizeBy: sum
+		sourceColumn: Del
+
+		annotation SummarizationSetBy = Automatic
+
+	column DNI/NIE
+		dataType: string
+		lineageTag: 4fbaf8f5-4692-45c7-961a-e877c9a948f8
+		summarizeBy: none
+		sourceColumn: DNI/NIE
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre
+		dataType: string
+		lineageTag: 9866192d-5bab-433e-8ed8-4a881bd0613a
+		summarizeBy: none
+		sourceColumn: Nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column CentrodeTrabajo
+		dataType: string
+		lineageTag: 6017b361-8dd7-4ce9-9799-3f7779fdc2ec
+		summarizeBy: none
+		sourceColumn: CentrodeTrabajo
+
+		annotation SummarizationSetBy = Automatic
+
+	column PuestodeTrabajo
+		dataType: string
+		lineageTag: 7c8579dd-6fab-4362-8987-42f2a1727c90
+		summarizeBy: none
+		sourceColumn: PuestodeTrabajo
+
+		annotation SummarizationSetBy = Automatic
+
+	column FechaReconocimiento
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0c1b0d37-9721-47b6-9581-e3ad163566d2
+		summarizeBy: none
+		sourceColumn: FechaReconocimiento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Vigencia(meses)
+		dataType: int64
+		formatString: 0
+		lineageTag: eb8f1f32-1d4b-41ff-b4c5-ad3060ae7eb6
+		summarizeBy: sum
+		sourceColumn: Vigencia(meses)
+
+		annotation SummarizationSetBy = Automatic
+
+	column GradoAptitud
+		dataType: string
+		lineageTag: 0235bbae-535d-4dd9-8fad-1129f7bae4ac
+		summarizeBy: none
+		sourceColumn: GradoAptitud
+
+		annotation SummarizationSetBy = Automatic
+
+	column Importe
+		dataType: double
+		lineageTag: 56d0a4cb-68bf-465b-a221-62efef2104ef
+		summarizeBy: sum
+		sourceColumn: Importe
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Factura
+		dataType: int64
+		formatString: 0
+		lineageTag: d5c95b5f-7e56-4cf3-8a2d-0da8e59b88ad
+		summarizeBy: sum
+		sourceColumn: Factura
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImporteAnaliticas
+		dataType: double
+		lineageTag: a06e950e-1e4b-4c02-aed6-54b7e4eb9a89
+		summarizeBy: sum
+		sourceColumn: ImporteAnaliticas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Factura_1
+		dataType: int64
+		formatString: 0
+		lineageTag: bd0c3ebd-3b4a-4497-baad-e48f1d9d9913
+		summarizeBy: sum
+		sourceColumn: Factura_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e32af3f-3d4c-4ac4-bd4b-eea12f0d1960
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotFra = RRMMQUIRON23[Importe]+RRMMQUIRON23[ImporteAnaliticas]
+		lineageTag: 64934a09-5a60-4c8d-a261-edda7f2987d4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RevCenCon = FORMAT(RRMMQUIRON23[ctcentro],"00")&FORMAT(RRMMQUIRON23[MinContra],"00000000")
+		lineageTag: 19147bd1-0885-46ff-8862-78c1e1b9bae6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 0d3aeab2-d189-4c1a-8148-a37869ad3442
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinContra
+		dataType: double
+		lineageTag: eae35acd-3989-44b8-8b42-4e9067409f2d
+		summarizeBy: sum
+		sourceColumn: MinContra
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition RRMMQUIRON23 = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents("\\10.10.138.5\Excels PBIs\CartasS de Aptitud.xlsx"), null, true),
+				    #"RRMM QUIRON 23_Sheet" = Origen{[Item="RRMM QUIRON 23",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"RRMM QUIRON 23_Sheet", [PromoteAllScalars=true]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"Del", Int64.Type}, {"DNI/NIE", type text}, {"Nombre", type text}, {"Contrato", Int64.Type}, {"RazónSocialdelcontrato", type text}, {"CentrodeTrabajo", type text}, {"PuestodeTrabajo", type text}, {"TipodeReconocimiento", type text}, {"FechaReconocimiento", type date}, {"FechaVigencia", type date}, {"Vigencia(meses)", Int64.Type}, {"GradoAptitud", type text}, {"TipoLimitación", type text}, {"Importe", type number}, {"Factura", Int64.Type}, {"ImporteAnaliticas", type number}, {"Factura_1", Int64.Type}}),
+				    #"Otras columnas quitadas" = Table.SelectColumns(#"Tipo cambiado",{"Del", "DNI/NIE", "Nombre", "CentrodeTrabajo", "PuestodeTrabajo", "FechaReconocimiento", "Vigencia(meses)", "GradoAptitud", "Importe", "Factura", "ImporteAnaliticas", "Factura_1"}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Otras columnas quitadas", {"DNI/NIE"}, contratos, {"trnif"}, "contratos", JoinKind.FullOuter),
+				    #"Se expandió contratos" = Table.ExpandTableColumn(#"Consultas combinadas", "contratos", {"ctcentro", "ctcontrato", "ctcliente", "ctfechaini", "ctfechafinreal"}, {"ctcentro", "ctcontrato", "ctcliente", "ctfechaini", "ctfechafinreal"}),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Se expandió contratos",{{"ctfechaini", type date}, {"ctfechafinreal", type date}}),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Tipo cambiado1", "cfecinimia", each Date.AddDays([ctfechaini],-10)),
+				    #"Tipo cambiado3" = Table.TransformColumnTypes(#"Personalizada agregada1",{{"cfecinimia", type date}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado3", each ([FechaReconocimiento] >= [cfecinimia] and ([FechaReconocimiento] <= [ctfechafinreal]or [ctfechafinreal] = null ))),
+				    #"Filas agrupadas" = Table.Group(#"Filas filtradas", {"Del", "DNI/NIE", "Nombre", "CentrodeTrabajo", "PuestodeTrabajo", "FechaReconocimiento", "Vigencia(meses)", "GradoAptitud", "Importe", "Factura", "ImporteAnaliticas", "Factura_1", "ctcentro", "ctcliente"}, {{"MinContra", each List.Min([ctcontrato]), type nullable number}})
+				in
+				    #"Filas agrupadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

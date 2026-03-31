@@ -1,0 +1,203 @@
+table OFlineas
+	lineageTag: 14047987-caa8-4df1-9568-43cb803c5827
+
+	column ofcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 92c95ea5-9dd6-4307-bb27-78b118fff378
+		summarizeBy: sum
+		sourceColumn: ofcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c8cda4c-71f6-4878-933a-86dd99543ce8
+		summarizeBy: sum
+		sourceColumn: ofcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column oflcatepuesto
+		dataType: int64
+		formatString: 0
+		lineageTag: 1439375c-0aae-4a6e-a496-8e5e23787460
+		summarizeBy: sum
+		sourceColumn: oflcatepuesto
+
+		annotation SummarizationSetBy = Automatic
+
+	column ofestado
+		dataType: string
+		lineageTag: 4f54bd4e-ece8-4ae3-8814-dae220dd4e04
+		summarizeBy: none
+		sourceColumn: ofestado
+
+		annotation SummarizationSetBy = Automatic
+
+	column offechaoferta
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a10ca2e1-e72a-45bc-ab5d-918d4b93ddec
+		summarizeBy: none
+		sourceColumn: offechaoferta
+
+		variation Variación
+			isDefault
+			relationship: 8ae6a0df-4a72-4fb7-b461-a85c76cc03d8
+			defaultHierarchy: LocalDateTable_b48a78c4-fde4-4541-8238-2c1e5eb0f545.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column oflepigrafe
+		dataType: int64
+		formatString: 0
+		lineageTag: dbceabd8-988b-4f5e-b428-bc82ab46d56a
+		summarizeBy: sum
+		sourceColumn: oflepigrafe
+
+		annotation SummarizationSetBy = Automatic
+
+	column oflporcmargen
+		dataType: double
+		lineageTag: cc43ea75-5de6-4dd8-b42b-73459dd455c7
+		summarizeBy: sum
+		sourceColumn: oflporcmargen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofltarifahora
+		dataType: double
+		lineageTag: b8afa9b0-423e-4864-ad59-597e892eef83
+		summarizeBy: sum
+		sourceColumn: ofltarifahora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofltarifames
+		dataType: double
+		lineageTag: b5f56c2c-128c-4bd4-ae75-1cb325e2909d
+		summarizeBy: sum
+		sourceColumn: ofltarifames
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ofltarifa7dias
+		dataType: double
+		lineageTag: afed39b2-c9e2-48c7-93ce-09c27617d53e
+		summarizeBy: sum
+		sourceColumn: ofltarifa7dias
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflsalariohora
+		dataType: double
+		lineageTag: 71be385d-ea79-4c73-b2f2-f707d0534b89
+		summarizeBy: sum
+		sourceColumn: oflsalariohora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflsalariomes
+		dataType: double
+		lineageTag: 72385c39-e479-4d4d-ab86-9e5dd9ded565
+		summarizeBy: sum
+		sourceColumn: oflsalariomes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflcoefhora
+		dataType: double
+		lineageTag: 98371db4-68ed-498f-9550-7d5a3ccdae1f
+		summarizeBy: sum
+		sourceColumn: oflcoefhora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflcoefhora7dias
+		dataType: double
+		lineageTag: bc457045-e6d5-4584-ab29-75cd19ff6cbb
+		summarizeBy: sum
+		sourceColumn: oflcoefhora7dias
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflcoefmes
+		dataType: double
+		lineageTag: f59b3605-a9bc-4d3d-a457-655ce1e6c769
+		summarizeBy: sum
+		sourceColumn: oflcoefmes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflporcmargenhora
+		dataType: int64
+		formatString: 0
+		lineageTag: ba275f97-76de-409f-aef8-ae64e698924a
+		summarizeBy: sum
+		sourceColumn: oflporcmargenhora
+
+		annotation SummarizationSetBy = Automatic
+
+	column oflporcmargenmes
+		dataType: double
+		lineageTag: 6b0d9867-7d37-42de-8c72-e32e38d1646a
+		summarizeBy: sum
+		sourceColumn: oflporcmargenmes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oflporcmargen7dias
+		dataType: double
+		lineageTag: ff770693-6e4b-47da-9b66-55bd461161d5
+		summarizeBy: sum
+		sourceColumn: oflporcmargen7dias
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IdOfLineas = FORMAT([ofcentro],"00")&FORMAT([ofcodigo],"00000000")
+		lineageTag: 494cd4c6-6dd5-4d7b-a98e-7984279dc4d6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OFlineas = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ofcentro,ofcodigo,oflcatepuesto,ofestado,offechaoferta,oflepigrafe,oflporcmargen,ofltarifahora,ofltarifames,ofltarifa7dias,oflsalariohora,oflsalariomes,oflcoefhora,oflcoefhora7dias,oflcoefmes,oflcatesalario#(lf)#(tab)oflporcmargenhora,oflporcmargenmes,oflporcmargen7dias#(lf)from oferta INNER JOIN#(lf)                      oflineas ON oferta.ofempresa = oflineas.oflempresa AND oferta.ofcentro = oflineas.oflcentro AND oferta.ofcodigo = oflineas.oflcodigo#(lf)where oflempresa=1#(lf)and year(offechaoferta)>=2021"]),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(Origen,{{"offechaoferta", type date}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Tipo cambiado1",{{"ofcentro", Int64.Type}, {"ofcodigo", Int64.Type}, {"oflcatepuesto", Int64.Type}}),
+				    Redondeado = Table.TransformColumns(#"Tipo cambiado",{{"oflcoefhora", each Number.Round(_, 3), type number}})
+				in
+				    Redondeado
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

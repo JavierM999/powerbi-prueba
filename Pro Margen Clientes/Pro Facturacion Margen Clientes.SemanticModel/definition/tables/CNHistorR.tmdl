@@ -1,0 +1,884 @@
+table CNHistorR
+	lineageTag: dd24aa01-a552-41f7-8279-6d6ffc76f59d
+
+	measure IngServDiver = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7590000000,CNHistorR[hicuenta]<= 7599999999)
+		lineageTag: 5e2e03cb-6fd0-4bab-b674-5f903629353b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PrestServ = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7050000000,CNHistorR[hicuenta]<= 7050009999)
+		lineageTag: 435abec7-d95d-4671-9290-2c20e22bdcdf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure RappelSVta = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7090000000,CNHistorR[hicuenta]<= 7090999999)
+		formatString: #,0.00
+		lineageTag: 24e82c63-f4e8-4f53-be64-c0e58ed87d7b
+
+	measure SelPersonal = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7050010000,CNHistorR[hicuenta]<= 7050019999)
+		lineageTag: 8b078e51-7937-42bb-84bd-a4420320a68c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtsComClien = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000011,CNHistorR[hicuenta]<= 6290000011)
+		lineageTag: 69485e83-1574-4ec5-82bb-7dc801b02727
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure CosPersEx = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6400000000,CNHistorR[hicuenta]<= 6400999999,CNHistorR[UltDigCta]=1)
+		lineageTag: b30cda9d-42cd-4944-898d-9975b0d194e4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SSCEmpExt = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6420000001,CNHistorR[hicuenta]<= 6420000001)
+		lineageTag: c8d2f2e0-c2f0-4892-b3ef-47fa426b8a12
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure OGtoPExt = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6490000001,CNHistorR[hicuenta]<= 6490000001)
+		lineageTag: ace5dd08-7a2e-4186-9362-3ac2eaf8fee5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IServPerEx = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7550000000,CNHistorR[hicuenta]<= 7559999999)
+		lineageTag: 966dc708-576c-423a-a8af-5893afd87a12
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IndemnExt = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6410000001,CNHistorR[hicuenta]<= 6410000001)
+		lineageTag: f021264a-b3f5-4e1a-b04b-1224cc438a8c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SSBonifFCon = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6420000003,CNHistorR[hicuenta]<= 6420000003)
+		lineageTag: 1a2be1ea-69a9-4c31-8a48-91c44f874668
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosDedFI = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6420000004,CNHistorR[hicuenta]<= 6420000004)
+		lineageTag: 74129f6e-a689-4a93-b0c0-17b0c561c103
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosVestuario = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000008,CNHistorR[hicuenta]<= 6290000008)
+		lineageTag: d49df941-4e97-4291-b07c-b6454711856b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosFormacion = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6480000000,CNHistorR[hicuenta]<= 6489999999)
+		lineageTag: 77aa26be-b880-458f-8be1-72f138e4a38c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PubliProp = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6270000000,CNHistorR[hicuenta]<= 6270999999)
+		lineageTag: 44f5b044-6fda-47bf-b86f-cafc37d1d0f4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TrabajXOEmp = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6070000000,CNHistorR[hicuenta]<= 6079999999)
+		lineageTag: f75f5a95-476b-48e0-8496-bdb52ae45c75
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ComXVtas = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6230000001,CNHistorR[hicuenta]<= 6230000001)
+		lineageTag: b2de6af2-00d9-495b-88ff-21e37cbe511a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ServBancar = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6260000000,CNHistorR[hicuenta]<= 6260000000)
+		lineageTag: a6787d2b-1116-4d78-a0b3-36910de92e68
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ComisFact = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6260000003,CNHistorR[hicuenta]<= 6260000003)
+		lineageTag: 03f8e53c-1c8e-4d86-9015-9908d1b4bede
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosVisAn = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000004,CNHistorR[hicuenta]<= 6290000004)
+		lineageTag: f76de4af-f2de-4c29-b8ec-c037b8c0f361
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosViajAn = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000006,CNHistorR[hicuenta]<= 6290000006)
+		lineageTag: d427ba41-271e-42d9-9286-488b7a73aceb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosPrevRLab = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000007,CNHistorR[hicuenta]<= 6290000007)
+		lineageTag: bcbb7ecf-93e7-4302-8225-6d7a9f788230
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MatOficina = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000005,CNHistorR[hicuenta]<= 6290000005)
+		lineageTag: 18f19dc4-2800-425d-87e2-7cd46ae42bbd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosViajeEx = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290010003,CNHistorR[hicuenta]<= 6290010003)
+		lineageTag: fadce2d3-5c83-4079-8dfd-87b278ee25fd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PerdCreCI = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6500000000,CNHistorR[hicuenta]<= 6500999999)
+		lineageTag: b07d563c-4923-4d10-9f21-47938542e21a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PerdDeCreC = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6940000000,CNHistorR[hicuenta]<= 6949999999)
+		lineageTag: 5b4ce519-c01f-4788-90f4-82451a830fb0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DotProInsol = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6954000000,CNHistorR[hicuenta]<= 6954009999)
+		lineageTag: 4812e084-658f-49ac-911f-225b75977ea5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure RevDetCCom = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7940000000,CNHistorR[hicuenta]<= 7949999999)
+		lineageTag: 4dcd464a-4f59-45ff-bd93-23285646d22c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ExProOpCom = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7954000000,CNHistorR[hicuenta]<= 7954999999)
+		lineageTag: 83995200-c075-40a9-a784-09d6bc67f03f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ComisXVta = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6230000001,CNHistorR[hicuenta]<= 6230000001)
+		lineageTag: 01b71016-188a-4377-ac6d-f2d48fcbbd00
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ServProDuna = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6230000004,CNHistorR[hicuenta]<= 6230000004)
+		lineageTag: 4ca735a1-2400-4ed3-a4a7-0e36cde4b981
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ServPresBW = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6230000017,CNHistorR[hicuenta]<= 6230000017)
+		lineageTag: 9ea8c7cb-9b32-45a0-8251-69194202eb9f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ServPreNono = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6230000026,CNHistorR[hicuenta]<= 6230000026)
+		lineageTag: ba1937aa-b092-4ace-b5bc-50004c399021
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure CosPersInt = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6400000000,CNHistorR[hicuenta]<= 6400999999,CNHistorR[UltDigCta]=0)
+		lineageTag: 3e4f0f08-5a82-438f-9724-21cfe1429ee7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure CostLimp = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6400940000,CNHistorR[hicuenta]<= 6400949999)
+		lineageTag: e8231b8b-052e-4e75-a080-df211008ab0b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SSCEmpInt = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6420000000,CNHistorR[hicuenta]<= 6420000000)
+		lineageTag: 3573e416-16ea-465e-b3a2-bb72f0ffef07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure OGtosPersInt = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6490000000,CNHistorR[hicuenta]<= 6490000000)
+		lineageTag: 2111bfe6-5bf3-4d24-a740-c5bb2c9bcb93
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IndemInt = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6410000000,CNHistorR[hicuenta]<= 6410000000)
+		lineageTag: dadb48e7-3f24-494d-b055-b2201b4791e4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ReparCons = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6220000000,CNHistorR[hicuenta]<= 6220999999)
+		lineageTag: 7de54967-bf1a-48b0-beda-bb2cda079109
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ProfesIndep = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6230000000,CNHistorR[hicuenta]<= 6230000000)
+		lineageTag: 2dfe3f48-4efc-41b1-97a2-754e1280aa96
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Transportes = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6240000000,CNHistorR[hicuenta]<= 6240999999)
+		lineageTag: 96e814f0-c1cf-48af-a905-967ea953a458
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PrimasSegur = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6250000000,CNHistorR[hicuenta]<= 6259999999)
+		lineageTag: 88a7f80c-05e3-4858-8dad-84367b27bc72
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ComisAvales = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6260000001,CNHistorR[hicuenta]<= 6260000001)
+		lineageTag: d6b3a429-2f35-49b3-9a89-33d27023ddee
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ComisPCre = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6260000002,CNHistorR[hicuenta]<= 6260000002)
+		lineageTag: 5f41fb90-53ae-40f3-9c2c-3eeb7fcb3376
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Suministros = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6280000000,CNHistorR[hicuenta]<= 6289999999)
+		lineageTag: fba6349e-a62d-42c7-a7b1-1f23f1104ac0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure OtrServic = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000000,CNHistorR[hicuenta]<= 6290000000)
+		lineageTag: 24e2d639-05a1-417d-a8a1-8f86410498eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosCajaChic = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000002,CNHistorR[hicuenta]<= 6290000002)
+		lineageTag: eaf5b958-ce3a-48f7-b112-23336b317607
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Mensajeria = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000003,CNHistorR[hicuenta]<= 6290000003)
+		lineageTag: 0107ea2c-0e26-4fa8-8b89-bfaac5ebbabe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosViaje = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290010000,CNHistorR[hicuenta]<= 6290010000)
+		lineageTag: 2dd7d1b1-b50d-465f-844d-8f6f678e0df5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GasolinaPaPe = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290010001,CNHistorR[hicuenta]<= 6290010001)
+		lineageTag: 44fbb693-f133-4af7-b940-6b1048e15f8e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosComida = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290010002,CNHistorR[hicuenta]<= 6290010002)
+		lineageTag: 12264324-05b9-4d56-921f-72ed9a2c7f62
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DotAmortiza = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6800000000,CNHistorR[hicuenta]<= 6899999999)
+		lineageTag: 8d1298a6-02ba-42e8-ba1d-c49393d75d3f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PerdCortEG = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6990000000,CNHistorR[hicuenta]<= 6990999999)
+		lineageTag: 7f72af86-6f6f-4505-9a47-20efce2b700d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ArrendamCa = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6210000000,CNHistorR[hicuenta]<= 6219999999)
+		lineageTag: d4562cdf-ba87-4cbf-85d9-d34ce75e8559
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tributos = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6300000000,CNHistorR[hicuenta]<= 6399999999)
+		lineageTag: a767743c-edd0-4c79-967c-564615cd4c15
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IngFinanc = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7600000000,CNHistorR[hicuenta]<= 7699999999)
+		lineageTag: 7aa2538f-e057-46db-a489-a3ee7691a2e2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure OtraPerdid = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6590000000,CNHistorR[hicuenta]<= 6599999999)
+		lineageTag: 8bb164ef-2320-4fd1-8994-6cfd12f9783b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PerdProcANCo = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6700000000,CNHistorR[hicuenta]<= 6799999999)
+		lineageTag: 27d44019-963e-484a-8a25-32fc6b2d7786
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DotInsolTra = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6959000000,CNHistorR[hicuenta]<= 6959000000)
+		lineageTag: b54e8f3e-69e8-4ced-b372-6f979991d565
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SubvenDonac = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7400000000,CNHistorR[hicuenta]<= 7499999999)
+		lineageTag: 36f3119d-032b-4d4c-a310-deccd718673c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure BenefPANC = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7700000000,CNHistorR[hicuenta]<= 7799999999)
+		lineageTag: c0abb633-420d-4f82-b44b-15d793f297e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ExcesProvis = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7952000000,CNHistorR[hicuenta]<= 7952999999)
+		lineageTag: 3d376b25-37fc-411b-a519-4443a4ca8cdf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TelefFijo = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000009,CNHistorR[hicuenta]<= 6290000009)
+		lineageTag: 840f2a25-0cb9-4080-851b-5d7cdc6b30ff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TelefMovil = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6290000010,CNHistorR[hicuenta]<= 6290000010)
+		lineageTag: da351e22-198d-4160-b01c-de172642a684
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'HMargen1 €' = [CosPersEx]+[SSCEmpExt]+[OGtoPExt]+[IndemnExt]+[GtosVestuario]+[GtosFormacion]+[PubliProp]+[ComXVtas]+[ComisFact]+[GtosPrevRLab]+[SSBonifFCon]+[TrabajXOEmp]+[ServBancar]+[GtosViajeEx]
+		lineageTag: 174684de-7261-4d35-9417-859d591b2323
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'HMargen2 €' = [CosPersInt]+[SSCEmpInt]+[OGtosPersInt]+[IndemInt]+[SelPersonal]+[IngServDiver]+[ServProDuna]+[ServPresBW]
+		lineageTag: 5d5ac269-24e1-4640-aa60-dec8ab793b34
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'HMargen3 €' = [PerdCreCI]+[DotProInsol]+[ExProOpCom]+[ArrendamCa]+[ReparCons]+[PrimasSegur]+[Suministros]+[OtrServic]+[Mensajeria]+[GtosCajaChic]+[MatOficina]+[GtosViaje]+[GasolinaPaPe]+[GtosComida]+[DotAmortiza]+[Tributos]+[OtraPerdid]+[BenefPANC]+[TelefFijo]+[TelefMovil]+[Transportes]+[PerdProcANCo]+[ProfesIndep]+[ComisAvales]+[ComisPCre]+[IngFinanc]+[RevDetCCom]
+		lineageTag: ebcfe128-f704-4196-8a11-e7c8c5deb868
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosFinanc = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 6600000000,CNHistorR[hicuenta]<= 6699999999)
+		lineageTag: 5403191e-c06a-4013-83ad-ee1ff79a540d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotFraCN3 = [PrestServ]+[RappelSVta]
+		formatString: #,0.00
+		lineageTag: c6a0206c-cef2-4bd5-ada9-279e122616f1
+
+	measure 'CN3 Margen1 %' = IF([TotFraCN3]>0,1-(([esSumCosSalP]+[esSumCosSSP]+Epis[Epis]+[TFraRRMM])/[TotFraCN3]),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: b488fc7b-6aad-4253-b38c-dcfe89769c76
+
+	measure 'CN3Margen1 €' = [TotFraCN3]+[HMargen1 €]
+		formatString: 0.00
+		lineageTag: a3c672dd-f3f2-419e-b400-93033a7504d7
+
+	measure 'CN3Margen2 €' = [CN3Margen1 €]+[HMargen2 €]
+		formatString: #,0.00
+		lineageTag: 14f4036a-6555-4179-aab8-8cf811de1069
+
+	measure 'CN3 Margen2 %' = [CN3Margen2 €]/[TotFraCN3]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 68928292-8bfe-487a-9cd2-80a3f6cc958b
+
+	measure 'CN3Margen3 €' = [CN3Margen2 €]+[HMargen3 €]
+		formatString: #,0.00
+		lineageTag: 2247517c-7adb-4968-bca1-9d812c384ea9
+
+	measure 'CN3 Margen3 %' = [CN3Margen3 €]/[TotFraCN3]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: a719e4cc-0163-4183-a0ae-629fba5b3dd7
+
+	measure 'CN3Margen4 €' = ([CN3Margen3 €]-(([TotFraCN3]*2.8)/100))+[GtosFinanc]
+		lineageTag: 93b80749-1604-47fd-bc53-a906633b8152
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CN3 Margen4 %' = [CN3Margen4 €]/[TotFraCN3]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 17a3ee3d-7c10-4e57-a159-16c76c3b5b37
+
+	measure Eseste4 = ([TotFraCN3]*2.8)/100
+		lineageTag: d3261bce-59f5-47ff-865c-f250afb2fa6a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AllFraCN3 = CALCULATE([TotFraCN3],ALL(MCANCentros[Texto]))
+		lineageTag: 77d15527-4759-4206-af4b-a2633d25c4a1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PrestServMA = CALCULATE([PrestServ],DATEADD(Calendario[Date],-1,MONTH))
+		lineageTag: 7c1459b7-240c-498d-ae3e-d231f1b731b8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure RappelSVtaMA = CALCULATE([RappelSVta],DATEADD(Calendario[Date],-1,MONTH))
+		lineageTag: bf12c193-6fa6-4cb2-990c-5790ffd3288d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotFraCN3MA = [PrestServMA]+[RappelSVtaMA]
+		formatString: #,0.00
+		lineageTag: 01660ce0-5dde-4ed4-8902-52309fb07eef
+
+	measure 'Margen1 CN3MA' = CALCULATE([CN3 Margen1 %],DATEADD(Calendario[Date],-1 ,MONTH))
+		lineageTag: 50906d10-1292-403e-a7e5-21f36f4c7af6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AvFraCN3 = DIVIDE([TotFraCN3],[CtaMeses])
+		lineageTag: 148054d1-c145-446b-85e7-a72a4393d653
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotFraCN3Prev = [TotFraCN3Y]-[TotFraCN3Mact]
+		formatString: #,0.00
+		lineageTag: 745b32ff-405d-4b03-bc5d-4f7ce4f9c0ab
+
+	measure TotFraCN3Mact = CALCULATE([TotFraCN3],FILTER(Calendario,MONTH(Calendario[Date])=8))
+		lineageTag: eb9962b4-c811-4bc5-a74f-44db4a6d34aa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotFraCN3Y = CALCULATE([PrestServ]+[RappelSVta],ALL(Calendario[Mes (Número)]))
+		lineageTag: e100488e-324c-48d8-9184-facf490ad9c9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PrevXAsigna = (([TotFraCN3Prev]/[CtaMeses])/[AvAnyoWeek])*[AvWeek]
+		formatString: #,0.00
+		lineageTag: 19c24d68-8bf3-4adc-b45a-bbb48ca7e16a
+
+	measure CompPrev = ([TotFraCN3Prev]/7)
+		formatString: 0.000
+		lineageTag: 9605536e-186a-4285-8d63-05ba7ce27c2c
+
+	measure CompPrev2 = [CompPrev]/[AvAnyoWeek]
+		formatString: 0.00
+		lineageTag: a756be82-fac5-4bf8-8334-425cc6787c80
+
+	measure TFraCN3AA = CALCULATE([TotFraCN3],SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: 2bd37ac7-0177-474a-a1c1-bcaf373d6c3a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'VariacionCN3 %' = IF(HASONEVALUE(Calendario[Año]),IF([TotFraCN3]>0,if([TFraCN3AA]>0,([TotFraCN3]-[TFraCN3AA])/[TFraCN3AA],1),blank()),BLANK())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: bd47dae4-3083-4ded-a19e-b6aaa78cb8cc
+
+	measure Seleccion = CALCULATE(SUM(CNHistorR[hiimporte]),CNHistorR[hicuenta]>= 7050010000,CNHistorR[hicuenta]<= 7050019999)
+		formatString: #,0.00
+		lineageTag: b027e164-2882-45bc-8b20-973c5411ef59
+
+		changedProperty = FormatString
+
+	measure SeleccionMA = CALCULATE([Seleccion],DATEADD(Calendario[Date],-1,MONTH))
+		lineageTag: f52ce682-5947-4528-920c-235f9cbbd555
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CN3 Margen1 MA %' = IF([TotFraCN3MA]>0,1-(([esSumCosSalPMA]+[esSumCosSSPMA]+Epis[EpisMA]+[TFraRRMM MA])/[TotFraCN3MA]),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 26ccd07a-ba07-49ef-bebc-2010541ac46f
+
+	measure RankFraCN3 = IF(HASONEVALUE(MCANCentros[Texto]),IF([TotFraCN3]>0,RANKX(ALL(MCANCentros[Texto]),[TotFraCN3]),BLANK()),BLANK())
+		formatString: 0
+		lineageTag: d77952eb-ec22-4719-8344-32b6ce03b0aa
+
+	measure AcumFraCN3 = IF(HASONEFILTER(MCANCentros[Texto]),SUMX(TOPN([RankFraCN3],ALL(MCANCentros[Texto]),[TotFraCN3]),[TotFraCN3]),BLANK())
+		formatString: #,0.00
+		lineageTag: c5eed607-7194-4935-a03d-ed0cd1aabd69
+
+	measure %Pareto1N = DIVIDE([AcumFraCN3],CALCULATE([TotFraCN3],ALL(MCANCentros[Texto])))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: e642f119-dad3-46e7-bb4e-ab08484f0b54
+
+	measure RankMargen = IF(HASONEVALUE(MCANCentros[Texto]),IF([CN3 Margen1 %]>0,RANKX(ALL(MCANCentros[Texto]),[CN3 Margen1 %]),BLANK()),BLANK())
+		formatString: 0
+		lineageTag: cdc44489-5c10-45c8-b7ca-1ed7fa006a0a
+
+	measure RankCliCN3 = IF([Total Fra],CALCULATE(IF(HASONEVALUE(Clientes[clcodigo]),RANKX(ALL(Clientes[clcodigo],Clientes[clnombre]),[Total Fra]),BLANK()),REMOVEFILTERS(MCANCentros[Texto])),BLANK())
+		formatString: 0
+		lineageTag: 95c607ab-b977-43ab-a992-06b3ba096309
+
+	measure AcumCliCN3 = IF([Total Fra],CALCULATE(IF(HASONEFILTER(Clientes[clcodigo]),SUMX(TOPN([RankCliCN3],ALL(Clientes[clcodigo],Clientes[clnombre]),[Total Fra]),[Total Fra]),BLANK()),REMOVEFILTERS(MCANCentros[Texto])),BLANK())
+		formatString: #,0.00
+		lineageTag: 2d21543b-12d7-47f1-a1c9-ce74945a50ae
+
+	measure %ParetoClia = IF([Total Fra],DIVIDE([AcumCliCN3],CALCULATE([Total Fra],ALL(Clientes[clcodigo],Clientes[clnombre]),REMOVEFILTERS(MCANCentros[Texto]))),BLANK())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 613c112e-656c-4957-a0d7-a7221100f8bd
+
+	measure RankCliCN32 = RANKX(ALL(CNHistorR[CNHCenCli]),[TotFraCN3])
+		formatString: 0
+		lineageTag: 6bcd8af8-7521-4dd6-930d-0fd0df9cca89
+
+	measure Seleccionado = SELECTEDVALUE('Selecciono EoD'[Ambito])
+		lineageTag: 02ead9de-c551-4ae9-ae38-bd5965efd8f8
+
+	measure RankCliCN3E = IF([Total Fra],IF(HASONEVALUE(Clientes[clcodigo]),RANKX(ALL(Clientes[clcodigo],Clientes[clnombre]),[Total Fra]),BLANK()),BLANK())
+		formatString: 0
+		lineageTag: 01a66ab7-1741-4f02-b365-5e6684f9f311
+
+	measure AcumCliCN3E = IF([Total Fra],IF(HASONEFILTER(Clientes[clcodigo]),SUMX(TOPN([RankCliCN3E],ALL(Clientes[clcodigo],Clientes[clnombre]),[Total Fra]),[Total Fra]),BLANK()),BLANK())
+		formatString: #,0.00
+		lineageTag: 65401d55-ca8b-4bbf-9136-ee8216b069a3
+
+	measure %ParetoCliE = IF([Total Fra],DIVIDE([AcumCliCN3E],CALCULATE([Total Fra],ALL(Clientes[clcodigo],Clientes[clnombre]))),BLANK())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 1769c7be-1183-4b26-8cde-059c1f919c4e
+
+	measure RankCli =
+			
+			SWITCH(
+			    TRUE(),
+			    [Seleccionado] = "Delegación", [RankCliCN3E],
+			    [Seleccionado] = "Empresa" , [RankCliCN3],
+			    "Selecciona Delegación o Empresa"
+			)
+		formatString: 0
+		lineageTag: a32575d7-1783-41d1-8d6e-25e62ae075ad
+
+	measure AcumCli =
+			
+			SWITCH(
+			    TRUE(),
+			    [Seleccionado] = "Delegación", [AcumCliCN3E],
+			    [Seleccionado] = "Empresa" , [AcumCliCN3],
+			    "Selecciona Delegación o Empresa"
+			)
+		formatString: #,0.00
+		lineageTag: 09d89125-9ab4-4438-a965-eb3a1c9c2fe7
+
+	measure %ParetoCli =
+			
+			SWITCH(
+			    TRUE(),
+			    [Seleccionado] = "Delegación", [%ParetoCliE],
+			    [Seleccionado] = "Empresa" , [%ParetoClia],
+			    "Selecciona Delegación o Empresa"
+			)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: f6b019c5-2086-4e41-975c-ba0b8842a7c4
+
+	measure 'Total Fra' = [TotFraCN3]+[Seleccion]
+		formatString: #,0.00
+		lineageTag: 3aab1cec-8b22-4be8-84bd-6d75fc938e69
+
+	measure TotFraCN3_MesPasado =
+			
+			CALCULATE(
+			    [TotFraCN3],
+			    PREVIOUSMONTH(Calendario[Date])
+			)
+		formatString: #,0.00
+		lineageTag: f302526c-e408-42cc-9d50-653205221989
+
+	column hidiario
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f446392-1ae4-4fc0-b5bf-acd124e4e027
+		summarizeBy: sum
+		sourceColumn: hidiario
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiseccion
+		dataType: int64
+		formatString: 0
+		lineageTag: c895a8b0-e873-4890-9f76-22ca69fba842
+		summarizeBy: sum
+		sourceColumn: hiseccion
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiejercicio
+		dataType: int64
+		formatString: 0
+		lineageTag: 84e4681a-4a56-469a-831f-cf815ea618b5
+		summarizeBy: sum
+		sourceColumn: hiejercicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column hitipo
+		dataType: string
+		lineageTag: 9b2b519e-b4cd-4ef3-9ece-0b7fea368fe5
+		summarizeBy: none
+		sourceColumn: hitipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column hifechamd
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: f198a3c2-2b01-47f4-ad8d-895280a69279
+		summarizeBy: none
+		sourceColumn: hifechamd
+
+		variation Variación
+			isDefault
+			relationship: 35c18cfb-e9cf-4847-948d-b34f301bd43a
+			defaultHierarchy: LocalDateTable_42e32745-9348-415e-9089-0df40fb24785.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hicuenta
+		dataType: int64
+		formatString: 0
+		lineageTag: b8a1853f-d951-481a-8d14-1ced0cf2d9f7
+		summarizeBy: sum
+		sourceColumn: hicuenta
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiimporteant
+		dataType: double
+		lineageTag: 5bc4e433-d93d-4b63-9c99-c1de7fa37725
+		summarizeBy: sum
+		sourceColumn: hiimporteant
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UltDigCta
+		dataType: int64
+		formatString: 0
+		lineageTag: 49aeb4dd-58b2-4357-abe2-0d6f34367e77
+		summarizeBy: sum
+		sourceColumn: UltDigCta
+
+		annotation SummarizationSetBy = Automatic
+
+	column DebeAct
+		dataType: double
+		lineageTag: 94f02ebb-9e67-4f3d-9923-3da67ec008a7
+		summarizeBy: sum
+		sourceColumn: DebeAct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column hiimporte
+		dataType: double
+		lineageTag: e7332069-2b82-4043-8807-48827cfde97d
+		summarizeBy: sum
+		sourceColumn: hiimporte
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oficina
+		dataType: int64
+		formatString: 0
+		lineageTag: bfde7ead-1d1a-4389-9910-adb92f09fdfe
+		summarizeBy: sum
+		sourceColumn: oficina
+
+		annotation SummarizationSetBy = Automatic
+
+	column numfra
+		dataType: int64
+		formatString: 0
+		lineageTag: d1a454cc-7202-47dd-8e56-dfc8660e6052
+		summarizeBy: sum
+		sourceColumn: numfra
+
+		annotation SummarizationSetBy = Automatic
+
+	column hidocumC
+		dataType: string
+		lineageTag: 62a1da31-4e16-4017-9c0c-d26da8270d1b
+		summarizeBy: none
+		sourceColumn: hidocumC
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ffccentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 761a5467-eae2-47f2-8382-bd2ef4ac5ab2
+		summarizeBy: sum
+		sourceColumn: Ffccentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ffccliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 5eafbb25-d62b-4295-8d1d-a2b44aa810e1
+		summarizeBy: sum
+		sourceColumn: Ffccliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cclcifdni
+		dataType: string
+		lineageTag: 799e1b74-4af5-4bb4-92ec-e5a1bbf71b1f
+		summarizeBy: none
+		sourceColumn: Cclcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column FRefclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: fb0a44a9-10f5-4a55-a278-a796eddaa602
+		summarizeBy: sum
+		sourceColumn: FRefclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column FRefclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: bd449af2-e809-4e19-a89c-66687e71600d
+		summarizeBy: sum
+		sourceColumn: FRefclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column hicontra
+		dataType: string
+		lineageTag: ab998a1a-317b-46ff-917e-c1c4a0f702cc
+		summarizeBy: none
+		sourceColumn: hicontra
+
+		annotation SummarizationSetBy = Automatic
+
+	column hicontraCli
+		dataType: int64
+		formatString: 0
+		lineageTag: beb6df74-0a85-4957-9b95-a6d80a9a5150
+		summarizeBy: sum
+		sourceColumn: hicontraCli
+
+		annotation SummarizationSetBy = Automatic
+
+	column CRefclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 3afd9915-431d-4688-bfc9-62c77ddb5892
+		summarizeBy: sum
+		sourceColumn: CRefclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Refclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: e90663ed-9503-4220-b6f7-a8cf956716b1
+		summarizeBy: sum
+		sourceColumn: Refclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column Refclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: e90e1cd0-56ea-4d7f-a516-8fbb163164df
+		summarizeBy: sum
+		sourceColumn: Refclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column CNHCenCli = FORMAT(CNHistorR[SuperCentro],"00")&FORMAT(CNHistorR[ClienteMio],"000000")
+		lineageTag: 9e16c678-3f39-43f2-b7e4-4ceeb4ebd878
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column FecAbCargo
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 10748385-b40f-471c-a64c-5839164c93ce
+		summarizeBy: none
+		sourceColumn: FecAbCargo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SRefclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d6df66a-8ea4-41e5-8263-8026c4566af4
+		summarizeBy: sum
+		sourceColumn: SRefclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column SRefclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: f35de0af-2dbe-4efd-8283-54f8e180a7d3
+		summarizeBy: sum
+		sourceColumn: SRefclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column SuperCentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 48f095a2-c3c7-4f0e-9bd3-17f8121683bb
+		summarizeBy: sum
+		sourceColumn: SuperCentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienteMio
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f3b3fe7-ebef-4194-af62-a51415d17dff
+		summarizeBy: sum
+		sourceColumn: ClienteMio
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CNHistorR-c9c01098-e36f-4385-99cc-16c6cf214496 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "n4db003", [Query="select hidiario,hiseccion,hiejercicio,hitipo,hifechamd,hicuenta,hiimporte,hidocum,hicontra#(lf)from cnhistor#(lf)where year(hifechamd)>=2022#(lf)and ((hicuenta>=7050000000 and hicuenta<=7050009999) or#(lf)(hicuenta>=7090000000 and hicuenta<=7090999999) or#(lf)(hicuenta>=7050010000 and hicuenta<=7050010002))"]),
+				    #"Personalizada agregada" = Table.AddColumn(Origen, "UltDigCta", each Text.End([hicuenta],1)),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Personalizada agregada",{{"hidiario", Int64.Type}, {"hiseccion", Int64.Type}, {"hiejercicio", Int64.Type}, {"hifechamd", type date}, {"hicuenta", Int64.Type}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado", each true),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Filas filtradas",{{"UltDigCta", Int64.Type}}),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Tipo cambiado1", "DebeAct", each if [hitipo]="D" then [hiimporte] * -1 else 0),
+				    #"Personalizada agregada2" = Table.AddColumn(#"Personalizada agregada1", "ImporteRef", each if [hitipo]="D" then [DebeAct] else [hiimporte]),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Personalizada agregada2",{{"hiimporte", "hiimporteant"}, {"ImporteRef", "hiimporte"}}),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Columnas con nombre cambiado",{{"DebeAct", type number}, {"hiimporte", type number}}),
+				    #"Columna duplicada" = Table.DuplicateColumn(#"Tipo cambiado2", "hidocum", "hidocum - Copia"),
+				    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Columna duplicada",{{"hidocum - Copia", "hidocumC"}}),
+				    #"Dividir columna por posición" = Table.SplitColumn(#"Columnas con nombre cambiado1", "hidocum", Splitter.SplitTextByPositions({0, 3}, false), {"hidocum.1", "hidocum.2"}),
+				    #"Tipo cambiado3" = Table.TransformColumnTypes(#"Dividir columna por posición",{{"hidocum.1", type text}, {"hidocum.2", Int64.Type}}),
+				    #"Columnas con nombre cambiado2" = Table.RenameColumns(#"Tipo cambiado3",{{"hidocum.1", "oficina"}, {"hidocum.2", "numfra"}}),
+				    #"Tipo cambiado4" = Table.TransformColumnTypes(#"Columnas con nombre cambiado2",{{"oficina", Int64.Type}}),
+				    #"Errores quitados" = Table.RemoveRowsWithErrors(#"Tipo cambiado4", {"oficina"}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Errores quitados", {"oficina", "numfra"}, Facturas, {"fcserie", "fcdocum"}, "Facturas", JoinKind.LeftOuter),
+				    #"Se expandió Facturas" = Table.ExpandTableColumn(#"Consultas combinadas", "Facturas", {"fccentro", "fccliente"}, {"Facturas.fccentro", "Facturas.fccliente"}),
+				    #"Columnas con nombre cambiado3" = Table.RenameColumns(#"Se expandió Facturas",{{"Facturas.fccentro", "Ffccentro"}, {"Facturas.fccliente", "Ffccliente"}}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Columnas con nombre cambiado3", {"Ffccentro", "Ffccliente"}, Clientes, {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes" = Table.ExpandTableColumn(#"Consultas combinadas1", "Clientes", {"clcifdni"}, {"Clientes.clcifdni"}),
+				    #"Columnas con nombre cambiado4" = Table.RenameColumns(#"Se expandió Clientes",{{"Clientes.clcifdni", "Cclcifdni"}}),
+				    #"Consultas combinadas2" = Table.NestedJoin(#"Columnas con nombre cambiado4", {"hiseccion", "Cclcifdni"}, Clientes, {"clcentro", "clcifdni"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes1" = Table.ExpandTableColumn(#"Consultas combinadas2", "Clientes", {"clcentro", "clcodigo"}, {"Clientes.clcentro", "Clientes.clcodigo"}),
+				    #"Columnas con nombre cambiado5" = Table.RenameColumns(#"Se expandió Clientes1",{{"Clientes.clcentro", "FRefclcentro"}, {"Clientes.clcodigo", "FRefclcodigo"}}),
+				    #"Columna duplicada1" = Table.DuplicateColumn(#"Columnas con nombre cambiado5", "hicontra", "hicontra - Copia"),
+				    #"Dividir columna por posición1" = Table.SplitColumn(#"Columna duplicada1", "hicontra - Copia", Splitter.SplitTextByPositions({0, 3}, false), {"hicontra - Copia.1", "hicontra - Copia.2"}),
+				    #"Tipo cambiado5" = Table.TransformColumnTypes(#"Dividir columna por posición1",{{"hicontra - Copia.1", type text}, {"hicontra - Copia.2", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado5",{"hicontra - Copia.1"}),
+				    #"Tipo cambiado6" = Table.TransformColumnTypes(#"Columnas quitadas",{{"hicontra - Copia.2", Int64.Type}}),
+				    #"Columnas con nombre cambiado6" = Table.RenameColumns(#"Tipo cambiado6",{{"hicontra - Copia.2", "hicontraCli"}}),
+				    #"Consultas combinadas3" = Table.NestedJoin(#"Columnas con nombre cambiado6", {"hiseccion", "hicontraCli"}, Clientes, {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes2" = Table.ExpandTableColumn(#"Consultas combinadas3", "Clientes", {"clcodigo"}, {"Clientes.clcodigo"}),
+				    #"Columnas con nombre cambiado7" = Table.RenameColumns(#"Se expandió Clientes2",{{"Clientes.clcodigo", "CRefclcodigo"}}),
+				    #"Personalizada agregada3" = Table.AddColumn(#"Columnas con nombre cambiado7", "Refclcentro", each if [hidocumC] = null then [hiseccion] else [FRefclcentro]),
+				    #"Tipo cambiado7" = Table.TransformColumnTypes(#"Personalizada agregada3",{{"Refclcentro", Int64.Type}}),
+				    #"Personalizada agregada4" = Table.AddColumn(#"Tipo cambiado7", "Refclcodigo", each if [oficina]=null then [CRefclcodigo] else [FRefclcodigo]),
+				    #"Tipo cambiado8" = Table.TransformColumnTypes(#"Personalizada agregada4",{{"Refclcodigo", Int64.Type}}),
+				    #"Personalizada agregada6" = Table.AddColumn(#"Tipo cambiado8", "SRefclcentro", each if [Refclcentro] = null then [Ffccentro] else [Refclcentro]),
+				    #"Tipo cambiado10" = Table.TransformColumnTypes(#"Personalizada agregada6",{{"SRefclcentro", Int64.Type}}),
+				    #"Personalizada agregada7" = Table.AddColumn(#"Tipo cambiado10", "SRefclcodigo", each if [Refclcodigo] = null then [Ffccliente] else [Refclcodigo]),
+				    #"Tipo cambiado11" = Table.TransformColumnTypes(#"Personalizada agregada7",{{"SRefclcodigo", Int64.Type}}),
+				    #"Personalizada agregada5" = Table.AddColumn(#"Tipo cambiado11", "FecAbCargo", each if [oficina]>900 and [oficina]<> null then if Date.Day([hifechamd])< 15 then Date.AddMonths([hifechamd],-1) else [hifechamd] else [hifechamd]),
+				    #"Tipo cambiado9" = Table.TransformColumnTypes(#"Personalizada agregada5",{{"FecAbCargo", type date}}),
+				    #"Duplicados quitados" = Table.Distinct(#"Tipo cambiado9", {"hidiario", "hiseccion", "hiejercicio", "hitipo", "hifechamd", "hicuenta", "hiimporteant", "oficina", "numfra", "hicontra", "UltDigCta", "DebeAct", "hiimporte", "hidocumC", "Ffccentro", "Ffccliente", "Cclcifdni"}),
+				    #"Personalizada agregada9" = Table.AddColumn(#"Duplicados quitados", "ClienteMio", each if [hiejercicio]=2024 then (if [SRefclcodigo]= 60492 then 160242 else (if [SRefclcodigo]= 60378 then 160225 else (if [SRefclcodigo]= 60280 then 160224 else (if [SRefclcodigo]= 60422 then 160230 else (if [SRefclcodigo]= 60461 then 160230 else (if [SRefclcodigo]= 60306 then 160228 else (if [SRefclcodigo]= 60449 then 160226 else (if [SRefclcodigo]= 60292 then 160227 else (if [SRefclcodigo]= 60433 then 160231 else (if [SRefclcodigo]= 60388 then 160236 else [SRefclcodigo])))))))))) else [SRefclcodigo]),
+				    #"Tipo cambiado13" = Table.TransformColumnTypes(#"Personalizada agregada9",{{"ClienteMio", Int64.Type}}),
+				    #"Personalizada agregada8" = Table.AddColumn(#"Tipo cambiado13", "SuperCentro", each if [ClienteMio]=160228 or [ClienteMio]=160230 or[ClienteMio]=160227 or[ClienteMio]=160231 or[ClienteMio]=160236 or[ClienteMio]=160226 or[ClienteMio]=160224 or[ClienteMio]=160225 or[ClienteMio]=160242 then 16 else [SRefclcentro]),
+				    #"Tipo cambiado12" = Table.TransformColumnTypes(#"Personalizada agregada8",{{"SuperCentro", Int64.Type}})
+				in
+				    #"Tipo cambiado12"
+
+	annotation PBI_QueryRelationships = {"columnCount":10,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/CNHistor/Tipo cambiado.{hidiario,0}","Section1/CNHistor/Tipo cambiado.{hiseccion,1}","Section1/CNHistor/Tipo cambiado.{hiejercicio,2}","Section1/CNHistor/Origen.{hitipo,3}","Section1/CNHistor/Tipo cambiado.{hifechamd,4}","Section1/CNHistor/Tipo cambiado.{hicuenta,5}","Section1/CNHistor/Origen.{hiimporte,6}","Section1/CNHistor/Tipo cambiado1.{UltDigCta,7}","Section1/CNHistor/Tipo cambiado2.{DebeAct,8}","Section1/CNHistor/Tipo cambiado2.{hiimporte,9}"],"ColumnCount":10,"KeyColumnNames":[],"ColumnIdentities":["Section1/CNHistor/Tipo cambiado.{hidiario,0}","Section1/CNHistor/Tipo cambiado.{hiseccion,1}","Section1/CNHistor/Tipo cambiado.{hiejercicio,2}","Section1/CNHistor/Origen.{hitipo,3}","Section1/CNHistor/Tipo cambiado.{hifechamd,4}","Section1/CNHistor/Tipo cambiado.{hicuenta,5}","Section1/CNHistor/Origen.{hiimporte,6}","Section1/CNHistor/Tipo cambiado1.{UltDigCta,7}","Section1/CNHistor/Tipo cambiado2.{DebeAct,8}","Section1/CNHistor/Tipo cambiado2.{hiimporte,9}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

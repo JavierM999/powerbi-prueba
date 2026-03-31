@@ -1,0 +1,7 @@
+role Lorena
+	modelPermission: read
+
+	tablePermission MCANCentros = [Sucursal] == 22 || [Sucursal] == 71
+
+	annotation PBI_Id = b844d214006f4fa58ce6f6c0d6fce44f
+

@@ -1,0 +1,77 @@
+table GruposEmp
+	lineageTag: e1a19fb1-a9c0-4e36-905e-3cc7505a2399
+
+	column gegrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e9cf024-b8ef-493d-9d0d-dbcff9090b69
+		summarizeBy: none
+		sourceColumn: gegrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column gesubgrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: f0b4f5f8-1a67-48cc-ad70-96abfc64f345
+		summarizeBy: none
+		sourceColumn: gesubgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column gedescripcion
+		dataType: string
+		lineageTag: d3da4188-d314-45f2-83cf-4745c7bb8341
+		summarizeBy: none
+		sourceColumn: gedescripcion
+
+		annotation SummarizationSetBy = Automatic
+
+	column gevendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: ab6796ca-2d73-4edb-a6ac-a2d016e4c984
+		summarizeBy: none
+		sourceColumn: gevendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column geclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: b1677655-635b-42c3-acad-1873f85d127f
+		summarizeBy: none
+		sourceColumn: geclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column geclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ebc2cec-ede4-459a-9b23-9bcb0a6b1e19
+		summarizeBy: none
+		sourceColumn: geclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column GEUniGruS = FORMAT(GruposEmp[gegrupo],"0000")&FORMAT(GruposEmp[gesubgrupo],"0000")
+		lineageTag: da2d2bba-dfb9-41c7-a583-f7baeff979b6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GruposEmp-d082b2e4-49d1-4f96-a72b-a5835c9cb008 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select gegrupo,gesubgrupo,gedescripcion,gevendedor,geclcentro,geclcodigo#(lf)from gruposemp#(lf)where geempresa=1"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"gegrupo", Int64.Type}, {"gesubgrupo", Int64.Type}, {"gevendedor", Int64.Type}, {"geclcentro", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_QueryRelationships = {"columnCount":6,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/GruposEmp/Tipo cambiado.{gegrupo,0}","Section1/GruposEmp/Tipo cambiado.{gesubgrupo,1}","Section1/GruposEmp/Origen.{gedescripcion,2}","Section1/GruposEmp/Tipo cambiado.{gevendedor,3}","Section1/GruposEmp/Tipo cambiado.{geclcentro,4}","Section1/GruposEmp/Origen.{geclcodigo,5}"],"ColumnCount":6,"KeyColumnNames":[],"ColumnIdentities":["Section1/GruposEmp/Tipo cambiado.{gegrupo,0}","Section1/GruposEmp/Tipo cambiado.{gesubgrupo,1}","Section1/GruposEmp/Origen.{gedescripcion,2}","Section1/GruposEmp/Tipo cambiado.{gevendedor,3}","Section1/GruposEmp/Tipo cambiado.{geclcentro,4}","Section1/GruposEmp/Origen.{geclcodigo,5}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

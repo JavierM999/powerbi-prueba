@@ -1,0 +1,7 @@
+role Jael
+	modelPermission: read
+
+	tablePermission MCANCentros = [Sucursal] == 6 || [Sucursal] == 15 || [Sucursal] == 33
+
+	annotation PBI_Id = 1994728a71e442b49aa08342ac6b9c88
+

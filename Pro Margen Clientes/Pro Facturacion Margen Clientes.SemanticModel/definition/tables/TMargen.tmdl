@@ -1,0 +1,28 @@
+table TMargen
+	lineageTag: 772ed47a-6654-4c50-a8cc-3268497776bc
+
+	column NMargen
+		dataType: int64
+		formatString: 0
+		lineageTag: b424ff98-e4d3-4f01-bc15-9c2a28e72aa9
+		summarizeBy: sum
+		sourceColumn: NMargen
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TMargen-3d7b1851-9c66-482b-8fb9-519d95e3698b = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSK1YlWMgKTxkqxsQA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [Columna1 = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Columna1", Int64.Type}}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Tipo cambiado",{{"Columna1", "NMargen"}})
+				in
+				    #"Columnas con nombre cambiado"
+
+	annotation PBI_QueryRelationships = {"columnCount":1,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/TMargen/Tipo cambiado.{Columna1,0}"],"ColumnCount":1,"KeyColumnNames":[],"ColumnIdentities":["Section1/TMargen/Tipo cambiado.{Columna1,0}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+
