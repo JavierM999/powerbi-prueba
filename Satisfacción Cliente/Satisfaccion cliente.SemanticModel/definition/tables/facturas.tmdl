@@ -1,0 +1,405 @@
+table facturas
+	lineageTag: 1b1b3a9d-6721-4ea0-ba8e-bb6c0e2d527f
+
+	measure CliAFact = DISTINCTCOUNT(facturas[FraCenCli])
+		formatString: 0
+		lineageTag: 47a99942-9bff-4a57-b985-78b448f532e9
+
+	measure ClientesMinimo6Meses = ```
+			
+			VAR Facturas2022 = 
+			    FILTER(facturas, YEAR(facturas[fcfecha]) = 2022)
+			VAR ClientesFacturados = 
+			    SUMMARIZE(Facturas2022, facturas[FraCenCli], "MesesFacturados",
+			    CALCULATE(DISTINCTCOUNT((facturas[fcfecha])), ALLEXCEPT(facturas, facturas[FraCenCli])))
+			RETURN
+			    COUNTROWS(FILTER(ClientesFacturados, [MesesFacturados] >= 6))
+			
+			```
+		formatString: 0
+		lineageTag: 0431a0ae-c44c-45e7-bfef-ae816acf5c76
+
+	measure 'ClientesMinimo6Meses 2' = ```
+			
+			VAR MesesPorCliente = 
+			    SUMMARIZE(
+			        FILTER(facturas, YEAR(facturas[fcfecha]) = 2022),
+			        facturas[FraCenCli],
+			        "MesesFacturados", DISTINCTCOUNT(facturas[mesfra])
+			    )
+			RETURN
+			    COUNTROWS(FILTER(MesesPorCliente, [MesesFacturados] >= 6))
+			
+			
+			```
+		formatString: 0
+		lineageTag: 1006af41-3f5d-427c-91b7-653c0f825f3f
+
+	measure ClientesMinimo6Meses3 = ```
+			
+			VAR Facturas2022 = 
+			    FILTER(facturas, YEAR(facturas[fechamia]) = 2022)
+			VAR ClientesFacturados = 
+			    SUMMARIZE(Facturas2022, facturas[FraCenCli], "MesesFacturados",
+			    CALCULATE(DISTINCTCOUNT((facturas[fechamia])), ALLEXCEPT(facturas, facturas[FraCenCli])))
+			RETURN
+			    COUNTROWS(FILTER(ClientesFacturados, [MesesFacturados] >= 6))
+			
+			```
+		formatString: 0
+		lineageTag: 2e4b57a1-7c35-4176-bfc5-9da476e6f1dc
+
+	measure ClientesMinimo6Meses4 = ```
+			
+			VAR ClientesFacturados = 
+			    SUMMARIZE(facturas, facturas[FraCenCli], "MesesFacturados",
+			    CALCULATE(DISTINCTCOUNT((facturas[fechamia])), ALLEXCEPT(facturas, facturas[FraCenCli])))
+			RETURN
+			    COUNTROWS(FILTER(ClientesFacturados, [MesesFacturados] >= 6))
+			```
+		formatString: 0
+		lineageTag: fe7d3019-e2dd-4037-b7d1-95346df29b9a
+
+	measure ClientesMinimo6Meses5 = ```
+			
+			VAR ClientesFacturados = 
+			    SUMMARIZE(
+			        FILTER(facturas,facturas[fcano]=2022),
+			        facturas[FraCenCli], "MesesFacturados",
+			    CALCULATE(DISTINCTCOUNT((facturas[fechamia])), ALLEXCEPT(facturas, facturas[FraCenCli])))
+			RETURN
+			    COUNTROWS(FILTER(ClientesFacturados, [MesesFacturados] >= SELECTEDVALUE(Meses[Value])))
+			```
+		formatString: 0
+		lineageTag: 74191583-60f1-4ce6-ad00-c5094ef48f76
+
+	measure 'Meses FRa' = CALCULATE(COUNTROWS(facturas))
+		formatString: 0
+		lineageTag: b81c161a-e6d1-4019-a1e2-5519433a03a6
+
+	measure ClientesMinimo6Meses6 = ```
+			
+			VAR ClientesFacturados = 
+			    CALCULATETABLE(
+			    SUMMARIZE(
+			        facturas,
+			        facturas[FraCenCli], "FraaAnyo",MIN(facturas[fcano]), "MesesFacturados",
+			    CALCULATE(DISTINCTCOUNT((facturas[fechamia])), ALLEXCEPT(facturas, facturas[FraCenCli]),facturas[fcano]=2022)),FILTER(facturas,facturas[fcano]=2022))
+			RETURN
+			    COUNTROWS(FILTER(ClientesFacturados, [MesesFacturados] >= SELECTEDVALUE(Meses[Value])))
+			```
+		formatString: 0
+		lineageTag: dada56f6-8637-4956-8ad6-7e7305a294be
+
+	measure ClientesMinimo6Meses7 = ```
+			
+			VAR ClientesFacturados = 
+			    SUMMARIZE(
+			       facturas,
+			        facturas[FraCenCli], "MesesFacturados",
+			    CALCULATE(DISTINCTCOUNT((facturas[fechamia])), ALLEXCEPT(facturas, facturas[FraCenCli]),facturas[fcano]=SELECTEDVALUE(Calendario[Año])))
+			RETURN
+			    COUNTROWS(FILTER(ClientesFacturados, [MesesFacturados] >= SELECTEDVALUE(Meses[Value])))
+			```
+		formatString: 0
+		lineageTag: 5d67ced1-11a0-46fc-9c9f-4b325d7ba3b8
+
+	measure 'Clientes ActivosSel' = ```
+			
+			VAR ClientesFacturados = 
+			    SUMMARIZE(
+			       facturas,
+			        facturas[FraCenCli], "MesesFacturados",
+			    CALCULATE(DISTINCTCOUNT((facturas[fechamia]))))
+			RETURN
+			    COUNTROWS(FILTER(ClientesFacturados, [MesesFacturados] >= SELECTEDVALUE(Meses[Value])))
+			```
+		formatString: 0
+		lineageTag: aa36011b-f6bb-40ef-930d-ac3a8174cba6
+
+	measure 'Clientes Perdidos' = ```
+			
+			IF(NOT(MIN(Calendario[Date]) > CALCULATE(MAX(Facturas[fcfecha]), ALL(Facturas))),
+			    VAR primeraFecha = FIRSTDATE(Calendario[Date])
+			    VAR tabla = FILTER(
+			                        ALL(Calendario),
+			                        Calendario[Date] >= DATEADD(primeraFecha, -1, YEAR) && Calendario[Date] <= MAX(Calendario[Date]) 
+			                    )
+			    RETURN
+			    COUNTROWS(
+			        FILTER(
+			            ADDCOLUMNS(
+			                CALCULATETABLE(
+			                    VALUES(facturas[FraCenCli]),
+			                    tabla
+			                ),
+			                "FechaUltimaFactura", CALCULATE(MAX(Facturas[fcfecha]))
+			            ),
+			            [FechaUltimaFactura] < primeraFecha
+			        )
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 52ae071a-41d0-431e-a0f9-92cd2c751696
+
+	measure 'Clientes Nuevos' = ```
+			
+			IF(NOT(MIN(Calendario[Date]) > CALCULATE(MAX(Facturas[fcfecha]), ALL(Facturas))),
+			    VAR primeraFecha = FIRSTDATE(Calendario[Date])
+			    VAR tabla = FILTER(
+			                        ALL(Calendario),
+			                        Calendario[Date] >= DATEADD(primeraFecha, -1, YEAR) && Calendario[Date] <= MAX(Calendario[Date]) 
+			                    )
+			    RETURN
+			    COUNTROWS(
+			        FILTER(
+			            ADDCOLUMNS(
+			                CALCULATETABLE(
+			                    VALUES(facturas[FraCenCli]),
+			                    tabla
+			                ),
+			                "FechaPrimFactura", CALCULATE(MIN(Facturas[fcfecha]), tabla)
+			            ),
+			            [FechaPrimFactura] >= primeraFecha
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 04565bc2-6685-4d3d-972b-45c7cd806a42
+
+	measure 'Clientes Perdidos2' = ```
+			
+			VAR ClientesPrimPeriodo =
+			    CALCULATETABLE (
+			        VALUES ( facturas[FraCenCli] ),
+			        FILTER (
+			            ALL ( Calendario ),
+			            Calendario[Date]
+			                > MIN ( Calendario[Date] ) - 730
+			                && Calendario[Date]
+			                    < MIN ( Calendario[Date] ) - 240
+			        )
+			    )
+			VAR ClientesSegPeriodo =
+			    CALCULATETABLE (
+			        VALUES ( facturas[FraCenCli] ),
+			        FILTER (
+			            ALL ( Calendario ),
+			            Calendario[Date]
+			                > MIN ( Calendario[Date] ) - 240
+			                && Calendario[Date] < MIN ( Calendario[Date] )
+			        )
+			    )
+			RETURN
+			    COUNTROWS ( EXCEPT ( ClientesPrimPeriodo, ClientesSegPeriodo ) )
+			
+			```
+		formatString: 0
+		lineageTag: 299a2399-9331-4536-838f-4168b1f09443
+
+	measure 'Fra Clientes Perdidos2' =
+			
+			VAR ClientesPrimPeriodo =
+			    CALCULATETABLE (
+			        VALUES ( facturas[FraCenCli] ),
+			        FILTER (
+			            ALL ( Calendario ),
+			            Calendario[Date]
+			                > MIN ( Calendario[Date] ) - 730
+			                && Calendario[Date]
+			                    < MIN ( Calendario[Date] ) - 240
+			        )
+			    )
+			VAR ClientesSegPeriodo =
+			    CALCULATETABLE (
+			        VALUES ( facturas[FraCenCli] ),
+			        FILTER (
+			            ALL ( Calendario ),
+			            Calendario[Date]
+			                > MIN ( Calendario[Date] ) - 240
+			                && Calendario[Date] < MIN ( Calendario[Date] )
+			        )
+			    )
+			RETURN
+			    CALCULATE([TotFra],
+			    DATESBETWEEN(Calendario[Date],MIN(Calendario[Date]) - 730, MIN ( Calendario[Date] ) - 240),
+			    EXCEPT ( ClientesPrimPeriodo, ClientesSegPeriodo )
+			)
+		formatString: #,0.00
+		lineageTag: 0e39e57b-5d20-43ec-b6d1-1ef49a77cffa
+
+	measure 'Clientes Nuevos 2' =
+			
+			VAR ListaClientes = VALUES(facturas[FraCenCli])
+			RETURN
+			CALCULATE(COUNTROWS(VALUES(facturas[FraCenCli])),
+			     FILTER(ListaClientes, CALCULATE(COUNTROWS(facturas),FILTER(ALLSELECTED(Calendario[Date]),Calendario[Date] < MIN(Calendario[Date])))=0))
+		formatString: 0
+		lineageTag: 37e6ca73-7c7a-4c03-a55c-b15f37ab376b
+
+	measure 'CliActSel AA' = CALCULATE([Clientes ActivosSel],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: 0
+		lineageTag: 3a9e0a0f-16eb-4fa5-a846-f394c5db14a0
+
+	measure TotFraF = SUM(Facturas[fcbruto])
+		lineageTag: afd89455-4624-49c7-87ab-96930d938c44
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotClientes = DISTINCTCOUNT(facturas[FraCenCli])
+		formatString: 0
+		lineageTag: 5f4e3352-30cf-4231-ace0-8db9c5187bd1
+
+	measure 'ClientesPerdidos gpt' = ```
+			
+			VAR primeraFecha = FIRSTDATE(Calendario[Date])
+			VAR clientesAnioActual =
+			    CALCULATETABLE(
+			        VALUES(Facturas[FraCenCli]),
+			        FILTER(
+			            ALL(Calendario),
+			            Calendario[Date] >= primeraFecha && Calendario[Date] <= MAX(Calendario[Date])
+			        )
+			    )
+			VAR clientesAnioPasado =
+			    CALCULATETABLE(
+			        VALUES(Facturas[FraCenCli]),
+			        FILTER(
+			            ALL(Calendario),
+			            Calendario[Date] >= DATEADD(primeraFecha, -1, YEAR) && Calendario[Date] < primeraFecha
+			        )
+			    )
+			VAR clientesFacturacionNegativa =
+			    FILTER(
+			        clientesAnioActual,
+			        CALCULATE(SUM(MovFra[TMFra])) <= 0
+			    )
+			RETURN
+			    COUNTROWS(
+			        EXCEPT(
+			            clientesAnioPasado,
+			            UNION(clientesAnioActual, clientesFacturacionNegativa)
+			        )
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: 9323168e-0967-4040-a377-368cd5c0c09d
+
+	measure TotFraAAA = CALCULATE(SUM(facturas[fcbruto]),SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: 5f554991-52c8-495d-8b96-890a5edb921e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fccentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 648295e0-5742-4711-a8c4-0841598b466f
+		summarizeBy: sum
+		sourceColumn: fccentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column fccliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 6311e195-3065-46c1-a3fd-11a9219b9ff2
+		summarizeBy: sum
+		sourceColumn: fccliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8f336fcf-d654-458d-9df0-e84b3f350485
+		summarizeBy: none
+		sourceColumn: fcfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fcserie
+		dataType: int64
+		formatString: 0
+		lineageTag: da96c50f-65c7-462e-a7b7-4f8ff2299dba
+		summarizeBy: sum
+		sourceColumn: fcserie
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcdocum
+		dataType: int64
+		formatString: 0
+		lineageTag: 09f66a4a-3c20-4d26-94f5-7de46edc84d1
+		summarizeBy: sum
+		sourceColumn: fcdocum
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcano
+		dataType: int64
+		formatString: 0
+		lineageTag: 150ec616-ab19-4d4d-b0a5-12ccdbf19470
+		summarizeBy: sum
+		sourceColumn: fcano
+
+		annotation SummarizationSetBy = Automatic
+
+	column FraCenCli = FORMAT(facturas[fccentro],"00")&FORMAT(facturas[fccliente],"000000")
+		lineageTag: de2f753d-d239-4263-9f56-4bbaf09f6a5e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column mesfra
+		dataType: int64
+		formatString: 0
+		lineageTag: 24dfeb0d-f28e-4aea-a6bb-c6078ae2d48c
+		summarizeBy: sum
+		sourceColumn: mesfra
+
+		annotation SummarizationSetBy = Automatic
+
+	column fechamia
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c2f23ee4-ac76-49f0-a84d-1fd45a561910
+		summarizeBy: none
+		sourceColumn: fechamia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fcbruto
+		dataType: double
+		lineageTag: 266bb2e2-eb2a-4096-bf52-0439fae49085
+		summarizeBy: sum
+		sourceColumn: fcbruto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition facturas-180553a4-d22b-4fa8-bdc3-9c3ef3554861 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="select fccentro,fccliente,fcfecha,fcserie,fcdocum,fcano,fcbruto#(lf)from facturas#(lf)where fcempresa=1#(lf)and fcano>2020"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"fccentro", Int64.Type}, {"fcano", Int64.Type}, {"fcfecha", type date}}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado", "mesfra", each Date.Month([fcfecha])),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Personalizada agregada",{{"mesfra", Int64.Type}}),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Tipo cambiado1", "fechamia", each Date.FromText("01/"&Number.ToText([mesfra])&"/"&Number.ToText([fcano]))),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Personalizada agregada1",{{"fechamia", type date}})
+				in
+				    #"Tipo cambiado2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

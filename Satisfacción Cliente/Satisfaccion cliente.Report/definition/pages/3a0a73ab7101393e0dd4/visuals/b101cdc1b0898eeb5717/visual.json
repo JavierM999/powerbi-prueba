@@ -1,0 +1,377 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b101cdc1b0898eeb5717",
+  "position": {
+    "x": 40.597014925373131,
+    "y": 102.6865671641791,
+    "z": 2000,
+    "height": 539.70149253731347,
+    "width": 1017.3134328358209,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto",
+              "nativeQueryRef": "Delegacion",
+              "displayName": "Delegacion"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clientes"
+                    }
+                  },
+                  "Property": "clcodigo"
+                }
+              },
+              "queryRef": "Sum(Clientes.clcodigo)",
+              "nativeQueryRef": "Codigo cliente",
+              "displayName": "Codigo cliente"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clientes"
+                    }
+                  },
+                  "Property": "clnombre"
+                }
+              },
+              "queryRef": "Clientes.clnombre",
+              "nativeQueryRef": "Nombre cliente",
+              "displayName": "Nombre cliente"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "Clientes Perdidos MCA"
+                }
+              },
+              "queryRef": "MovFra.ClientesTotFraActual",
+              "nativeQueryRef": "Clientes Perdidos ",
+              "displayName": "Clientes Perdidos "
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "FraCli Perdidos"
+                }
+              },
+              "queryRef": "MovFra.FraCli Perdidos2",
+              "nativeQueryRef": "FraCli Perdidos"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "AsignacionesClientesPerdidos"
+                }
+              },
+              "queryRef": "MovFra.MediaAsignacionesClientesPerdidos",
+              "nativeQueryRef": "MediaAsignacionesClientesPerdidos"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "estadi"
+                    }
+                  },
+                  "Property": "Margenaa %"
+                }
+              },
+              "queryRef": "estadi.Margenaa %",
+              "nativeQueryRef": "Margenaa %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Clientes"
+                  }
+                },
+                "Property": "clcodigo"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "70.98129442112852D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "MCANCentros.Texto"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "13b31a25b52e345020ea",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MCANCentros"
+              }
+            },
+            "Property": "Texto"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MCANCentros",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "m"
+                              }
+                            },
+                            "Property": "Texto"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'99 CEN'"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "2c1006d59c8fc3c18a9a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "TotFra"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "5006f0fce3b4ee971ffa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "Clientes Perdidos MCA"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MovFra",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 0,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "Clientes Perdidos MCA"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "1L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "b0cbd41b88da0650919e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Clientes"
+              }
+            },
+            "Property": "clnombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "92261d021e0d5f7de556",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "AsignacionesClientesPerdidos"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "df4ea1ec5299ec24aaaa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "estadi"
+              }
+            },
+            "Property": "Margenaa %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9e2f5872b3e054afd555",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Clientes"
+              }
+            },
+            "Property": "clcodigo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4c563f297f9cccac8363",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "FraCli Perdidos"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

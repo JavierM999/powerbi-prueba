@@ -1,0 +1,150 @@
+table Calmio
+	lineageTag: 5f3bf7a2-a66f-4ba2-9155-c97e1f9b6974
+
+	column Date
+		formatString: General Date
+		lineageTag: a4080201-eb31-4cd9-b48c-0a7166293443
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		lineageTag: 6888ebc6-2ed1-4e1d-9502-a3b11a511e6a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[DateKey]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Año
+		formatString: 0
+		lineageTag: 2c88dea1-4a73-4007-b6de-e51a61381500
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Año]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes (Número)'
+		lineageTag: 07bdcdeb-d799-48f9-bb81-a45f76573a4e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Mes (Número)]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Año/Mes
+		lineageTag: 873853f1-73eb-4f2c-8915-384b26bfe6cf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Año/Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes (Corto)'
+		lineageTag: 760bacbf-0934-4c0d-b598-52c4b76fe879
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Mes (Corto)]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes
+		lineageTag: e45a149d-0867-4c34-afa7-ca94029065cb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Día
+		formatString: 0
+		lineageTag: edebf631-dd93-4cf0-9d15-35c3801d767a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Día]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Semana
+		lineageTag: 47f72db2-592f-4dca-a053-4689d73ddd3f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana ISO'
+		lineageTag: 47411e18-23ed-49a0-aba5-aa329796c96d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Semana ISO]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Año ISO'
+		formatString: 0
+		lineageTag: aa3fc60b-026a-43ec-a774-5e0a27845377
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Año ISO]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Día Semana (Número)'
+		formatString: 0
+		lineageTag: 1ff59631-b5a5-4591-aed3-6c7c8fda7c90
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Día Semana (Número)]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekDay
+		lineageTag: 3b46908e-5ad0-49b8-b910-e6bfbcb2e0f0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[WeekDay]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekDayShort
+		lineageTag: 5b938c5a-d64d-400a-9992-546794786963
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[WeekDayShort]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		lineageTag: 1b9e855a-4b1a-43aa-8ff7-e8f47a64ea54
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Trimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trimestre Año'
+		lineageTag: cf9d1dec-c83b-4d3e-a092-5a52e8fff8e7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Trimestre Año]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calmio-cde8e7c8-bff8-462c-af49-e1c8055d1551 = calculated
+		mode: import
+		source = ```
+				
+				var primerafecha = DATE(2022,03,01)
+				return  
+				FILTER(
+				                        ALL(Calendario),
+				                        Calendario[Date] >=primerafecha && Calendario[Date] <= MAX(Calendario[Date]) 
+				                    )
+				```
+
+	annotation PBI_Id = ddb627428b5743cfad2524760d7ecc1c
+

@@ -1,0 +1,46 @@
+table Opciones
+	lineageTag: add2c00b-6601-40e7-a416-b2055973654d
+
+	measure 'Check Filtro' = ISFILTERED(Opciones[Texto])
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e999581f-6148-42f6-b309-d41eb21bc5e4
+
+	measure Transparente = IF(SELECTEDVALUE(Opciones[Texto])="ASIGNACIONES","#FFFFF00",BLANK())
+		lineageTag: c9f29c13-0822-421c-84f7-00d62dd560ea
+
+	measure TransparenteAL = IF(SELECTEDVALUE(Opciones[Texto])="FACTURACIÓN","#FFFFF00",BLANK())
+		lineageTag: 3341e728-e345-4ec7-99ca-f1a20c1895db
+
+	measure TextTit = "Gráfico por "&SELECTEDVALUE(Opciones[Texto])
+		lineageTag: 9db23e45-d9fb-4a1e-930a-f11d855ac8c7
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 48196482-882f-45ea-85e5-71ec42c97767
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Texto
+		dataType: string
+		lineageTag: a77e4354-c91e-4fbc-9281-97a667b599bf
+		summarizeBy: none
+		sourceColumn: Texto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Opciones = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUXJzdA4JDXJ09jw82U8pVidayQgo6Bjs6e4HFPP3cw1Wio0FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Id = _t, Texto = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Id", Int64.Type}, {"Texto", type text}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

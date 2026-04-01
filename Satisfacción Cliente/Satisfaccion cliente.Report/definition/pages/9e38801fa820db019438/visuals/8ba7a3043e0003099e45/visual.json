@@ -1,0 +1,458 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "8ba7a3043e0003099e45",
+  "position": {
+    "x": 84.776119402985074,
+    "y": 117.01492537313433,
+    "z": 5001,
+    "height": 487.16417910447763,
+    "width": 1036.4179104477612,
+    "tabOrder": 5001
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto",
+              "nativeQueryRef": "Delegación",
+              "displayName": "Delegación"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clientes"
+                    }
+                  },
+                  "Property": "clcodigo"
+                }
+              },
+              "queryRef": "Sum(Clientes.clcodigo)",
+              "nativeQueryRef": "Codigo cliente",
+              "displayName": "Codigo cliente"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clientes"
+                    }
+                  },
+                  "Property": "clnombre"
+                }
+              },
+              "queryRef": "Clientes.clnombre",
+              "nativeQueryRef": "Nombre cliente",
+              "displayName": "Nombre cliente"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "TotFra"
+                }
+              },
+              "queryRef": "MovFra.TotFra",
+              "nativeQueryRef": "Factura 2025",
+              "displayName": "Factura 2025"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "TotFraAA"
+                }
+              },
+              "queryRef": "MovFra.TotFraAA",
+              "nativeQueryRef": "Factura 2024",
+              "displayName": "Factura 2024"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "IncFactura"
+                }
+              },
+              "queryRef": "MovFra.IncFactura",
+              "nativeQueryRef": "IncFactura"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "%Incfacturas"
+                }
+              },
+              "queryRef": "MovFra.%Incfacturas",
+              "nativeQueryRef": "%Incfacturas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "estadi"
+                    }
+                  },
+                  "Property": "DifMargen%"
+                }
+              },
+              "queryRef": "estadi.DifMargen%",
+              "nativeQueryRef": "IncMargen",
+              "displayName": "IncMargen"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Asignaciones"
+                }
+              },
+              "queryRef": "contratos.Asignaciones",
+              "nativeQueryRef": "Asignaciones 2025",
+              "displayName": "Asignaciones 2025"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "AsignacionesAA"
+                }
+              },
+              "queryRef": "contratos.AsignacionesAA",
+              "nativeQueryRef": "Asignacione 2024",
+              "displayName": "Asignacione 2024"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "IncAsignac"
+                }
+              },
+              "queryRef": "MovFra.IncAsignac",
+              "nativeQueryRef": "IncAsignac"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "%IncAsigna"
+                }
+              },
+              "queryRef": "MovFra.%IncAsigna",
+              "nativeQueryRef": "IncAsigna",
+              "displayName": "IncAsigna"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "MCANCentros"
+                  }
+                },
+                "Property": "Texto"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "d8a7c45f4eec6a6ba271",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "TotFra"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MovFra",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "TotFra"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "e069d5d138f5cfa65b81",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "TotFraAA"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MovFra",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "TotFraAA"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "b1f1fad46623006935e7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "contratos"
+              }
+            },
+            "Property": "Asignaciones"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "462f482e56fbb2fe7de2",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "contratos"
+              }
+            },
+            "Property": "AsignacionesAA"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b3ccd93f40aa483d49b9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "%IncAsigna"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c4b3d1ca4fa8d4202717",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "IncAsignac"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "88989d5c9dfa470a63ad",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "%Incfacturas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "88965318c53873aacca9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "IncFactura"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "01a1cfe2162efb549a08",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MCANCentros"
+              }
+            },
+            "Property": "Texto"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "21fd0d7f1c9d6c980e90",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Clientes"
+              }
+            },
+            "Property": "clcodigo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1aeaae1d0585f1a92b49",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Clientes"
+              }
+            },
+            "Property": "clnombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "a1a0df05ff994b1bed27",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "estadi"
+              }
+            },
+            "Property": "DifMargen%"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

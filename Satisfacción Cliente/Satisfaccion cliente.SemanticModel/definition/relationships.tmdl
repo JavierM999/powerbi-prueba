@@ -1,0 +1,32 @@
+relationship 49540b80-1138-4fca-a2c9-d399ceea35e4
+	fromColumn: contratos.ConCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship c01682d4-da19-4c01-a5ca-f705bb979386
+	fromColumn: Clientes.clcentro
+	toColumn: MCANCentros.Id
+
+relationship 2990dda7-ccdc-424c-a2ec-2a193e0cf8c7
+	fromColumn: facturas.FraCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 80bb5375-7eb9-4f2b-956e-9a82d75b1c2c
+	fromColumn: facturas.fcfecha
+	toColumn: Calendario.Date
+
+relationship 077bf5fb-49fc-4151-b6bf-62722c88e654
+	fromColumn: MovFra.fcfecha
+	toColumn: Calendario.Date
+
+relationship 8899a42c-c710-419e-8b77-6efa479b6bf9
+	fromColumn: MovFra.FraCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 953e4bda-b2b8-0e9f-4ae7-af5bba234783
+	fromColumn: Comentarios.Del
+	toColumn: MCANCentros.Id
+
+relationship 245c7d27-d503-fe76-cc80-3ba77972ecff
+	fromColumn: estadi.EsCenCli
+	toColumn: Clientes.ClCenCli
+

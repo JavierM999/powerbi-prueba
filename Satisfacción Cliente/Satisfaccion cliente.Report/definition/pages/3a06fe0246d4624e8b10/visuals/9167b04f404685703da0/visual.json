@@ -1,0 +1,548 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "9167b04f404685703da0",
+  "position": {
+    "x": 26.936866718628213,
+    "y": 117.72408417770849,
+    "z": 5001,
+    "height": 562.68121590023372,
+    "width": 1161.2782540919718,
+    "tabOrder": 5001
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto",
+              "nativeQueryRef": "Texto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "MovTotCli"
+                }
+              },
+              "queryRef": "MovFra.MovTotCli",
+              "nativeQueryRef": "Clientes2025",
+              "displayName": "Clientes2025"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "MovTotCliAA"
+                }
+              },
+              "queryRef": "MovFra.MovTotCliAA",
+              "nativeQueryRef": "Clientes2024",
+              "displayName": "Clientes2024"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "IncClientes"
+                }
+              },
+              "queryRef": "MovFra.IncClientes",
+              "nativeQueryRef": "IncClientes"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "%IncClientes"
+                }
+              },
+              "queryRef": "MovFra.%IncClientes",
+              "nativeQueryRef": "%IncClientes"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "TotFra"
+                }
+              },
+              "queryRef": "MovFra.TotFra",
+              "nativeQueryRef": "Factura2025",
+              "displayName": "Factura2025"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "TotFraAA"
+                }
+              },
+              "queryRef": "MovFra.TotFraAA",
+              "nativeQueryRef": "Factura2024",
+              "displayName": "Factura2024"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "IncFactura"
+                }
+              },
+              "queryRef": "MovFra.IncFactura",
+              "nativeQueryRef": "IncFactura"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "%Incfacturas"
+                }
+              },
+              "queryRef": "MovFra.%Incfacturas",
+              "nativeQueryRef": "%Incfacturas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "Asignaciones"
+                }
+              },
+              "queryRef": "contratos.Asignaciones",
+              "nativeQueryRef": "Asignaciones2025",
+              "displayName": "Asignaciones2025"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contratos"
+                    }
+                  },
+                  "Property": "AsignacionesAA"
+                }
+              },
+              "queryRef": "contratos.AsignacionesAA",
+              "nativeQueryRef": "Asignaciones2024",
+              "displayName": "Asignaciones2024"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "IncAsignac"
+                }
+              },
+              "queryRef": "MovFra.IncAsignaciones",
+              "nativeQueryRef": "IncAsignac"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "%IncAsigna"
+                }
+              },
+              "queryRef": "MovFra.%IncAsigna",
+              "nativeQueryRef": "%IncAsigna"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "MCANCentros"
+                  }
+                },
+                "Property": "Texto"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1b4166bccb029fa7efc4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "TotFra"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MovFra",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "TotFra"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "703b6f94f4406f161b4c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "TotFraAA"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MovFra",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "TotFraAA"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "13b31a25b52e345020ea",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MCANCentros"
+              }
+            },
+            "Property": "Texto"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MCANCentros",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "m"
+                              }
+                            },
+                            "Property": "Texto"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'99 CEN'"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "79c71da593473cd0e561",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "contratos"
+              }
+            },
+            "Property": "Asignaciones"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2a059479b782a82b517a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "contratos"
+              }
+            },
+            "Property": "AsignacionesAA"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "498abb39ca43a881ab2f",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "MovTotCli"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "df5280343d3841091ac9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "MovTotCliAA"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0b9cea22f24cd81169d2",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "IncClientes"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "12d8ac6730bb38b23170",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "%IncClientes"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "96aaafa70abdd1194e49",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "IncFactura"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b7fb59c104a67e94b3c0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "%Incfacturas"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2d47a370fda5f30aa14e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "IncAsignac"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9017bcaa71246b898fed",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "%IncAsigna"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

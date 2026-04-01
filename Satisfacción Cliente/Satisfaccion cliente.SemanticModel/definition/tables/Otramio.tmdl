@@ -1,0 +1,36 @@
+table Otramio
+	lineageTag: 70c81d72-0f4b-4f09-9921-eb58ceaa24e6
+
+	column FraCenCli
+		lineageTag: 7fab9be2-b85a-431e-b837-3f736022e686
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: facturas[FraCenCli]
+
+		annotation SummarizationSetBy = Automatic
+
+	column FechaUltimaFactura
+		formatString: General Date
+		lineageTag: a16a9cd6-493c-4aa0-a791-2878365612e7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [FechaUltimaFactura]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Otramio-0bf8b8e1-a2a8-4061-9844-441f33a23722 = calculated
+		mode: import
+		source =
+				
+				FILTER(
+				            ADDCOLUMNS(
+				                CALCULATETABLE(
+				                    VALUES(facturas[FraCenCli]),
+				                    Calmio
+				                ),
+				                "FechaUltimaFactura", CALCULATE(MAX(Facturas[fcfecha]))
+				            ),
+				            [FechaUltimaFactura] < DATE(2023,03,01))
+
+	annotation PBI_Id = d4071c97414a443986f2a48c2d0bca4f
+

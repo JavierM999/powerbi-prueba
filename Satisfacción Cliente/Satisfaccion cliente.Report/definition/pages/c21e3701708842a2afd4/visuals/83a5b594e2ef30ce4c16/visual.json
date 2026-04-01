@@ -1,0 +1,194 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "83a5b594e2ef30ce4c16",
+  "position": {
+    "x": 87.164179104477611,
+    "y": 102.6865671641791,
+    "z": 2000,
+    "height": 594.62686567164178,
+    "width": 930.14925373134326,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Comentarios"
+                    }
+                  },
+                  "Property": "¿Con qué delegación trabajas?"
+                }
+              },
+              "queryRef": "Comentarios.¿Con qué delegación trabajas?",
+              "nativeQueryRef": "¿Con qué delegación trabajas?"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Comentarios"
+                    }
+                  },
+                  "Property": "Cliente"
+                }
+              },
+              "queryRef": "Comentarios.Cliente",
+              "nativeQueryRef": "Cliente"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Comentarios"
+                    }
+                  },
+                  "Property": "Persona de contacto en Temporing ETT"
+                }
+              },
+              "queryRef": "Comentarios.Persona de contacto en Temporing ETT",
+              "nativeQueryRef": "Persona de contacto en Temporing ETT"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Comentarios"
+                    }
+                  },
+                  "Property": "Puedes comentarnos las observaciones que consideres oportunas."
+                }
+              },
+              "queryRef": "Comentarios.Puedes comentarnos las observaciones que consideres oportunas.",
+              "nativeQueryRef": "Puedes comentarnos las observaciones que consideres oportunas."
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "13b31a25b52e345020ea",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MCANCentros"
+              }
+            },
+            "Property": "Texto"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MCANCentros",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "m"
+                              }
+                            },
+                            "Property": "Texto"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'99 CEN'"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "036ce23935df03309c08",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "TotFra"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "83be44a44ac466ba5184",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "TotFraAA"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      }
+    ]
+  }
+}

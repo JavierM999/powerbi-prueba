@@ -1,0 +1,158 @@
+table estadi
+	lineageTag: 8f495fa2-fdae-4d0e-bf5d-842b4ceae168
+
+	measure 'Margen €' = [TotFra]-([esSumCosSalP]+[esSumCosSSP])
+		lineageTag: 8044786e-e037-4f86-8167-757ad019ccb0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure esSumCosSalP = CALCULATE(SUM(estadi[SCosSal])+SUM(estadi[SIndem]),FILTER(estadi,estadi[esfecha]>=[fecini]),FILTER(estadi,estadi[esfecha]<=[fecfin]))
+		lineageTag: 854ff0fc-4bf7-4e18-8e81-d78e67dd4ab6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure esSumCosSSP = CALCULATE(SUM(estadi[SCosSs]),FILTER(estadi,estadi[esfecha]>=[fecini]),FILTER(estadi,estadi[esfecha]<=[fecfin]))
+		lineageTag: 98e4a20f-6d3f-4711-b260-5f93c9b5f46f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure esSumCosSalPaa = CALCULATE(SUM(estadi[SCosSal]) + SUM(estadi[SIndem]) ,FILTER(estadi,estadi[esfecha]>=[feciniaa]),FILTER(estadi,estadi[esfecha]<=[fecfinaa]))
+		lineageTag: 734c56b8-4984-4cf2-91e7-32d8c5ac471e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure esSumCosSSPaa = CALCULATE(SUM(estadi[SCosSs]),FILTER(estadi,estadi[esfecha]>=[feciniaa]),FILTER(estadi,estadi[esfecha]<=[fecfinaa]))
+		lineageTag: f66fad79-ff83-4d67-8b73-eb4ae51dbb9e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MargenAA €' = [TotFraAA]-([esSumCosSalPaa]+[esSumCosSSPaa])
+		formatString: 0.00
+		lineageTag: ea188108-5824-4abc-87a1-c0051366a446
+
+	measure 'Margenaa %' = IF([TotFraAA]>0,1-(([esSumCosSalPaa]+[esSumCosSSPaa])/[TotFraAA]),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 849b9a27-ca75-4961-bce6-976c6ff38e2d
+
+	measure 'Margen %' = IF([TotFra]>0,1-(([esSumCosSalP]+[esSumCosSSP])/[TotFra]),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 04b31641-b970-4a9f-a080-0a88170d3e91
+
+	measure DifMargen% = [Margen %]-[Margenaa %]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: b4c8600d-f59f-4c28-92d0-4b57d0fe17a8
+
+	column escentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e05bb12-58a9-4de8-9ae1-920ddc13dd30
+		summarizeBy: sum
+		sourceColumn: escentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column escliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e1df85b-9b9a-4681-be1b-3b47b2886c45
+		summarizeBy: sum
+		sourceColumn: escliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column esanyo
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a50d930-3afe-4efd-b087-d4b5731de026
+		summarizeBy: sum
+		sourceColumn: esanyo
+
+		annotation SummarizationSetBy = Automatic
+
+	column esmes
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a9f7477-b597-4e54-b4ed-6c1cea8aa140
+		summarizeBy: sum
+		sourceColumn: esmes
+
+		annotation SummarizationSetBy = Automatic
+
+	column esfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 653d9e78-24ef-43ed-9257-89b927c2a8e4
+		summarizeBy: none
+		sourceColumn: esfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SImpFra
+		dataType: double
+		lineageTag: ae84c013-0bba-4330-9ecb-7832d654e96f
+		summarizeBy: sum
+		sourceColumn: SImpFra
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SCosSal
+		dataType: double
+		lineageTag: 0d9ac9f1-260a-4702-ae7e-3c545479144a
+		summarizeBy: sum
+		sourceColumn: SCosSal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SCosSs
+		dataType: double
+		lineageTag: c0bf8851-d0fd-4333-8a00-f813c8c0a36e
+		summarizeBy: sum
+		sourceColumn: SCosSs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SIndem
+		dataType: double
+		lineageTag: b070c5b2-6cff-46b5-a049-94c124f5dc41
+		summarizeBy: sum
+		sourceColumn: SIndem
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EsCenCli = FORMAT(estadi[escentro],"00")&FORMAT(estadi[escliente],"000000")
+		lineageTag: 6b81d279-d8df-4f18-80f1-59bd3ec11ba5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition estadi = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001"),
+				    dbo_estadi = Source{[Schema="dbo",Item="estadi"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_estadi, each [esempresa] = 1),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each [escentro] >= 1 and [escentro] <= 87),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows1",{"escentro", "escliente", "escontrato", "esanyo", "esmes", "esimportefac", "escostosalario", "escostoss", "esindemniz"}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Removed Other Columns", each [esanyo] >= 2023),
+				    #"Added Custom" = Table.AddColumn(#"Filtered Rows2", "esfecha", each Date.FromText("01/"&Number.ToText([esmes])&"/"&Number.ToText([esanyo]))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"esfecha", type date}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Changed Type",{"escentro", "escliente", "esanyo", "esmes", "esfecha", "esimportefac", "escostosalario", "escostoss"}),
+				    #"Grouped Rows" = Table.Group(#"Reordered Columns", {"escentro", "escliente", "esanyo", "esmes", "esfecha"}, {{"SImpFra", each List.Sum([esimportefac]), type nullable number}, {"SCosSal", each List.Sum([escostosalario]), type nullable number}, {"SCosSs", each List.Sum([escostoss]), type nullable number}, {"SIndem", each List.Sum([esindemniz]), type nullable number}})
+				in
+				    #"Grouped Rows"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

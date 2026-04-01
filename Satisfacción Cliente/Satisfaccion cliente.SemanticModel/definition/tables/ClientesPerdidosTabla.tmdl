@@ -1,0 +1,31 @@
+table ClientesPerdidosTabla
+	lineageTag: 3c2b3ef2-6411-4f97-8ff3-22ccaab36a0c
+
+	column FraCenCli
+		lineageTag: dbf118c2-b52b-4fbb-9174-6eb27248df97
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MovFra[FraCenCli]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ClientesPerdidosTabla = calculated
+		mode: import
+		source =
+				
+				FILTER(
+				    ALL(MovFra[FraCenCli]), -- Evalúa todos los clientes
+				    CALCULATE(
+				        SUM(MovFra[TMFra]),
+				        REMOVEFILTERS(Calendario), -- Evalúa sin filtros actuales
+				        Calendario[Año] = 2023 -- Clientes con actividad en 2023
+				    ) > 0 &&
+				    CALCULATE(
+				        SUM(MovFra[TMFra]),
+				        REMOVEFILTERS(Calendario), -- Evalúa sin filtros actuales
+				        Calendario[Año] = 2024 -- Sin actividad en 2024
+				    ) <= 0
+				)
+
+	annotation PBI_Id = 474d0fee003b41ec88265b019da519c7
+

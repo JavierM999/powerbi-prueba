@@ -1,0 +1,190 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "4e3194ff0189d5d59a82",
+  "position": {
+    "x": 87.153404429860544,
+    "y": 102.90401968826907,
+    "z": 2000,
+    "height": 594.32321575061519,
+    "width": 530.27071369975386,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto",
+              "nativeQueryRef": "Delegación",
+              "displayName": "Delegación"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "Clientes Perdidos MCA"
+                }
+              },
+              "queryRef": "MovFra.ClientesTotFraActual",
+              "nativeQueryRef": "Clientes Perdidos",
+              "displayName": "Clientes Perdidos"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "FraCli Perdidos"
+                }
+              },
+              "queryRef": "MovFra.FraCli Perdidos",
+              "nativeQueryRef": "FraCli Perdidos"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MovFra"
+                    }
+                  },
+                  "Property": "AsignacionesClientesPerdidos"
+                }
+              },
+              "queryRef": "MovFra.MediaAsignacionesClientesPerdidos",
+              "nativeQueryRef": "AsignacionesClientesPerdidos"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "70.98129442112852D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "MCANCentros.Texto"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "13b31a25b52e345020ea",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MCANCentros"
+              }
+            },
+            "Property": "Texto"
+          }
+        },
+        "type": "Categorical",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "b533b22d53e40a4643ef",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "TotFra"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "337d50a45ef666b2d0c4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "Clientes Perdidos MCA"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "abede49372a680b1d80a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "AsignacionesClientesPerdidos"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "99b4358f0e3cba3f5d54",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MovFra"
+              }
+            },
+            "Property": "FraCli Perdidos"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Clientes","MCANCentros","contratos","facturas","MovFra","Opciones","Comentarios","estadi"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Clientes
+ref table MCANCentros
+ref table contratos
+ref table Calendario
+ref table facturas
+ref table Meses
+ref table MovFra
+ref table Calmio
+ref table Otramio
+ref table Opciones
+ref table ClientesPerdidosTabla
+ref table Comentarios
+ref table estadi
+
+ref cultureInfo es-ES
+

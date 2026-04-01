@@ -1,0 +1,82 @@
+table Clientes
+	lineageTag: 6b48fc7d-cfdc-4526-82e7-34df89c2e127
+
+	column clcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: c12b22b7-ed0b-4524-ad5e-21486a626714
+		summarizeBy: none
+		sourceColumn: clcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: fcef6123-dfa7-4006-99f6-1793cc8021b3
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnombre
+		dataType: string
+		lineageTag: d9a577dd-8b70-4332-bb20-a4f1272d90a7
+		summarizeBy: none
+		sourceColumn: clnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnomfis
+		dataType: string
+		lineageTag: 6e63282b-8e5e-4b61-adcd-bbd28d4f5f65
+		summarizeBy: none
+		sourceColumn: clnomfis
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: e258f16f-5e00-4c18-bfae-3629163b849f
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column clgrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: a829e6da-a4d4-43a3-8033-e607e8fc4639
+		summarizeBy: sum
+		sourceColumn: clgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clsubgrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 10ebe4a5-931b-4963-a0d7-b0f20e5d155a
+		summarizeBy: sum
+		sourceColumn: clsubgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClCenCli = FORMAT(Clientes[clcentro],"00")&FORMAT(Clientes[clcodigo],"000000")
+		lineageTag: 4be66606-bb53-4940-a164-39c2dbed64e2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clientes-771496db-ccee-4209-956d-1cfb804affc5 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)FROM         clientes INNER JOIN#(lf)                      contra ON clientes.clempresa = contra.ctempresa and clientes.clcentro=contra.ctcentro and clientes.clcodigo=contra.ctcliente#(lf)where ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal)>=2021)#(lf)and clientes.clempresa=1#(lf)#(lf)union#(lf)SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)from facturas INNER JOIN#(lf)                      clientes ON facturas.fcempresa=clientes.clempresa and facturas.fccentro=clientes.clcentro  and  facturas.fccliente = clientes.clcodigo#(lf)where year(facturas.fcfecha)>=2021#(lf)and facturas.fcempresa=01"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"clcentro", Int64.Type}, {"clgrupo", Int64.Type}, {"clsubgrupo", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

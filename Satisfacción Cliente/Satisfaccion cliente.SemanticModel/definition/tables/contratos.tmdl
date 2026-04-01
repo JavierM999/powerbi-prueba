@@ -1,0 +1,199 @@
+table contratos
+	lineageTag: 2b14b125-5a35-4b51-b592-a3b105a43a44
+
+	measure Asignaciones =
+			
+			IF (
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			        = BLANK (),
+			    0,
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 8785f689-5750-4226-9376-3ccbb93bd74a
+
+	measure CliAct = CALCULATE(DISTINCTCOUNT(contratos[ConCenCli]),FILTER(contratos,[Asignaciones]>0))
+		formatString: 0
+		lineageTag: cacfc853-ef6a-4c33-aa7c-0b686f172e4f
+
+	measure 'Trab Activos' =
+			
+			IF (
+			    CALCULATE (
+			       DISTINCTCOUNT(contratos[cttrabajador]),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			        = BLANK (),
+			    0,
+			    CALCULATE (
+			        DISTINCTCOUNT(contratos[cttrabajador]),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: ca0fcdbc-b038-4f65-9fb2-1d831dd9ead8
+
+	measure AvWeek = AVERAGEX(VALUES(Calendario[Date]),[Asignaciones])
+		formatString: 0.00
+		lineageTag: d9e3fb1f-70b7-4917-a41f-a6ae42561ea4
+
+	measure 'MediaAnual TrabAct' = CALCULATE(AVERAGEX(VALUES(Calendario[Date]),contratos[Trab Activos]),ALL(Calendario[Mes (Número)]))
+		formatString: 0.00
+		lineageTag: 5473f7b6-ac31-4578-a490-f0f63a16cd93
+
+	measure 'MediaMes TrabAct' = AVERAGEX(VALUES(Calendario[Date]),contratos[Trab Activos])
+		formatString: 0.00
+		lineageTag: 855b9af3-2e3c-45ca-9ddb-abaec3e07d4d
+
+	measure DifMedia = [MediaMes TrabAct]-[MediaAnual TrabAct]
+		formatString: 0.00
+		lineageTag: 2c3fd7a0-0898-4e1f-befe-e8d71304239e
+
+	measure AsignacionesAA =
+			
+			IF (
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfinaa] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [feciniaa]
+			        )
+			    )
+			        = BLANK (),
+			    0,
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfinaa] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [feciniaa]
+			        )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 40f7306a-a71d-4bdc-92fc-58f7cbab7318
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 46c44edb-0f26-4342-88be-39e7f03e76dc
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c9e68b6-146f-463e-bd7c-59323f6b1b9e
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: aa455bf3-8287-4cfb-b8cf-de2d70b20159
+		summarizeBy: sum
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: a812b653-f5d4-46db-91ea-29eadc44de6b
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: fb15303f-9398-41bf-84c9-def9005390fc
+		summarizeBy: sum
+		sourceColumn: ctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d9d0a5d2-8ff6-45aa-8150-6cc7bc7e7f15
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 24445874-81d1-4d43-a466-766ece881841
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcatepuesto
+		dataType: int64
+		formatString: 0
+		lineageTag: b074f612-0448-4bc7-b004-83b24c8a82e8
+		summarizeBy: sum
+		sourceColumn: ctcatepuesto
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConCenCli = FORMAT(contratos[ctcentro],"00")&FORMAT(contratos[ctcliente],"000000")
+		lineageTag: 18cede84-0c26-4584-98be-e6653f90e35c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition contratos-bdbddce9-a58c-4f38-a294-aadbd135ea88 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001"),
+				    dbo_contra = Source{[Schema="dbo",Item="contra"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_contra, each [ctempresa] = 1),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"ctcentro", "ctcontrato", "cttrabajador", "ctcliente", "ctcencli", "ctfechaini", "ctfechafinreal", "ctcatepuesto"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Removed Other Columns", each [ctcentro] >= 1 and [ctcentro] <= 87),
+				    #"Filtered Rows2" = Table.SelectRows(#"Filtered Rows1", each [ctfechafinreal] > #datetime(2020, 12, 31, 0, 0, 0) or [ctfechafinreal] = null),
+				    #"Filtered Rows3" = Table.SelectRows(#"Filtered Rows2", each true),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Filtered Rows3",{{"ctcentro", Int64.Type}, {"ctcencli", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+

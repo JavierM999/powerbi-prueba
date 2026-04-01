@@ -1,0 +1,18 @@
+table Meses
+	lineageTag: 32ccb010-3a28-45b8-b4be-61015872ce53
+
+	column Value
+		formatString: 0
+		lineageTag: 3c503026-5ee7-4d6d-bf66-d00606fe424b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Meses-a7510d1d-4a2e-4a1c-adff-2de2d04b2fbd = calculated
+		mode: import
+		source = GENERATESERIES(1, 12, 1)
+
+	annotation PBI_Id = b61775ffa4554578a857910163463414
+

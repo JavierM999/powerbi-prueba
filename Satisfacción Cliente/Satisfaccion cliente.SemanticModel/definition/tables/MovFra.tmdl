@@ -1,0 +1,376 @@
+table MovFra
+	lineageTag: b3c796e4-c225-4198-97d0-cbc9dddb9005
+
+	measure TotFra = SUM(MovFra[TMFra])
+		formatString: #,0.00
+		lineageTag: 98ea45f6-6f04-420e-a5c2-2e1c6bb865c5
+
+	measure 'MediaFra Anual' = CALCULATE(AVERAGEX(VALUES(Calendario[Mes (Número)]),[TotFra2]),ALL(Calendario[Mes (Número)]))
+		formatString: #,0.00
+		lineageTag: fabbbefe-86b4-4534-be05-ae29971e7013
+
+	measure TotFraAA = CALCULATE([TotFra],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.00
+		lineageTag: aa4b75ee-1d37-4ae1-9a37-d6ba6434ec18
+
+	measure MediaFraAnAA = CALCULATE(AVERAGEX(VALUES(Calendario[Mes (Número)]),[TotFraAA2]),ALL(Calendario[Mes (Número)]))
+		lineageTag: 13c6f073-5a75-4ef5-83a4-9b359967e7eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MediaFra Anual2' = CALCULATE(AVERAGEX(ALL(Calendario[Mes (Número)]),[TotFra]),ALL(Calendario[Mes (Número)]))
+		formatString: 0.00
+		lineageTag: d5bf633c-7c6a-4ff6-9fa1-f260b4d24653
+
+	measure TotFra2 = IF(SUM(MovFra[TMFra])=BLANK(),0,SUM(MovFra[TMFra]))
+		lineageTag: 8dd0986d-83c2-4fbc-972e-5004299ce19b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotFraAA2 = CALCULATE([TotFra2],SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: 6c99f530-790b-4dac-8d1c-99429d2c3c0c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DifMedFra = [TotFra]-[MediaFra Anual]
+		formatString: #,0.00
+		lineageTag: 00c6c7d0-b093-48ba-bed8-232149733807
+
+	measure Oculta = IF(SELECTEDVALUE(Opciones[Texto])="ASIGNACIONES",1,0)
+		formatString: 0
+		lineageTag: 845f0796-6411-42a7-a34b-a2079a8e6692
+
+	measure MovTotCli = DISTINCTCOUNT(MovFra[FraCenCli])
+		formatString: 0
+		lineageTag: aa92eda7-db40-433e-bc0b-45d2fa9bc9d8
+
+	measure MovTotCliAA = CALCULATE([MovTotCli],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: 0
+		lineageTag: 076ddc2e-f9a2-4115-baf8-7eb31839c9e8
+
+	measure IncClientes = [MovTotCli]-[MovTotCliAA]
+		formatString: 0
+		lineageTag: 9534b174-ef9c-43bd-bf21-161606ceeca5
+
+	measure %IncClientes = DIVIDE([IncClientes],[MovTotCliAA])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 59e0325b-321c-452a-a566-60dce853e7c4
+
+	measure IncFactura = [TotFra]-[TotFraAA]
+		formatString: #,0.00
+		lineageTag: 46530107-6644-4835-96d0-684eac455ac4
+
+	measure %Incfacturas = DIVIDE([IncFactura],[TotFraAA])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 3c2465f3-d480-4244-8cd4-4cebb8bc73c7
+
+	measure IncAsignac = [Asignaciones]-[AsignacionesAA]
+		formatString: #,0
+		lineageTag: 020dd94a-515d-426a-b108-0516fe49463e
+
+	measure %IncAsigna = DIVIDE([IncAsignac],[AsignacionesAA])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 1c21f966-100d-4d80-94de-17447100fad1
+
+	measure ImpFraCliPer = IF([TotFra]<=0,IF([TotFraAA]>=0,[TotFraAA],BLANK()),BLANK())
+		formatString: #,0.00
+		lineageTag: d3b717b8-8da0-4738-b1ed-55abd194bd3d
+
+	measure TotCliPerd =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(MovFra[FraCenCli]),
+			    FILTER(
+			        VALUES(MovFra[FraCenCli]),
+			        ([TotFraAA] > 0) && (ISBLANK([TotFra]) || [TotFra] <= 0)
+			    )
+			)
+		formatString: 0
+		lineageTag: 9baefd9d-e683-4fd3-adbe-10cf3c73ec56
+
+	measure ImpFraCliPer2 = ```
+			
+			VAR ClientesTotFraActual =
+			    FILTER(
+			        VALUES(MovFra[FraCenCli]),
+			        [TotFra] <= 0 || ISBLANK([TotFra])
+			    )
+			
+			RETURN
+			    ClientesTotFraActual
+			
+			
+			```
+		lineageTag: cd7659bc-af69-45d6-bde5-163a744f385a
+
+	measure 'TotFraAA 2' = ```
+			
+			CALCULATE(
+			    [TotFra],
+			    FILTER(
+			        ALL(Calendario),
+			        Calendario[Año] = 2023
+			    )
+			)
+			
+			```
+		formatString: #,0.00
+		lineageTag: 01a8c1f5-c4eb-46de-8431-36d6d0bffca7
+
+	measure 'Clientes Perdidos MCA' =
+			
+			VAR AnioSeleccionado = SELECTEDVALUE(Calendario[Año])
+			VAR AnioAnterior = AnioSeleccionado - 1
+			RETURN
+			IF(
+			    ISBLANK(AnioSeleccionado),
+			    BLANK(),
+			    COUNTROWS(
+			        FILTER(
+			            ALL(MovFra[FraCenCli]),
+			            CALCULATE(
+			                SUM(MovFra[TMFra]),
+			                REMOVEFILTERS(Calendario),
+			                Calendario[Año] = AnioAnterior
+			            ) > 0
+			            &&
+			            CALCULATE(
+			                SUM(MovFra[TMFra]),
+			                REMOVEFILTERS(Calendario),
+			                Calendario[Año] = AnioSeleccionado
+			            ) <= 0
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 97625fc2-1fb9-43ed-af80-1bfbb909173f
+
+	measure 'FraCli Perdidos ant' = ```
+			
+			VAR ClientesTotFraActual =
+			    FILTER(
+			        ALL(MovFra[FraCenCli]),
+			        CALCULATE(
+			            SUM(MovFra[TMFra]),
+			            REMOVEFILTERS(Calendario),
+			            Calendario[Año] = 2024
+			        ) <=0
+			    )
+			VAR ClientesTotFraAnterior =
+			    FILTER(
+			        ALL(MovFra[FraCenCli]),
+			        CALCULATE(
+			            SUM(MovFra[TMFra]),
+			            REMOVEFILTERS(Calendario),
+			            Calendario[Año] = 2023
+			        ) > 0
+			    )
+			VAR ClientesCruzados =
+			    INTERSECT(ClientesTotFraActual, ClientesTotFraAnterior)
+			RETURN
+			    SUMX(
+			        ClientesCruzados,
+			        CALCULATE(
+			            SUM(MovFra[TMFra]),
+			            REMOVEFILTERS(Calendario),
+			            Calendario[Año] = 2023
+			        )
+			    )
+			
+			```
+		formatString: #,0.00
+		lineageTag: 3d31c3ec-5b00-44c9-97df-6b20e279389c
+
+	measure AsignacionesClientesPerdidos = ```
+			
+			VAR AnioSeleccionado = SELECTEDVALUE(Calendario[Año])
+			VAR AnioAnterior = AnioSeleccionado - 1
+			VAR FechaInicioAnioAnterior = DATE(AnioAnterior, 1, 1)
+			VAR FechaFinAnioAnterior = DATE(AnioAnterior, 12, 31)
+			
+			VAR ClientesPerdidos = 
+			    FILTER(
+			        ALL(MovFra[FraCenCli]),
+			        CALCULATE(
+			            SUM(MovFra[TMFra]),
+			            REMOVEFILTERS(Calendario),
+			            Calendario[Año] = AnioAnterior
+			        ) > 0
+			        &&
+			        CALCULATE(
+			            SUM(MovFra[TMFra]),
+			            REMOVEFILTERS(Calendario),
+			            Calendario[Año] = AnioSeleccionado
+			        ) <= 0
+			    )
+			
+			VAR TotalAsignaciones =
+			    SUMX(
+			        ClientesPerdidos,
+			        VAR ClienteActual = MovFra[FraCenCli]
+			        RETURN
+			            CALCULATE(
+			                COUNTROWS(Contratos),
+			                FILTER(
+			                    ALL(Contratos),
+			                    Contratos[ConCenCli] = ClienteActual
+			                        && Contratos[ctfechaini] <= FechaFinAnioAnterior
+			                        && (
+			                            ISBLANK(Contratos[ctfechafinreal])
+			                            || Contratos[ctfechafinreal] >= FechaInicioAnioAnterior
+			                        )
+			                )
+			            )
+			    )
+			
+			RETURN
+			IF(
+			    ISBLANK(AnioSeleccionado),
+			    BLANK(),
+			    TotalAsignaciones
+			)
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 634f1d99-b347-4da3-b62c-08ea63d8fbe9
+
+	measure 'FraCli Perdidos' = ```
+			
+			VAR AnioSeleccionado = SELECTEDVALUE(Calendario[Año])
+			VAR AnioAnterior = AnioSeleccionado - 1
+			RETURN
+			IF(
+			    ISBLANK(AnioSeleccionado),
+			    BLANK(),
+			    SUMX(
+			        FILTER(
+			            ALL(MovFra[FraCenCli]),
+			            CALCULATE(
+			                SUM(MovFra[TMFra]),
+			                REMOVEFILTERS(Calendario),
+			                Calendario[Año] = AnioAnterior
+			            ) > 0
+			            &&
+			            CALCULATE(
+			                SUM(MovFra[TMFra]),
+			                REMOVEFILTERS(Calendario),
+			                Calendario[Año] = AnioSeleccionado
+			            ) <= 0
+			        ),
+			        CALCULATE(
+			            SUM(MovFra[TMFra]),
+			            REMOVEFILTERS(Calendario),
+			            Calendario[Año] = AnioAnterior
+			        )
+			    )
+			)
+			
+			```
+		formatString: #,0.00
+		lineageTag: 02a957e0-8cf4-457b-88cb-b35e81cf40b7
+
+	measure 'TotFraAA New' = IF([Clientes Perdidos MCA]=1,CALCULATE([TotFra],SAMEPERIODLASTYEAR(Calendario[Date])),BLANK())
+		formatString: 0.00
+		lineageTag: f0d8102e-3ab1-46e5-aeb2-e27a13847012
+
+	column mvempresa
+		dataType: int64
+		formatString: 0
+		lineageTag: 7bdea3cc-587b-4364-a72c-b6750413a9f2
+		summarizeBy: sum
+		sourceColumn: mvempresa
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 7dcd1fc1-778d-4bfe-b17d-d1a99d1ae603
+		summarizeBy: sum
+		sourceColumn: mvcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 1394661d-68b9-44b1-bdf6-962e61d222bd
+		summarizeBy: sum
+		sourceColumn: mvcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvcpd
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b3e73a4-26fe-444b-9bc6-35ae46d16cc8
+		summarizeBy: sum
+		sourceColumn: mvcpd
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvtrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: c8f16572-63ea-4628-ad51-e85a2522a19d
+		summarizeBy: sum
+		sourceColumn: mvtrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvunidad
+		dataType: double
+		lineageTag: d11d12a8-1821-4319-96d3-42493c2496fb
+		summarizeBy: sum
+		sourceColumn: mvunidad
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mvprecio
+		dataType: double
+		lineageTag: e54b4bfc-d08e-41f2-9bdf-9ea7ca578727
+		summarizeBy: sum
+		sourceColumn: mvprecio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fcfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: de4460e2-1af9-491b-aa3c-58262c86540e
+		summarizeBy: none
+		sourceColumn: fcfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TMFra = MovFra[mvunidad]*MovFra[mvprecio]
+		formatString: 0.00
+		lineageTag: 8fbe3987-b41d-43f4-9ee1-5831a9ebbd4f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column FraCenCli = FORMAT(MovFra[mvcentro],"00")&FORMAT(MovFra[mvcliente],"000000")
+		lineageTag: e9cf7e01-83be-495d-9473-9a81862cc23d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MovFra-292ca2ea-5a26-4f7d-9c7b-2d417a475deb = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="select movtos.mvempresa,movtos.mvcentro,movtos.mvcliente,movtos.mvcpd,movtos.mvtrabajador,movtos.mvunidad,movtos.mvprecio,facturas.fcfecha#(lf)from movtos inner join#(lf)       facturas on movtos.mvempresa=facturas.fcempresa and movtos.mvseriefac=facturas.fcserie and#(lf)#(tab)          movtos.mvnumerofac=facturas.fcdocum and movtos.mvanofac=facturas.fcano#(lf)where movtos.mvempresa=1#(lf)and YEAR(facturas.fcfecha) >= (YEAR(GETDATE()) - 2)#(lf)and mvfacturada='S'"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"fcfecha", type date}, {"mvcentro", Int64.Type}, {"mvempresa", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
