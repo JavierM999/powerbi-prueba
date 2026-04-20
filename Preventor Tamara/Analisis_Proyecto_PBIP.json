@@ -1,0 +1,1715 @@
+{
+  "projectInfo": {
+    "name": "Preventor vs Net4 Tamara New",
+    "type": "Power BI Project (PBIP)",
+    "location": "c:\\Users\\infor\\Documents\\prueba vscode\\Preventor Tamara",
+    "semanticModelVersion": "1600",
+    "dataSourceVersion": "powerBI_V3",
+    "defaultCulture": "es-ES"
+  },
+  "semanticModel": {
+    "database": {
+      "name": "Preventor vs Net4 Tamara New",
+      "compatibilityLevel": 1600
+    },
+    "model": {
+      "culture": "es-ES",
+      "defaultPowerBIDataSourceVersion": "powerBI_V3",
+      "sourceQueryCulture": "es-ES",
+      "timeIntelligenceEnabled": false,
+      "queryOrder": [
+        "Trabajador",
+        "Contratos",
+        "MCANCentros",
+        "ContFirmados",
+        "CursoXTrab",
+        "Cursos",
+        "FormPRL",
+        "Clientes",
+        "Categorias"
+      ]
+    },
+    "tables": [
+      {
+        "id": "Trabajador",
+        "name": "Trabajador",
+        "description": "Tabla de trabajadores/empleados de la empresa",
+        "lineageTag": "22dfdc57-3c7a-47c9-b902-012cd24d064a",
+        "dataSource": {
+          "type": "SQL Database",
+          "server": "10.10.138.5\\TEMPORING",
+          "database": "no3001",
+          "query": "SELECT DISTINCT contra.cttrabajador, trabajador.trcodigo, trabajador.trnombrecompleto, trabajador.trnacionalidad, trabajador.trnif, trabajador.trtipoident FROM contra INNER JOIN trabajador ON contra.ctempresa = trabajador.trempresa AND contra.cttrabajador = trabajador.trtrabajador WHERE ctempresa=01 AND ((contra.ctfechafinreal IS NULL) OR YEAR(contra.ctfechafinreal)>=2021)"
+        },
+        "columns": [
+          {
+            "name": "cttrabajador",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "cttrabajador",
+            "description": "Código identificador del trabajador (clave primaria)"
+          },
+          {
+            "name": "trnombrecompleto",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "trnombrecompleto",
+            "description": "Nombre completo del trabajador"
+          },
+          {
+            "name": "trnacionalidad",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "trnacionalidad",
+            "description": "Nacionalidad del trabajador"
+          },
+          {
+            "name": "trnif",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "trnif",
+            "description": "NIF/DNI del trabajador"
+          },
+          {
+            "name": "trtipoident",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "trtipoident",
+            "description": "Tipo de identificación (código)"
+          },
+          {
+            "name": "trcodigo",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "trcodigo",
+            "description": "Código del trabajador"
+          }
+        ],
+        "measures": [],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "Trabajador",
+            "fromColumn": "cttrabajador",
+            "toTable": "Contratos",
+            "toColumn": "cttrabajador",
+            "relationshipId": "f5271835-4555-4aab-b28f-658052000871"
+          },
+          {
+            "fromTable": "Trabajador",
+            "fromColumn": "cttrabajador",
+            "toTable": "CursoXTrab",
+            "toColumn": "pcttrabajador",
+            "relationshipId": "e4397318-235c-4b9b-9143-3ea0b46b16e3"
+          },
+          {
+            "fromTable": "Trabajador",
+            "fromColumn": "cttrabajador",
+            "toTable": "FormPRL",
+            "toColumn": "CodTrab",
+            "relationshipId": "68612c76-6b01-427b-b31d-5b7165ebd50b"
+          },
+          {
+            "fromTable": "Trabajador",
+            "fromColumn": "cttrabajador",
+            "toTable": "ContFirmados",
+            "toColumn": "cttrabajador",
+            "relationshipId": "b95b770b-fb09-4664-886a-2d68ba848db0"
+          }
+        ]
+      },
+      {
+        "id": "Contratos",
+        "name": "Contratos",
+        "description": "Tabla de contratos laborales de los trabajadores",
+        "lineageTag": "839b09ee-e9c6-433c-aca3-c874436bad68",
+        "dataSource": {
+          "type": "SQL Database",
+          "server": "10.10.138.5\\TEMPORING",
+          "database": "no3001",
+          "query": "SELECT ctcentro, ctcliente, clnombre, ctcontrato, cttrabajador, ctfechaini, ctfechafinreal FROM contra INNER JOIN clientes ON ctempresa=clempresa AND ctcentro=clcentro AND ctcliente=clcodigo WHERE ctempresa=1 AND (ctfechafinreal IS NULL OR YEAR(ctfechafinreal)>=2022)"
+        },
+        "columns": [
+          {
+            "name": "ctcentro",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "ctcentro",
+            "description": "Centro/oficina del contrato"
+          },
+          {
+            "name": "ctcontrato",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "ctcontrato",
+            "description": "Identificador del contrato"
+          },
+          {
+            "name": "cttrabajador",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "cttrabajador",
+            "description": "Identificador del trabajador (clave foránea)"
+          },
+          {
+            "name": "CTCenCon",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "isCalculated": true,
+            "expression": "FORMAT(Contratos[ctcentro],\"00\")&FORMAT(Contratos[ctcontrato],\"00000000\")",
+            "description": "Clave compuesta: Centro-Contrato (formato: 00-00000000)"
+          },
+          {
+            "name": "ctfechaini",
+            "dataType": "dateTime",
+            "formatString": "Short Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "ctfechaini",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de inicio del contrato"
+          },
+          {
+            "name": "ctfechafinreal",
+            "dataType": "dateTime",
+            "formatString": "Short Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "ctfechafinreal",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de fin real del contrato (NULL si está activo)"
+          },
+          {
+            "name": "CTCenCli",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "isCalculated": true,
+            "expression": "FORMAT(Contratos[ctcentro],\"00\")&FORMAT(Contratos[ctcliente],\"000000\")",
+            "description": "Clave compuesta: Centro-Cliente (formato: 00-000000)"
+          },
+          {
+            "name": "ctcliente",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "ctcliente",
+            "description": "Identificador del cliente"
+          },
+          {
+            "name": "clnombre",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "clnombre",
+            "description": "Nombre del cliente"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Asignaciones",
+            "expression": "CALCULATE(COUNTROWS(Contratos),FILTER(ALL(contratos[ctfechaini]),Contratos[ctfechaini]<=[fecfin]),FILTER(ALL(contratos[ctfechafinreal]),ISBLANK(Contratos[ctfechafinreal])=TRUE() OR Contratos[ctfechafinreal]>=[fecini]))",
+            "formatString": "0",
+            "lineageTag": "05037190-3f55-4a55-ba18-9f717cd4be3f",
+            "description": "Número de asignaciones/contratos activos en el período seleccionado"
+          },
+          {
+            "name": "TotTra",
+            "expression": "DISTINCTCOUNT(Contratos[cttrabajador])",
+            "formatString": "0",
+            "lineageTag": "d77e0205-6f4b-4831-be1b-877effeb3759",
+            "description": "Total de trabajadores (DISTINCTCOUNT)"
+          },
+          {
+            "name": "TotTRaAct",
+            "expression": "CALCULATE(DISTINCTCOUNT(Contratos[cttrabajador]),FILTER(ALL(contratos[ctfechaini]),Contratos[ctfechaini]<=[fecfin]),FILTER(ALL(contratos[ctfechafinreal]),ISBLANK(Contratos[ctfechafinreal])=TRUE() OR Contratos[ctfechafinreal]>=[fecini]))",
+            "formatString": "0",
+            "lineageTag": "4a3517d0-0f4e-4b64-b2ee-c0314a647ce8",
+            "description": "Total de trabajadores activos en el período seleccionado"
+          },
+          {
+            "name": "Altas",
+            "expression": "CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]>=[fecini]),FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]))",
+            "formatString": "0",
+            "lineageTag": "b1725d94-356d-417d-988f-da73300832f7",
+            "description": "Número de contratos que iniciaron en el período seleccionado (altas)"
+          },
+          {
+            "name": "TotTRaAlt",
+            "expression": "CALCULATE(DISTINCTCOUNT(Contratos[cttrabajador]),FILTER(ALL(contratos[ctfechaini]),Contratos[ctfechaini]>=[fecini]),FILTER(ALL(contratos[ctfechaini]),Contratos[ctfechaini]<=[fecfin]))",
+            "formatString": "0",
+            "lineageTag": "4f9747a1-40b2-4ffa-8cbf-8b508bf13bc4",
+            "description": "Total de trabajadores con altas en el período seleccionado"
+          },
+          {
+            "name": "Novac OKAS",
+            "expression": "SUMX(CALCULATETABLE(ADDCOLUMNS(SUMMARIZE(DocContratos,MCANCentros[Texto],DocContratos[DetCCenCon],DocContratos[dodescripcion]),\"DTROK\",IF(CONTAINSSTRING(DocContratos[dodescripcion],\"novación\"),1)),FILTER(ALL(DocContratos[ctfechaini]),DocContratos[ctfechaini]<=[fecfin]),FILTER(ALL(DocContratos[ctfechafinreal]),ISBLANK(DocContratos[ctfechafinreal])=TRUE() OR DocContratos[ctfechafinreal]>=[fecini]),FILTER(ALL(DocContratos[CFacftipacc]),DocContratos[CFacftipacc]=\"FIEMP\")),[DTROK])",
+            "formatString": "0",
+            "lineageTag": "2f25d430-5ff4-4605-8c1f-01f1b7f17c3e",
+            "description": "Número de novaciones OKAS (con período activo)"
+          },
+          {
+            "name": "Novac OKAL",
+            "expression": "SUMX(CALCULATETABLE(ADDCOLUMNS(SUMMARIZE(DocContratos,MCANCentros[Texto],DocContratos[DetCCenCon],DocContratos[dodescripcion]),\"DTROK\",IF(CONTAINSSTRING(DocContratos[dodescripcion],\"novación\"),1)),FILTER(ALL(DocContratos[ctfechaini]),DocContratos[ctfechaini]>=[fecini] && DocContratos[ctfechaini]<=[fecfin]),FILTER(ALL(DocContratos[CFacftipacc]),DocContratos[CFacftipacc]=\"FIEMP\")),[DTROK])",
+            "formatString": "0",
+            "lineageTag": "eae12880-a30e-4187-b728-014145d36552",
+            "description": "Número de novaciones OKAL (que iniciaron en el período)"
+          },
+          {
+            "name": "Oculta",
+            "expression": "IF(SELECTEDVALUE(Opciones[Texto])=\"ASIGNACIONES\",1,0)",
+            "formatString": "0",
+            "lineageTag": "47b56a5b-cb7d-426f-a290-907c4c2e3bbb",
+            "description": "Medida de control (1 si es ASIGNACIONES, 0 en otro caso)"
+          },
+          {
+            "name": "NFPRLAL",
+            "expression": "CALCULATE(DISTINCTCOUNT(Contratos[CTCenCon]),FILTER('Contratos',[Altas]=1 && TREATAS(SELECTCOLUMNS(FILTER('FormPRL',FormPRL[CodTrab]=Contratos[cttrabajador] && FormPRL[dofecha]<=[fecfin] && FormPRL[Validez]>=[fecini] && FormPRL[acftipacc]=\"FIEMP\"),FormPRL[CodTrab]),Contratos[cttrabajador])))",
+            "formatString": "0",
+            "lineageTag": "7d41ad42-72e2-4846-b892-42de8c9608ea",
+            "description": "Número de formularios PRL realizados con Altas (NFPRLAL)"
+          },
+          {
+            "name": "NFPRLAS",
+            "expression": "CALCULATE(DISTINCTCOUNT(Contratos[CTCenCon]),FILTER('Contratos',[Asignaciones]=1 && TREATAS(SELECTCOLUMNS(FILTER('FormPRL',FormPRL[CodTrab]=Contratos[cttrabajador] && FormPRL[dofecha]<=[fecfin] && FormPRL[Validez]>=[fecini] && FormPRL[acftipacc]=\"FIEMP\"),FormPRL[CodTrab]),Contratos[cttrabajador])))",
+            "formatString": "0",
+            "lineageTag": "41faa2a6-b979-4be2-94a8-758a2e76baa8",
+            "description": "Número de formularios PRL realizados con Asignaciones (NFPRLAS)"
+          },
+          {
+            "name": "% NFPRLAL",
+            "expression": "DIVIDE([NFPRLAL],[Altas])",
+            "formatString": "0.00\\ %;-0.00\\ %;0.00\\ %",
+            "lineageTag": "3d848cf8-5ef7-478d-b811-745794e6b21d",
+            "description": "Porcentaje de NFPRLAL respecto a Altas"
+          },
+          {
+            "name": "% NFPRLAS",
+            "expression": "DIVIDE([NFPRLAS],[Asignaciones])",
+            "formatString": "0.00\\ %;-0.00\\ %;0.00\\ %",
+            "lineageTag": "23d63dfe-570d-4813-a095-845cae625daf",
+            "description": "Porcentaje de NFPRLAS respecto a Asignaciones"
+          }
+        ],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "Contratos",
+            "fromColumn": "cttrabajador",
+            "toTable": "Trabajador",
+            "toColumn": "cttrabajador",
+            "relationshipId": "f5271835-4555-4aab-b28f-658052000871"
+          },
+          {
+            "fromTable": "Contratos",
+            "fromColumn": "ctcentro",
+            "toTable": "MCANCentros",
+            "toColumn": "Id",
+            "relationshipId": "2bbc218c-77e2-4e52-9abe-6ecdc3303003"
+          },
+          {
+            "fromTable": "Contratos",
+            "fromColumn": "CTCenCli",
+            "toTable": "Clientes",
+            "toColumn": "CliCenCli",
+            "relationshipId": "16591b53-5a03-0978-7ba5-a3098dc87d39"
+          }
+        ]
+      },
+      {
+        "id": "Calendario",
+        "name": "Calendario",
+        "description": "Tabla de dimensión de fecha con información de períodos temporales",
+        "lineageTag": "50f4bc76-b47c-4031-b7dc-f5cd1269b323",
+        "isCalculated": true,
+        "dataSource": {
+          "type": "DAX Calculated",
+          "description": "Tabla calculada usando ADDCOLUMNS y CALENDAR"
+        },
+        "columns": [
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Date]",
+            "description": "Fecha de la tabla de calendario"
+          },
+          {
+            "name": "DateKey",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[DateKey]",
+            "description": "Clave de fecha en formato YYYYMMDD"
+          },
+          {
+            "name": "Año",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "[Año]",
+            "description": "Año de la fecha"
+          },
+          {
+            "name": "Mes (Número)",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Mes (Número)]",
+            "description": "Número del mes (MM)"
+          },
+          {
+            "name": "Año/Mes",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Año/Mes]",
+            "description": "Año/Mes en formato YYYY/MM"
+          },
+          {
+            "name": "Mes (Corto)",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Mes (Corto)]",
+            "description": "Nombre del mes en formato corto mayúsculas (JAN, FEB, etc.)"
+          },
+          {
+            "name": "Mes",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Mes]",
+            "description": "Nombre del mes completo"
+          },
+          {
+            "name": "Día",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "[Día]",
+            "description": "Día del mes"
+          },
+          {
+            "name": "Semana",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Semana]",
+            "description": "Semana del año (formato: S## )"
+          },
+          {
+            "name": "Semana ISO",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Semana ISO]",
+            "description": "Semana ISO del año"
+          },
+          {
+            "name": "Año ISO",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "[Año ISO]",
+            "description": "Año ISO (considerando semanas fronterizas)"
+          },
+          {
+            "name": "Día Semana (Número)",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "[Día Semana (Número)]",
+            "description": "Número del día de la semana (1=Lunes, 7=Domingo)"
+          },
+          {
+            "name": "WeekDay",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[WeekDay]",
+            "description": "Nombre del día de la semana"
+          },
+          {
+            "name": "WeekDayShort",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[WeekDayShort]",
+            "description": "Nombre corto del día de la semana"
+          },
+          {
+            "name": "Trimestre",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Trimestre]",
+            "description": "Trimestre del año (formato: T#)"
+          },
+          {
+            "name": "Trimestre Año",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "[Trimestre Año]",
+            "description": "Trimestre y año (formato: YYYY/T#)"
+          }
+        ],
+        "measures": [
+          {
+            "name": "fecini",
+            "expression": "FIRSTDATE(Calendario[Date])",
+            "formatString": "General Date",
+            "lineageTag": "36cce6d4-3f10-44b7-969c-24aa7d286a81",
+            "description": "Primera fecha del período seleccionado"
+          },
+          {
+            "name": "fecfin",
+            "expression": "LASTDATE(Calendario[Date])",
+            "formatString": "General Date",
+            "lineageTag": "b38b2692-6643-4422-80ce-25449a1711df",
+            "description": "Última fecha del período seleccionado"
+          }
+        ],
+        "hierarchies": [],
+        "relationships": []
+      },
+      {
+        "id": "MCANCentros",
+        "name": "MCANCentros",
+        "description": "Tabla de centros/sucursales de la empresa",
+        "lineageTag": "f7fa1a20-7a5c-4adb-be17-55a2bd6eb775",
+        "dataSource": {
+          "type": "Embedded JSON Data"
+        },
+        "columns": [
+          {
+            "name": "Id",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "Id",
+            "description": "Identificador del centro (clave primaria)"
+          },
+          {
+            "name": "Sucursal",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "Sucursal",
+            "description": "Número de sucursal"
+          },
+          {
+            "name": "Texto",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "Texto",
+            "description": "Texto/código del centro (ej: '09 REUS')"
+          },
+          {
+            "name": "Nombre",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "Nombre",
+            "description": "Nombre del centro"
+          },
+          {
+            "name": "Delegado",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "Delegado",
+            "description": "Persona delegada o responsable del centro"
+          }
+        ],
+        "measures": [],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "MCANCentros",
+            "fromColumn": "Id",
+            "toTable": "Contratos",
+            "toColumn": "ctcentro",
+            "relationshipId": "2bbc218c-77e2-4e52-9abe-6ecdc3303003"
+          },
+          {
+            "fromTable": "MCANCentros",
+            "fromColumn": "Id",
+            "toTable": "CursoXTrab",
+            "toColumn": "pctcentro",
+            "relationshipId": "CursoXTrab-MCANCentros"
+          }
+        ]
+      },
+      {
+        "id": "CursoXTrab",
+        "name": "CursoXTrab",
+        "description": "Tabla asociativa de cursos realizados por trabajadores",
+        "lineageTag": "0e317eda-b1e8-4bc1-897b-a82868f65a37",
+        "dataSource": {
+          "type": "SQL Database",
+          "server": "10.10.138.5\\temporing",
+          "database": "no3001"
+        },
+        "columns": [
+          {
+            "name": "pctcentro",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "pctcentro",
+            "description": "Centro del curso"
+          },
+          {
+            "name": "pcttrabajador",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pcttrabajador",
+            "description": "Identificador del trabajador (clave foránea)"
+          },
+          {
+            "name": "pctcurso",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "pctcurso",
+            "description": "Identificador del curso (clave foránea)"
+          },
+          {
+            "name": "pctfecha",
+            "dataType": "dateTime",
+            "formatString": "Short Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pctfecha",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha del curso"
+          },
+          {
+            "name": "pctfechaini",
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pctfechaini",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de inicio del curso"
+          },
+          {
+            "name": "pctfechaultima",
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pctfechaultima",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Última fecha registrada del curso"
+          },
+          {
+            "name": "pctfechafin",
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pctfechafin",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de fin del curso"
+          },
+          {
+            "name": "pcttienecertificado",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pcttienecertificado",
+            "description": "Indicador si tiene certificado (S/N)"
+          },
+          {
+            "name": "pctcliente",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "pctcliente",
+            "description": "Identificador del cliente"
+          },
+          {
+            "name": "pctcencli",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "pctcencli",
+            "description": "Centro del cliente"
+          },
+          {
+            "name": "pctcontralab",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "pctcontralab",
+            "description": "Código del contrato laboral"
+          },
+          {
+            "name": "pctcategoria",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pctcategoria",
+            "description": "Identificador de la categoría del curso (clave foránea)"
+          },
+          {
+            "name": "pctestado",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pctestado",
+            "description": "Estado del curso (ej: Completado, Pendiente)"
+          },
+          {
+            "name": "pctcertificadofirmado",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pctcertificadofirmado",
+            "description": "Indicador si el certificado está firmado"
+          },
+          {
+            "name": "pctaccion",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "pctaccion",
+            "description": "Código de acción"
+          },
+          {
+            "name": "pctidtrabprev",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "pctidtrabprev",
+            "description": "Identificador de trabajador en sistema previo"
+          },
+          {
+            "name": "CurCenCur",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "isCalculated": true,
+            "expression": "FORMAT(CursoXTrab[pctcentro],\"00\")&FORMAT(CursoXTrab[pctcurso],\"0000\")",
+            "description": "Clave compuesta: Centro-Curso (formato: 00-0000)"
+          },
+          {
+            "name": "Cpcnombre",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "Cpcnombre",
+            "description": "Nombre del curso (relacionado de Cursos)"
+          },
+          {
+            "name": "FechaCaducidad",
+            "dataType": "dateTime",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "isCalculated": true,
+            "expression": "VAR _Anios = COALESCE(RELATED(Cursos[pccaducidad]),0) RETURN EDATE(CursoXTrab[pctfechafin],_Anios*12)",
+            "description": "Fecha de caducidad del certificado (fecha fin + años de validez)"
+          }
+        ],
+        "measures": [
+          {
+            "name": "TotCurTra",
+            "expression": "DISTINCTCOUNT(CursoXTrab[pcttrabajador])",
+            "formatString": "0",
+            "lineageTag": "34436a2f-27cb-4265-a73b-bc6806881a43",
+            "description": "Total de trabajadores que han realizado cursos"
+          },
+          {
+            "name": "TotCurTra2",
+            "expression": "IF([TotTRaAct],DISTINCTCOUNT(CursoXTrab[pcttrabajador]),BLANK())",
+            "formatString": "0",
+            "lineageTag": "c57ede8e-52ee-4511-bf92-395a5f7c945f",
+            "description": "Total de trabajadores con cursos (condicionado a trabajadores activos)"
+          },
+          {
+            "name": "Tot TraCurso",
+            "expression": "IF([TotTRaAct],CALCULATE(DISTINCTCOUNT(CursoXTrab[pcttrabajador]),FILTER(CursoXTrab,CursoXTrab[pcttrabajador] IN VALUES(Contratos[cttrabajador]))),BLANK())",
+            "formatString": "0",
+            "lineageTag": "9605e97e-c09c-4247-bd6d-d3829af18151",
+            "description": "Total de trabajadores con cursos (filtrados por contratos activos)"
+          },
+          {
+            "name": "TotCursos",
+            "expression": "IF([Tot TraCurso],DISTINCTCOUNT(CursoXTrab[pctcurso]),BLANK())",
+            "formatString": "0",
+            "lineageTag": "071eead8-71bc-47c1-9e4a-ef84096faf4c",
+            "description": "Total de cursos distintos realizados"
+          },
+          {
+            "name": "TotCur AsContra",
+            "expression": "IF([TotTRaAct],CALCULATE(DISTINCTCOUNT(CursoXTrab[pcttrabajador]),FILTER(CursoXTrab,CursoXTrab[pcttrabajador] IN VALUES(Contratos[cttrabajador])),FILTER(CursoXTrab,CursoXTrab[pctcontralab]>0)),BLANK())",
+            "formatString": "0",
+            "lineageTag": "a131031c-55b0-41dd-811f-faa990cddd5e",
+            "description": "Total de trabajadores con cursos asignados por contrato"
+          },
+          {
+            "name": "TotCur AsTrabaj",
+            "expression": "IF([TotTRaAct],CALCULATE(DISTINCTCOUNT(CursoXTrab[pcttrabajador]),FILTER(CursoXTrab,CursoXTrab[pcttrabajador] IN VALUES(Contratos[cttrabajador])),FILTER(CursoXTrab,CursoXTrab[pctcontralab]=0)),BLANK())",
+            "formatString": "0",
+            "lineageTag": "abf336e2-99e7-4e56-8eda-be2074d76514",
+            "description": "Total de trabajadores con cursos asignados por trabajador"
+          },
+          {
+            "name": "Tot TraCurso2",
+            "expression": "IF([TotTRaAct],CALCULATE(COUNTROWS(CursoXTrab),FILTER(CursoXTrab,CursoXTrab[pctfechafin]>=DATE(YEAR(TODAY())-1,MONTH(TODAY()),DAY(TODAY())))),BLANK())",
+            "formatString": "0",
+            "lineageTag": "607e2428-c8d5-4834-9138-26dc9213e57a",
+            "description": "Total de trabajadores con cursos realizados en el último año"
+          },
+          {
+            "name": "Cursos Trabajador",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Trabajador[cttrabajador]) RETURN IF(NOT ISBLANK(_Trabajador),CALCULATE(CONCATENATEX(DISTINCT(CursoXTrab[pctcurso]),CursoXTrab[pctcurso],\", \"),FILTER(ALL(CursoXTrab),CursoXTrab[pcttrabajador]=_Trabajador)))",
+            "lineageTag": "143f5a94-166f-471f-986f-cd2521ed16d9",
+            "description": "Lista de cursos realizados por el trabajador seleccionado"
+          },
+          {
+            "name": "Cursos Trabajador Activo",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) RETURN IF(HASONEVALUE(Contratos[cttrabajador]),CALCULATE(CONCATENATEX(VALUES(CursoXTrab[pctcurso]),CursoXTrab[pctcurso],\", \",CursoXTrab[pctcurso],ASC),TREATAS({_Trabajador},CursoXTrab[pcttrabajador])))",
+            "lineageTag": "ee142d43-7b92-4598-8c58-014cc3ec4c40",
+            "description": "Lista de cursos del trabajador activo seleccionado"
+          },
+          {
+            "name": "Cursos Trabajador Detalle",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) RETURN IF(HASONEVALUE(Contratos[cttrabajador]),CALCULATE(CONCATENATEX(CursoXTrab,CursoXTrab[pctcurso]&\" (\"&FORMAT(CursoXTrab[pctfechaini],\"dd/MM/yyyy\")&\" - \"&FORMAT(CursoXTrab[pctfechafin],\"dd/MM/yyyy\")&\")\",\", \",CursoXTrab[pctfechaini],ASC),TREATAS({_Trabajador},CursoXTrab[pcttrabajador])))",
+            "lineageTag": "a120837f-e3ed-4718-88f2-ebd2f93a4552",
+            "description": "Lista detallada de cursos con fechas de inicio y fin"
+          },
+          {
+            "name": "Caducidad Cursos Detalle",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) RETURN IF(HASONEVALUE(Contratos[cttrabajador]),CALCULATE(CONCATENATEX(CursoXTrab,CursoXTrab[pctcurso]&\" caduca el \"&FORMAT(EDATE(CursoXTrab[pctfechafin],RELATED(Cursos[pccaducidad])*12),\"dd/MM/yyyy\"),\", \",CursoXTrab[pctfechafin],ASC),TREATAS({_Trabajador},CursoXTrab[pcttrabajador])))",
+            "lineageTag": "e42e6161-d77a-48ca-aabf-42d80581884e",
+            "description": "Lista de cursos con fecha de caducidad"
+          },
+          {
+            "name": "Nombre y Codigo Cursos Trabajador",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) RETURN IF(HASONEVALUE(Contratos[cttrabajador]),CALCULATE(CONCATENATEX(CursoXTrab,CursoXTrab[pctcurso]&\" - \"&RELATED(Cursos[pcnombre]),\", \",CursoXTrab[pctcurso],ASC),TREATAS({_Trabajador},CursoXTrab[pcttrabajador])))",
+            "lineageTag": "d3de4cb3-7572-41b6-99c0-fb94869a354e",
+            "description": "Lista de cursos con código y nombre"
+          },
+          {
+            "name": "Tiene Curso Aplicable",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) VAR _IniContrato = SELECTEDVALUE(Contratos[ctfechaini]) VAR _FinContrato = COALESCE(SELECTEDVALUE(Contratos[ctfechafinreal]),[fecfin]) VAR _NumCursos = CALCULATE(COUNTROWS(CursoXTrab),FILTER(CursoXTrab,CursoXTrab[pcttrabajador]=_Trabajador && CursoXTrab[pctfechaini]<=_FinContrato && EDATE(CursoXTrab[pctfechafin],COALESCE(RELATED(Cursos[pccaducidad]),0)*12)>=_IniContrato)) RETURN IF(_NumCursos>0,\"Sí\",BLANK())",
+            "lineageTag": "f2be2284-0fa1-462b-905e-0155bf39acb8",
+            "description": "Indicador si el trabajador tiene cursos aplicables al contrato"
+          },
+          {
+            "name": "Cursos Aplicables Contrato",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) VAR _IniContrato = SELECTEDVALUE(Contratos[ctfechaini]) VAR _FinContrato = COALESCE(SELECTEDVALUE(Contratos[ctfechafinreal]),[fecfin]) VAR _Cursos = FILTER(ALL(CursoXTrab),CursoXTrab[pcttrabajador]=_Trabajador && CursoXTrab[pctfechaini]<=_FinContrato && CursoXTrab[FechaCaducidad]>=_IniContrato) RETURN IF(HASONEVALUE(Contratos[ctcontrato]) && NOT ISBLANK(_Trabajador) && NOT ISBLANK(_IniContrato),CONCATENATEX(_Cursos,CursoXTrab[CursoDetalle],\", \",CursoXTrab[pctfechaini],ASC))",
+            "lineageTag": "cc4c4261-637f-4d14-8572-1754c5c06a4c",
+            "description": "Cursos aplicables al contrato del trabajador seleccionado"
+          },
+          {
+            "name": "Nombre y Codigo Cursos Aplicables",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) VAR _IniContrato = SELECTEDVALUE(Contratos[ctfechaini]) VAR _FinContrato = COALESCE(SELECTEDVALUE(Contratos[ctfechafinreal]),[fecfin]) VAR _CursosAplicables = FILTER(CursoXTrab,CursoXTrab[pcttrabajador]=_Trabajador && CursoXTrab[pctfechaini]<=_FinContrato && EDATE(CursoXTrab[pctfechafin],COALESCE(RELATED(Cursos[pccaducidad]),0)*12)>=_IniContrato) RETURN IF(HASONEVALUE(Contratos[ctcontrato]),CONCATENATEX(_CursosAplicables,CursoXTrab[pctcurso]&\" - \"&RELATED(Cursos[pcnombre]),\", \",CursoXTrab[pctcurso],ASC))",
+            "lineageTag": "d9b24529-19c5-4082-8e6d-07b5a192ade4",
+            "description": "Código y nombre de cursos aplicables"
+          },
+          {
+            "name": "Cursos Aplicables Resumen",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) VAR _IniContrato = SELECTEDVALUE(Contratos[ctfechaini]) VAR _FinContrato = COALESCE(SELECTEDVALUE(Contratos[ctfechafinreal]),[fecfin]) RETURN IF(HASONEVALUE(Contratos[ctcontrato]) && NOT ISBLANK(_Trabajador) && NOT ISBLANK(_IniContrato),CALCULATE(CONCATENATEX(FILTER(ALL(CursoXTrab),CursoXTrab[pcttrabajador]=_Trabajador && CursoXTrab[pctfechaini]<=_FinContrato && CursoXTrab[FechaCaducidad]>=_IniContrato),CursoXTrab[pctcurso]&\" - \"&RELATED(Cursos[pcnombre])&\" | inicio: \"&FORMAT(CursoXTrab[pctfechaini],\"dd/MM/yyyy\")&\" | caduca: \"&FORMAT(CursoXTrab[FechaCaducidad],\"dd/MM/yyyy\"),\", \",CursoXTrab[pctfechaini],ASC)))",
+            "lineageTag": "3a948134-15cc-4d90-b759-bac1940123a1",
+            "description": "Resumen detallado de cursos aplicables con fechas"
+          },
+          {
+            "name": "Categoria Cursos Trabajador",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) RETURN IF(HASONEVALUE(Contratos[cttrabajador]),CALCULATE(CONCATENATEX(VALUES(CursoXTrab[pctcategoria]),CursoXTrab[pctcategoria],\", \",CursoXTrab[pctcategoria],ASC),TREATAS({_Trabajador},CursoXTrab[pcttrabajador])))",
+            "lineageTag": "668a925b-ce39-4780-a056-f719a126165a",
+            "description": "Categorías de cursos del trabajador"
+          },
+          {
+            "name": "Nombre Categorias Aplicables",
+            "expression": "VAR _Trabajador = SELECTEDVALUE(Contratos[cttrabajador]) VAR _IniContrato = SELECTEDVALUE(Contratos[ctfechaini]) VAR _FinContrato = COALESCE(SELECTEDVALUE(Contratos[ctfechafinreal]),[fecfin]) RETURN IF(HASONEVALUE(Contratos[ctcontrato]) && NOT ISBLANK(_Trabajador) && NOT ISBLANK(_IniContrato),CALCULATE(CONCATENATEX(DISTINCT(SELECTCOLUMNS(FILTER(ALL(CursoXTrab),CursoXTrab[pcttrabajador]=_Trabajador && CursoXTrab[pctfechaini]<=_FinContrato && CursoXTrab[FechaCaducidad]>=_IniContrato),\"NombreCategoria\",RELATED(Categorias[canombre]))),\"NombreCategoria\",\", \",\"NombreCategoria\",ASC)))",
+            "lineageTag": "6cd928c4-e65a-46c8-bb9e-c1eb0329b10f",
+            "description": "Nombres de categorías de cursos aplicables"
+          }
+        ],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "CursoXTrab",
+            "fromColumn": "CurCenCur",
+            "toTable": "Cursos",
+            "toColumn": "CuCenCur",
+            "relationshipId": "9144eeba-bf23-4c35-9f5f-cd3746a3ad96"
+          },
+          {
+            "fromTable": "CursoXTrab",
+            "fromColumn": "pcttrabajador",
+            "toTable": "Trabajador",
+            "toColumn": "cttrabajador",
+            "relationshipId": "e4397318-235c-4b9b-9143-3ea0b46b16e3"
+          },
+          {
+            "fromTable": "CursoXTrab",
+            "fromColumn": "pctcategoria",
+            "toTable": "Categorias",
+            "toColumn": "cacodigo",
+            "relationshipId": "29565fbe-e7fb-e30b-11e6-9dce358a3400"
+          }
+        ]
+      },
+      {
+        "id": "Cursos",
+        "name": "Cursos",
+        "description": "Tabla de catálogo de cursos disponibles",
+        "lineageTag": "44a0d315-3577-4633-9997-1a132e591578",
+        "dataSource": {
+          "type": "SQL Database",
+          "server": "10.10.138.5\\temporing",
+          "database": "no3001",
+          "query": "SELECT pccentro, pccodigo, pcnombre, pcestado, pcproveedor, pcidcursoprov, pcmodalidad, pccaducidad, pctipocurso FROM prvcursos WHERE pcempresa=1"
+        },
+        "columns": [
+          {
+            "name": "pccentro",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pccentro",
+            "description": "Centro del curso"
+          },
+          {
+            "name": "pccodigo",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pccodigo",
+            "description": "Código del curso (clave primaria junto con pccentro)"
+          },
+          {
+            "name": "pcnombre",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pcnombre",
+            "description": "Nombre del curso"
+          },
+          {
+            "name": "pcestado",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pcestado",
+            "description": "Estado del curso (Activo, Inactivo, etc.)"
+          },
+          {
+            "name": "pcproveedor",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pcproveedor",
+            "description": "Proveedor del curso"
+          },
+          {
+            "name": "pcidcursoprov",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pcidcursoprov",
+            "description": "Identificador del curso en el sistema del proveedor"
+          },
+          {
+            "name": "pcmodalidad",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pcmodalidad",
+            "description": "Modalidad del curso (código)"
+          },
+          {
+            "name": "pccaducidad",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pccaducidad",
+            "description": "Años de validez/caducidad del certificado"
+          },
+          {
+            "name": "pctipocurso",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "pctipocurso",
+            "description": "Tipo de curso (código)"
+          },
+          {
+            "name": "CuCenCur",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "isCalculated": true,
+            "expression": "FORMAT(Cursos[pccentro],\"00\")&FORMAT(Cursos[pccodigo],\"0000\")",
+            "description": "Clave compuesta: Centro-Curso (formato: 00-0000)"
+          }
+        ],
+        "measures": [],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "Cursos",
+            "fromColumn": "CuCenCur",
+            "toTable": "CursoXTrab",
+            "toColumn": "CurCenCur",
+            "relationshipId": "9144eeba-bf23-4c35-9f5f-cd3746a3ad96"
+          }
+        ]
+      },
+      {
+        "id": "FormPRL",
+        "name": "FormPRL",
+        "description": "Tabla de formularios de evaluación PRL (Prevención de Riesgos Laborales)",
+        "lineageTag": "01496a01-2f7d-49fb-b09b-3662b1b14232",
+        "dataSource": {
+          "type": "SQL Database",
+          "server": "10.10.138.5\\temporing",
+          "database": "ttidoc001",
+          "query": "SELECT documentos.docentro, SUBSTRING(documentos.doentidad,9,8) AS CodContra, SUBSTRING(documentos.doentidad,1,8) AS CodTrab, documentos.dotipodoc, documentos.docontador, dofecha, dodescripcion, contra.ctfechaini, contra.ctfechafinreal FROM documentos INNER JOIN no3001.dbo.contra ON documentos.doempresa=contra.ctempresa AND documentos.docentro=contra.ctcentro AND SUBSTRING(documentos.doentidad,1,8)=contra.cttrabajador WHERE documentos.doempresa=1 AND documentos.dotipodoc='N4PR' AND dofecha>='12/01/2022'"
+        },
+        "columns": [
+          {
+            "name": "docentro",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "docentro",
+            "description": "Centro del documento"
+          },
+          {
+            "name": "CodContra",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "CodContra",
+            "description": "Código del contrato"
+          },
+          {
+            "name": "CodTrab",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "CodTrab",
+            "description": "Código del trabajador (clave foránea)"
+          },
+          {
+            "name": "dotipodoc",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "dotipodoc",
+            "description": "Tipo de documento (ej: N4PR)"
+          },
+          {
+            "name": "docontador",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "docontador",
+            "description": "Contador/número secuencial del documento"
+          },
+          {
+            "name": "dofecha",
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "dofecha",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de realización del formulario PRL"
+          },
+          {
+            "name": "dodescripcion",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "dodescripcion",
+            "description": "Descripción del documento/evento"
+          },
+          {
+            "name": "ctfechaini",
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "ctfechaini",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de inicio del contrato asociado"
+          },
+          {
+            "name": "ctfechafinreal",
+            "dataType": "dateTime",
+            "formatString": "General Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "ctfechafinreal",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de fin real del contrato asociado"
+          },
+          {
+            "name": "Validez",
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "Validez",
+            "underlyingDateTimeDataType": "Date",
+            "isCalculated": true,
+            "expression": "Date.AddYears([dofecha],1)",
+            "description": "Fecha de vencimiento (1 año después de dofecha)"
+          },
+          {
+            "name": "acftipacc",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "acftipacc",
+            "description": "Tipo de acción/acceso (ej: FIEMP)"
+          }
+        ],
+        "measures": [
+          {
+            "name": "TotFPRL",
+            "expression": "COUNTROWS(FormPRL)",
+            "formatString": "0",
+            "lineageTag": "6622b76e-1a69-4f6d-96fb-bc7a0cb8e28a",
+            "description": "Total de formularios PRL registrados"
+          }
+        ],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "FormPRL",
+            "fromColumn": "CodTrab",
+            "toTable": "Trabajador",
+            "toColumn": "cttrabajador",
+            "relationshipId": "68612c76-6b01-427b-b31d-5b7165ebd50b"
+          }
+        ]
+      },
+      {
+        "id": "ContFirmados",
+        "name": "ContFirmados",
+        "description": "Tabla de contratos firmados digitalmente",
+        "lineageTag": "c631f608-8848-4cd5-aada-dad2d7bafb8a",
+        "dataSource": {
+          "type": "SQL Database",
+          "server": "10.10.138.5\\TEMPORING",
+          "database": "NO3001",
+          "query": "SELECT ctcentro, ctcontrato, cttrabajador, acftipacc, ctfechaini, ctfechafinreal FROM no3001.dbo.contra LEFT OUTER JOIN no3001.dbo.accctofirma ON ... WHERE ctempresa=1 AND (ctfechafinreal IS NULL OR ctfechafinreal>='12/01/2022') AND ctestado<>'E' AND traceptafirmadigital='S' ..."
+        },
+        "columns": [
+          {
+            "name": "cttrabajador",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "cttrabajador",
+            "description": "Identificador del trabajador (clave foránea)"
+          },
+          {
+            "name": "acftipacc",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "acftipacc",
+            "description": "Tipo de acción/acceso (ej: FIEMP)"
+          },
+          {
+            "name": "ctfechaini",
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "ctfechaini",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de inicio del contrato"
+          },
+          {
+            "name": "ctfechafinreal",
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "ctfechafinreal",
+            "underlyingDateTimeDataType": "Date",
+            "description": "Fecha de fin real del contrato"
+          },
+          {
+            "name": "ctcentro",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "ctcentro",
+            "description": "Centro del contrato"
+          },
+          {
+            "name": "ctcontrato",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "sum",
+            "sourceColumn": "ctcontrato",
+            "description": "Código del contrato"
+          }
+        ],
+        "measures": [
+          {
+            "name": "totcontFirma",
+            "expression": "COUNTROWS(ContFirmados)",
+            "formatString": "0",
+            "lineageTag": "373c0e6e-1fff-43eb-81f0-12743da11f3f",
+            "description": "Total de contratos con firma digital"
+          }
+        ],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "ContFirmados",
+            "fromColumn": "cttrabajador",
+            "toTable": "Trabajador",
+            "toColumn": "cttrabajador",
+            "relationshipId": "b95b770b-fb09-4664-886a-2d68ba848db0"
+          }
+        ]
+      },
+      {
+        "id": "Clientes",
+        "name": "Clientes",
+        "description": "Tabla de clientes/empresas",
+        "lineageTag": "a00171f7-2cfc-47ff-ae01-600313e4559f",
+        "dataSource": {
+          "type": "SQL Database",
+          "server": "10.10.138.5\\TEMPORING",
+          "database": "no3001",
+          "query": "SELECT DISTINCT clientes.clcentro, clientes.clcodigo, clientes.clnombre, clientes.clcifdni FROM clientes INNER JOIN contra ON clientes.clempresa=contra.ctempresa AND clientes.clcentro=contra.ctcentro AND clientes.clcodigo=contra.ctcliente WHERE clientes.clempresa=01 AND ((contra.ctfechafinreal IS NULL) OR YEAR(contra.ctfechafinreal)>=2025) AND clientes.clnombre NOT LIKE '%fijo%'"
+        },
+        "columns": [
+          {
+            "name": "clcentro",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "clcentro",
+            "description": "Centro del cliente"
+          },
+          {
+            "name": "clcodigo",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "clcodigo",
+            "description": "Código del cliente"
+          },
+          {
+            "name": "clnombre",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "clnombre",
+            "description": "Nombre del cliente"
+          },
+          {
+            "name": "clcifdni",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "clcifdni",
+            "description": "CIF/DNI del cliente"
+          },
+          {
+            "name": "CliCenCli",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "isCalculated": true,
+            "expression": "FORMAT(Clientes[clcentro],\"00\")&FORMAT(Clientes[clcodigo],\"000000\")",
+            "description": "Clave compuesta: Centro-Cliente (formato: 00-000000)"
+          }
+        ],
+        "measures": [],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "Clientes",
+            "fromColumn": "CliCenCli",
+            "toTable": "Contratos",
+            "toColumn": "CTCenCli",
+            "relationshipId": "16591b53-5a03-0978-7ba5-a3098dc87d39"
+          }
+        ]
+      },
+      {
+        "id": "Categorias",
+        "name": "Categorias",
+        "description": "Tabla de categorías/puestos de trabajo",
+        "lineageTag": "b5d8aeda-e5e8-4671-84f3-d1ddc45653b3",
+        "dataSource": {
+          "type": "SQL Database",
+          "server": "10.10.138.5\\temporing",
+          "database": "no3001",
+          "query": "SELECT cacodigo, canombre FROM catego"
+        },
+        "columns": [
+          {
+            "name": "cacodigo",
+            "dataType": "int64",
+            "formatString": "0",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "cacodigo",
+            "description": "Código de la categoría (clave primaria)"
+          },
+          {
+            "name": "canombre",
+            "dataType": "string",
+            "isMeasure": false,
+            "summarizeBy": "none",
+            "sourceColumn": "canombre",
+            "description": "Nombre de la categoría/puesto"
+          }
+        ],
+        "measures": [],
+        "hierarchies": [],
+        "relationships": [
+          {
+            "fromTable": "Categorias",
+            "fromColumn": "cacodigo",
+            "toTable": "CursoXTrab",
+            "toColumn": "pctcategoria",
+            "relationshipId": "29565fbe-e7fb-e30b-11e6-9dce358a3400"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "relationshipId": "f5271835-4555-4aab-b28f-658052000871",
+        "name": "Trabajador -> Contratos",
+        "fromTable": "Trabajador",
+        "fromColumn": "cttrabajador",
+        "toTable": "Contratos",
+        "toColumn": "cttrabajador",
+        "cardinalidad": "One-to-Many"
+      },
+      {
+        "relationshipId": "2bbc218c-77e2-4e52-9abe-6ecdc3303003",
+        "name": "MCANCentros -> Contratos",
+        "fromTable": "MCANCentros",
+        "fromColumn": "Id",
+        "toTable": "Contratos",
+        "toColumn": "ctcentro",
+        "cardinalidad": "One-to-Many"
+      },
+      {
+        "relationshipId": "9144eeba-bf23-4c35-9f5f-cd3746a3ad96",
+        "name": "Cursos -> CursoXTrab",
+        "fromTable": "Cursos",
+        "fromColumn": "CuCenCur",
+        "toTable": "CursoXTrab",
+        "toColumn": "CurCenCur",
+        "cardinalidad": "One-to-Many"
+      },
+      {
+        "relationshipId": "e4397318-235c-4b9b-9143-3ea0b46b16e3",
+        "name": "Trabajador -> CursoXTrab",
+        "fromTable": "Trabajador",
+        "fromColumn": "cttrabajador",
+        "toTable": "CursoXTrab",
+        "toColumn": "pcttrabajador",
+        "cardinalidad": "One-to-Many"
+      },
+      {
+        "relationshipId": "68612c76-6b01-427b-b31d-5b7165ebd50b",
+        "name": "Trabajador -> FormPRL",
+        "fromTable": "Trabajador",
+        "fromColumn": "cttrabajador",
+        "toTable": "FormPRL",
+        "toColumn": "CodTrab",
+        "cardinalidad": "One-to-Many"
+      },
+      {
+        "relationshipId": "b95b770b-fb09-4664-886a-2d68ba848db0",
+        "name": "Trabajador -> ContFirmados",
+        "fromTable": "Trabajador",
+        "fromColumn": "cttrabajador",
+        "toTable": "ContFirmados",
+        "toColumn": "cttrabajador",
+        "cardinalidad": "One-to-Many"
+      },
+      {
+        "relationshipId": "16591b53-5a03-0978-7ba5-a3098dc87d39",
+        "name": "Clientes -> Contratos",
+        "fromTable": "Clientes",
+        "fromColumn": "CliCenCli",
+        "toTable": "Contratos",
+        "toColumn": "CTCenCli",
+        "cardinalidad": "One-to-Many"
+      },
+      {
+        "relationshipId": "29565fbe-e7fb-e30b-11e6-9dce358a3400",
+        "name": "Categorias -> CursoXTrab",
+        "fromTable": "Categorias",
+        "fromColumn": "cacodigo",
+        "toTable": "CursoXTrab",
+        "toColumn": "pctcategoria",
+        "cardinalidad": "One-to-Many"
+      }
+    ]
+  },
+  "report": {
+    "name": "Preventor vs Net4 Tamara New",
+    "description": "Reporte de Prevención de Riesgos Laborales y Gestión de Contratos",
+    "culture": "es-ES",
+    "theme": {
+      "name": "CY18SU07",
+      "type": "SharedResources"
+    },
+    "settings": {
+      "useStylableVisualContainerHeader": true,
+      "exportDataMode": "AllowSummarized",
+      "defaultDrillFilterOtherVisuals": true,
+      "allowChangeFilterTypes": true,
+      "useEnhancedTooltips": false
+    }
+  },
+  "pages": [
+    {
+      "pageId": "9f6ccaee3044b4e9345e",
+      "displayName": "Duplicado de Duplicado de Tamara New",
+      "displayOption": "FitToPage",
+      "height": 720,
+      "width": 1280,
+      "isActive": true,
+      "visualsCount": 5,
+      "visualContainers": [
+        {
+          "visualId": "14ea2c41d0850b502848",
+          "name": "Slicer Trabajador",
+          "visualType": "slicer",
+          "position": {
+            "x": 1022.60,
+            "y": 608.57,
+            "z": 3000,
+            "height": 102.76,
+            "width": 162.62
+          },
+          "configuration": {
+            "field": "Trabajador[cttrabajador]",
+            "mode": "Basic",
+            "filterMode": "Advanced",
+            "defaultValue": 265
+          },
+          "purpose": "Selector de trabajador para filtrar datos"
+        },
+        {
+          "visualId": "1a1f27b88400460b5ae1",
+          "name": "Slicer Centro",
+          "visualType": "slicer",
+          "position": {
+            "x": 1167.78,
+            "y": 450.44,
+            "z": 2000,
+            "height": 269.56,
+            "width": 112.61
+          },
+          "configuration": {
+            "field": "MCANCentros[Texto]",
+            "mode": "Basic",
+            "filterMode": "Categorical",
+            "defaultValue": "09 REUS",
+            "selectAllCheckboxEnabled": true
+          },
+          "purpose": "Selector de centro/sucursal para filtrar datos"
+        },
+        {
+          "visualId": "42d9b85ecab82cb05461",
+          "name": "Slicer Mes",
+          "visualType": "slicer",
+          "position": {
+            "x": 1166.87,
+            "y": 192.54,
+            "z": 1000,
+            "height": 259.70,
+            "width": 96.72
+          },
+          "configuration": {
+            "field": "Calendario[Mes (Número)]",
+            "mode": "Basic",
+            "defaultValues": ["03", "04"]
+          },
+          "purpose": "Selector de mes para filtrar por período temporal"
+        },
+        {
+          "visualId": "68752d8fbe88d1099caa",
+          "name": "Slicer Año",
+          "visualType": "slicer",
+          "position": {
+            "x": 1185.63,
+            "y": 26.73,
+            "z": 0,
+            "height": 100.89,
+            "width": 93.99
+          },
+          "configuration": {
+            "field": "Calendario[Año]",
+            "mode": "Basic",
+            "defaultValue": 2026
+          },
+          "purpose": "Selector de año para filtrar por período temporal"
+        },
+        {
+          "visualId": "35443d9b831c99d1d807",
+          "name": "Tabla de Contratos y Cursos",
+          "visualType": "tableEx",
+          "position": {
+            "x": 64.85,
+            "y": 76.82,
+            "z": 5000,
+            "height": 485.86,
+            "width": 1067.50
+          },
+          "configuration": {
+            "sortBy": "cttrabajador",
+            "sortDirection": "Ascending"
+          },
+          "columns": [
+            {
+              "name": "clnombre",
+              "sourceTable": "Contratos",
+              "displayName": "Nombre Cliente",
+              "dataType": "string",
+              "width": 138.70
+            },
+            {
+              "name": "ctcliente",
+              "sourceTable": "Contratos",
+              "displayName": "Cliente",
+              "dataType": "int64"
+            },
+            {
+              "name": "ctcontrato",
+              "sourceTable": "Contratos",
+              "displayName": "Contrato",
+              "dataType": "int64"
+            },
+            {
+              "name": "cttrabajador",
+              "sourceTable": "Contratos",
+              "displayName": "Código Trabajador",
+              "dataType": "int64"
+            },
+            {
+              "name": "trnombrecompleto",
+              "sourceTable": "Trabajador",
+              "displayName": "Nombre Trabajador",
+              "dataType": "string"
+            },
+            {
+              "name": "Categoria Cursos Trabajador",
+              "sourceTable": "CursoXTrab",
+              "displayName": "Puesto",
+              "isMeasure": true,
+              "dataType": "string"
+            },
+            {
+              "name": "Nombre Categorias Aplicables",
+              "sourceTable": "CursoXTrab",
+              "displayName": "Categorías Aplicables",
+              "isMeasure": true,
+              "dataType": "string"
+            },
+            {
+              "name": "Cursos Aplicables Resumen",
+              "sourceTable": "CursoXTrab",
+              "displayName": "Cursos Aplicables",
+              "isMeasure": true,
+              "dataType": "string"
+            },
+            {
+              "name": "Asignaciones",
+              "sourceTable": "Contratos",
+              "displayName": "Asignaciones",
+              "isMeasure": true,
+              "dataType": "int64"
+            }
+          ],
+          "filters": [
+            {
+              "field": "Contratos[Asignaciones]",
+              "filterType": "Advanced",
+              "condition": "Greater than 0"
+            },
+            {
+              "field": "CursoXTrab[Cursos Aplicables Resumen]",
+              "filterType": "Advanced"
+            },
+            {
+              "field": "Trabajador[trnombrecompleto]",
+              "filterType": "Categorical"
+            }
+          ],
+          "purpose": "Tabla principal que muestra contratos y cursos aplicables por trabajador"
+        }
+      ]
+    }
+  ],
+  "businessLogic": {
+    "overview": "Este proyecto Power BI gestiona información de prevención de riesgos laborales (PRL) y contratos laborales de una empresa de servicios (Preventor). Integra datos de trabajadores, contratos, cursos de formación, centros de trabajo y formularios de evaluación PRL.",
+    "keyMetrics": [
+      {
+        "metric": "Asignaciones",
+        "definition": "Número de contratos laborales activos en el período seleccionado",
+        "businessMeaning": "KPI principal para medir la ocupación laboral"
+      },
+      {
+        "metric": "TotTRaAct",
+        "definition": "Total de trabajadores únicos con contrato activo en el período",
+        "businessMeaning": "Plantilla de trabajo activa"
+      },
+      {
+        "metric": "Altas",
+        "definition": "Nuevos contratos iniciados en el período seleccionado",
+        "businessMeaning": "Crecimiento y rotación de personal"
+      },
+      {
+        "metric": "NFPRLAL / NFPRLAS",
+        "definition": "Número de formularios PRL realizados respecto a Altas/Asignaciones",
+        "businessMeaning": "Cumplimiento legal en evaluaciones PRL"
+      },
+      {
+        "metric": "Cursos Aplicables",
+        "definition": "Cursos relevantes para el trabajador en su contrato activo",
+        "businessMeaning": "Identificación de necesidades de formación continua"
+      },
+      {
+        "metric": "Caducidad Cursos",
+        "definition": "Fecha de vencimiento de certificados de cursos",
+        "businessMeaning": "Gestión de formación y cumplimiento normativo"
+      }
+    ],
+    "dataIntegration": [
+      {
+        "source": "Database: no3001 (TEMPORING)",
+        "tables": ["contra", "trabajador", "clientes", "catego", "prvcursos"],
+        "purpose": "Datos maestros de contratos, trabajadores, clientes y catálogos"
+      },
+      {
+        "source": "Database: ttidoc001 (TEMPORING)",
+        "tables": ["documentos"],
+        "purpose": "Formularios y documentos PRL"
+      },
+      {
+        "source": "Power BI Embedded Data",
+        "tables": ["MCANCentros"],
+        "purpose": "Datos de centros/sucursales"
+      }
+    ],
+    "filteringLogic": [
+      {
+        "dimension": "Período Temporal",
+        "fields": ["Calendario[Año]", "Calendario[Mes (Número)]"],
+        "usage": "Controla el rango de fechas para mostrar datos de contratos y formularios en ese período"
+      },
+      {
+        "dimension": "Centro",
+        "fields": ["MCANCentros[Texto]"],
+        "usage": "Filtra datos por sucursal/centro de trabajo"
+      },
+      {
+        "dimension": "Trabajador",
+        "fields": ["Trabajador[cttrabajador]"],
+        "usage": "Permite análisis individual de trabajadores seleccionados"
+      }
+    ],
+    "calculatedFields": [
+      {
+        "name": "CTCenCon",
+        "tables": ["Contratos"],
+        "expression": "FORMAT(Contratos[ctcentro],\"00\")&FORMAT(Contratos[ctcontrato],\"00000000\")",
+        "purpose": "Crear clave compuesta para relacionar tablas"
+      },
+      {
+        "name": "CTCenCli",
+        "tables": ["Contratos"],
+        "expression": "FORMAT(Contratos[ctcentro],\"00\")&FORMAT(Contratos[ctcliente],\"000000\")",
+        "purpose": "Crear clave compuesta Centro-Cliente"
+      },
+      {
+        "name": "CurCenCur",
+        "tables": ["CursoXTrab", "Cursos"],
+        "expression": "FORMAT([pctcentro/pccentro],\"00\")&FORMAT([pctcurso/pccodigo],\"0000\")",
+        "purpose": "Crear clave compuesta para relacionar cursos"
+      },
+      {
+        "name": "FechaCaducidad",
+        "tables": ["CursoXTrab"],
+        "expression": "EDATE(CursoXTrab[pctfechafin], COALESCE(RELATED(Cursos[pccaducidad]),0)*12)",
+        "purpose": "Calcular fecha de vencimiento del certificado"
+      },
+      {
+        "name": "Validez",
+        "tables": ["FormPRL"],
+        "expression": "Date.AddYears([dofecha],1)",
+        "purpose": "Calcular fecha de vencimiento del formulario PRL (1 año)"
+      }
+    ]
+  },
+  "summary": {
+    "totalTables": 10,
+    "totalMeasures": 31,
+    "totalRelationships": 8,
+    "primaryDataSource": "SQL Server (TEMPORING - no3001, ttidoc001)",
+    "reportPages": 1,
+    "reportVisuals": 5,
+    "language": "Spanish (es-ES)",
+    "mainPurpose": "Gestión y análisis de cumplimiento normativo en prevención de riesgos laborales (PRL) y formación continua de trabajadores",
+    "targetAudience": "Responsables de PRL, Recursos Humanos, Directivos"
+  }
+}
