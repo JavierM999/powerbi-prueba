@@ -1,0 +1,526 @@
+table CursoXTrab
+	lineageTag: 0e317eda-b1e8-4bc1-897b-a82868f65a37
+
+	measure TotCurTra = DISTINCTCOUNT(CursoXTrab[pcttrabajador])
+		formatString: 0
+		lineageTag: 34436a2f-27cb-4265-a73b-bc6806881a43
+
+	measure TotCurTra2 = IF([TotTRaAct],DISTINCTCOUNT(CursoXTrab[pcttrabajador]),BLANK())
+		formatString: 0
+		lineageTag: c57ede8e-52ee-4511-bf92-395a5f7c945f
+
+	measure 'Tot TraCurso' = IF([TotTRaAct],CALCULATE(DISTINCTCOUNT(CursoXTrab[pcttrabajador]),FILTER(CursoXTrab,CursoXTrab[pcttrabajador] in VALUES(Contratos[cttrabajador]))),BLANK())
+		formatString: 0
+		lineageTag: 9605e97e-c09c-4247-bd6d-d3829af18151
+
+	measure TotCursos = IF([Tot TraCurso],DISTINCTCOUNT(CursoXTrab[pctcurso]),BLANK())
+		formatString: 0
+		lineageTag: 071eead8-71bc-47c1-9e4a-ef84096faf4c
+
+	measure 'TotCur AsContra' = IF([TotTRaAct],CALCULATE(DISTINCTCOUNT(CursoXTrab[pcttrabajador]),FILTER(CursoXTrab,CursoXTrab[pcttrabajador] in VALUES(Contratos[cttrabajador])),FILTER(CursoXTrab,CursoXTrab[pctcontralab]>0)),BLANK())
+		formatString: 0
+		lineageTag: a131031c-55b0-41dd-811f-faa990cddd5e
+
+	measure 'TotCur AsTrabaj' =
+			
+			IF (
+			    [TotTRaAct],
+			    CALCULATE (
+			        DISTINCTCOUNT ( CursoXTrab[pcttrabajador] ),
+			        FILTER (
+			            CursoXTrab,
+			            CursoXTrab[pcttrabajador] IN VALUES ( Contratos[cttrabajador] )
+			        ),
+			        FILTER ( CursoXTrab, CursoXTrab[pctcontralab] = 0 )
+			    ),
+			    BLANK ()
+			)
+		formatString: 0
+		lineageTag: abf336e2-99e7-4e56-8eda-be2074d76514
+
+	measure 'Tot TraCurso2' = ```
+			
+			   IF (
+			    [TotTRaAct],
+			    CALCULATE (
+			        COUNTROWS ( CursoXTrab ),
+			        FILTER (
+			            CursoXTrab,
+			            CursoXTrab[pctfechafin]
+			                >= DATE ( YEAR ( TODAY () ) - 1, MONTH ( TODAY () ), DAY ( TODAY () ) )
+			        )
+			    ),
+			    BLANK ()
+			)
+			```
+		formatString: 0
+		lineageTag: 607e2428-c8d5-4834-9138-26dc9213e57a
+
+	measure 'Cursos Trabajador' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Trabajador[cttrabajador] )
+			RETURN
+			IF (
+			    NOT ISBLANK ( _Trabajador ),
+			    CALCULATE (
+			        CONCATENATEX (
+			            DISTINCT ( CursoXTrab[pctcurso] ),
+			            CursoXTrab[pctcurso],
+			            ", "
+			        ),
+			        FILTER (
+			            ALL ( CursoXTrab ),
+			            CursoXTrab[pcttrabajador] = _Trabajador
+			        )
+			    )
+			)
+		lineageTag: 143f5a94-166f-471f-986f-cd2521ed16d9
+
+	measure 'Cursos Trabajador Activo' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[cttrabajador] ),
+			    CALCULATE (
+			        CONCATENATEX (
+			            VALUES ( CursoXTrab[pctcurso] ),
+			            CursoXTrab[pctcurso],
+			            ", ",
+			            CursoXTrab[pctcurso],
+			            ASC
+			        ),
+			        TREATAS ( { _Trabajador }, CursoXTrab[pcttrabajador] )
+			    )
+			)
+		lineageTag: ee142d43-7b92-4598-8c58-014cc3ec4c40
+
+	measure 'Cursos Trabajador Detalle' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[cttrabajador] ),
+			    CALCULATE (
+			        CONCATENATEX (
+			            CursoXTrab,
+			            CursoXTrab[pctcurso]
+			                & " ("
+			                & FORMAT ( CursoXTrab[pctfechaini], "dd/MM/yyyy" )
+			                & " - "
+			                & FORMAT ( CursoXTrab[pctfechafin], "dd/MM/yyyy" )
+			                & ")",
+			            ", ",
+			            CursoXTrab[pctfechaini],
+			            ASC
+			        ),
+			        TREATAS ( { _Trabajador }, CursoXTrab[pcttrabajador] )
+			    )
+			)
+		lineageTag: a120837f-e3ed-4718-88f2-ebd2f93a4552
+
+	measure 'Caducidad Cursos Detalle' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[cttrabajador] ),
+			    CALCULATE (
+			        CONCATENATEX (
+			            CursoXTrab,
+			            CursoXTrab[pctcurso]
+			                & " caduca el "
+			                & FORMAT (
+			                    EDATE (
+			                        CursoXTrab[pctfechafin],
+			                        RELATED ( Cursos[pccaducidad] ) * 12
+			                    ),
+			                    "dd/MM/yyyy"
+			                ),
+			            ", ",
+			            CursoXTrab[pctfechafin],
+			            ASC
+			        ),
+			        TREATAS ( { _Trabajador }, CursoXTrab[pcttrabajador] )
+			    )
+			)
+		lineageTag: e42e6161-d77a-48ca-aabf-42d80581884e
+
+	measure 'Nombre y Codigo Cursos Trabajador' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[cttrabajador] ),
+			    CALCULATE (
+			        CONCATENATEX (
+			            CursoXTrab,
+			            CursoXTrab[pctcurso] & " - " & RELATED ( Cursos[pcnombre] ),
+			            ", ",
+			            CursoXTrab[pctcurso],
+			            ASC
+			        ),
+			        TREATAS ( { _Trabajador }, CursoXTrab[pcttrabajador] )
+			    )
+			)
+		lineageTag: d3de4cb3-7572-41b6-99c0-fb94869a354e
+
+	measure 'Tiene Curso Aplicable' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			VAR _IniContrato = SELECTEDVALUE ( Contratos[ctfechaini] )
+			VAR _FinContrato =
+			    COALESCE (
+			        SELECTEDVALUE ( Contratos[ctfechafinreal] ),
+			        [fecfin]
+			    )
+			VAR _NumCursos =
+			    CALCULATE (
+			        COUNTROWS ( CursoXTrab ),
+			        FILTER (
+			            CursoXTrab,
+			            CursoXTrab[pcttrabajador] = _Trabajador
+			                && CursoXTrab[pctfechaini] <= _FinContrato
+			                && EDATE (
+			                    CursoXTrab[pctfechafin],
+			                    COALESCE ( RELATED ( Cursos[pccaducidad] ), 0 ) * 12
+			                ) >= _IniContrato
+			        )
+			    )
+			RETURN
+			IF ( _NumCursos > 0, "Sí", BLANK () )
+		lineageTag: f2be2284-0fa1-462b-905e-0155bf39acb8
+
+	measure 'Cursos Aplicables Contrato' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			VAR _IniContrato = SELECTEDVALUE ( Contratos[ctfechaini] )
+			VAR _FinContrato =
+			    COALESCE ( SELECTEDVALUE ( Contratos[ctfechafinreal] ), [fecfin] )
+			VAR _Cursos =
+			    FILTER (
+			        ALL ( CursoXTrab ),
+			        CursoXTrab[pcttrabajador] = _Trabajador
+			            && CursoXTrab[pctfechaini] <= _FinContrato
+			            && CursoXTrab[FechaCaducidad] >= _IniContrato
+			    )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[ctcontrato] )
+			        && NOT ISBLANK ( _Trabajador )
+			        && NOT ISBLANK ( _IniContrato ),
+			    CONCATENATEX (
+			        _Cursos,
+			        CursoXTrab[CursoDetalle],
+			        ", ",
+			        CursoXTrab[pctfechaini],
+			        ASC
+			    )
+			)
+		lineageTag: cc4c4261-637f-4d14-8572-1754c5c06a4c
+
+	measure 'Nombre y Codigo Cursos Aplicables' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			VAR _IniContrato = SELECTEDVALUE ( Contratos[ctfechaini] )
+			VAR _FinContrato =
+			    COALESCE (
+			        SELECTEDVALUE ( Contratos[ctfechafinreal] ),
+			        [fecfin]
+			    )
+			VAR _CursosAplicables =
+			    FILTER (
+			        CursoXTrab,
+			        CursoXTrab[pcttrabajador] = _Trabajador
+			            && CursoXTrab[pctfechaini] <= _FinContrato
+			            && EDATE (
+			                CursoXTrab[pctfechafin],
+			                COALESCE ( RELATED ( Cursos[pccaducidad] ), 0 ) * 12
+			            ) >= _IniContrato
+			    )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[ctcontrato] ),
+			    CONCATENATEX (
+			        _CursosAplicables,
+			        CursoXTrab[pctcurso] & " - " & RELATED ( Cursos[pcnombre] ),
+			        ", ",
+			        CursoXTrab[pctcurso],
+			        ASC
+			    )
+			)
+		lineageTag: d9b24529-19c5-4082-8e6d-07b5a192ade4
+
+	measure 'Cursos Aplicables Resumen' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			VAR _IniContrato = SELECTEDVALUE ( Contratos[ctfechaini] )
+			VAR _FinContrato =
+			    COALESCE ( SELECTEDVALUE ( Contratos[ctfechafinreal] ), [fecfin] )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[ctcontrato] )
+			        && NOT ISBLANK ( _Trabajador )
+			        && NOT ISBLANK ( _IniContrato ),
+			    CALCULATE (
+			        CONCATENATEX (
+			            FILTER (
+			                ALL ( CursoXTrab ),
+			                CursoXTrab[pcttrabajador] = _Trabajador
+			                    && CursoXTrab[pctfechaini] <= _FinContrato
+			                    && CursoXTrab[FechaCaducidad] >= _IniContrato
+			            ),
+			            CursoXTrab[pctcurso]
+			                & " - "
+			                & RELATED ( Cursos[pcnombre] )
+			                & " | inicio: "
+			                & FORMAT ( CursoXTrab[pctfechaini], "dd/MM/yyyy" )
+			                & " | caduca: "
+			                & FORMAT ( CursoXTrab[FechaCaducidad], "dd/MM/yyyy" ),
+			            ", ",
+			            CursoXTrab[pctfechaini],
+			            ASC
+			        )
+			    )
+			)
+		lineageTag: 3a948134-15cc-4d90-b759-bac1940123a1
+
+	measure 'Categoria Cursos Trabajador' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[cttrabajador] ),
+			    CALCULATE (
+			        CONCATENATEX (
+			            VALUES ( CursoXTrab[pctcategoria] ),
+			            CursoXTrab[pctcategoria],
+			            ", ",
+			            CursoXTrab[pctcategoria],
+			            ASC
+			        ),
+			        TREATAS ( { _Trabajador }, CursoXTrab[pcttrabajador] )
+			    )
+			)
+		lineageTag: 668a925b-ce39-4780-a056-f719a126165a
+
+	measure 'Nombre Categorias Aplicables' =
+			
+			VAR _Trabajador = SELECTEDVALUE ( Contratos[cttrabajador] )
+			VAR _IniContrato = SELECTEDVALUE ( Contratos[ctfechaini] )
+			VAR _FinContrato =
+			    COALESCE ( SELECTEDVALUE ( Contratos[ctfechafinreal] ), [fecfin] )
+			RETURN
+			IF (
+			    HASONEVALUE ( Contratos[ctcontrato] )
+			        && NOT ISBLANK ( _Trabajador )
+			        && NOT ISBLANK ( _IniContrato ),
+			    CALCULATE (
+			        CONCATENATEX (
+			            DISTINCT (
+			                SELECTCOLUMNS (
+			                    FILTER (
+			                        ALL ( CursoXTrab ),
+			                        CursoXTrab[pcttrabajador] = _Trabajador
+			                            && CursoXTrab[pctfechaini] <= _FinContrato
+			                            && CursoXTrab[FechaCaducidad] >= _IniContrato
+			                    ),
+			                    "NombreCategoria", RELATED ( Categorias[canombre] )
+			                )
+			            ),
+			            [NombreCategoria],
+			            ", ",
+			            [NombreCategoria],
+			            ASC
+			        )
+			    )
+			)
+		lineageTag: 6cd928c4-e65a-46c8-bb9e-c1eb0329b10f
+
+	column pctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: ae8c4672-0be6-4287-9130-fec8b4dab467
+		summarizeBy: sum
+		sourceColumn: pctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 349d24b4-c011-4876-95d9-343d1dde193a
+		summarizeBy: none
+		sourceColumn: pcttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctcurso
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d2b2d0f-9f67-44bc-b7a6-be35dfb1cb11
+		summarizeBy: sum
+		sourceColumn: pctcurso
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctfecha
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b41a4563-5037-4d90-94ce-2a02d2e4ef04
+		summarizeBy: none
+		sourceColumn: pctfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column pctfechaini
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9eae4441-9791-419b-afaf-29a9a769ae5c
+		summarizeBy: none
+		sourceColumn: pctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctfechaultima
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8ea5438d-a487-4e9f-a762-69b4d4c0b22a
+		summarizeBy: none
+		sourceColumn: pctfechaultima
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctfechafin
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1bfc5cb0-1744-42fa-8b9e-e3ea424a6f67
+		summarizeBy: none
+		sourceColumn: pctfechafin
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcttienecertificado
+		dataType: string
+		lineageTag: 116d70e0-c0f8-4c4b-951d-234bc336b0f0
+		summarizeBy: none
+		sourceColumn: pcttienecertificado
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: c97b0eb4-9c4b-406d-b0c1-8b69dd9a5d11
+		summarizeBy: sum
+		sourceColumn: pctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: 95d73753-8297-4aff-90f1-3c73c6591b44
+		summarizeBy: sum
+		sourceColumn: pctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctcontralab
+		dataType: int64
+		formatString: 0
+		lineageTag: c745ab9f-4582-487a-9521-66692bedf146
+		summarizeBy: sum
+		sourceColumn: pctcontralab
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctcategoria
+		dataType: int64
+		formatString: 0
+		lineageTag: 6442cd52-1ee5-4ca1-ad1c-4a755a8c2e4a
+		summarizeBy: none
+		sourceColumn: pctcategoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctestado
+		dataType: string
+		lineageTag: 412b8b2d-a937-42ca-b9a1-27fea3ef47dc
+		summarizeBy: none
+		sourceColumn: pctestado
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctcertificadofirmado
+		dataType: string
+		lineageTag: ef8496cf-8b1d-4d69-9f27-8e1d42bc7fdf
+		summarizeBy: none
+		sourceColumn: pctcertificadofirmado
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctaccion
+		dataType: int64
+		formatString: 0
+		lineageTag: cb9e6d8b-cd0b-4912-a2d3-5e8aab6da76c
+		summarizeBy: sum
+		sourceColumn: pctaccion
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctidtrabprev
+		dataType: int64
+		formatString: 0
+		lineageTag: 710cdbed-3f84-4932-9dc3-33afcd32d1df
+		summarizeBy: sum
+		sourceColumn: pctidtrabprev
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurCenCur = FORMAT(CursoXTrab[pctcentro],"00")&FORMAT(CursoXTrab[pctcurso],"0000")
+		lineageTag: 2f936e39-8023-4dcf-82e5-9ecda2ef386f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cpcnombre
+		dataType: string
+		lineageTag: 76e842af-5c91-415c-9050-d09ac821c601
+		summarizeBy: none
+		sourceColumn: Cpcnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column FechaCaducidad =
+			
+			VAR _Anios = COALESCE ( RELATED ( Cursos[pccaducidad] ), 0 )
+			RETURN
+			IF (
+			    NOT ISBLANK ( CursoXTrab[pctfechafin] ),
+			    EDATE ( CursoXTrab[pctfechafin], _Anios * 12 )
+			)
+		formatString: General Date
+		lineageTag: 65b16c29-1a07-4d26-a1ac-7b4b6d6644dd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CursoXTrab-ef466826-4d3c-448a-807d-2c596656e96e = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="select pctcentro,pcttrabajador,pctcurso,pctfecha,pctfechaini,pctfechaultima,pctfechafin,pcttienecertificado,pctcliente,pctcencli,pctcontralab,pctcategoria,#(lf)#(tab)#(tab)#(tab)pctestado,pctcertificadofirmado,pctaccion,pctidtrabprev#(lf)  from prvcursosxtra#(lf)  where pctempresa=1#(lf)  and year(pctfechafin) >=2022#(lf)"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"pctcentro", Int64.Type}, {"pctcurso", Int64.Type}, {"pctfecha", type date}, {"pctcencli", Int64.Type}, {"pctaccion", Int64.Type}}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Tipo cambiado", {"pctcentro", "pctcurso"}, Cursos, {"pccentro", "pccodigo"}, "Cursos", JoinKind.LeftOuter),
+				    #"Se expandió Cursos" = Table.ExpandTableColumn(#"Consultas combinadas", "Cursos", {"pcnombre"}, {"Cursos.pcnombre"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Se expandió Cursos",{{"Cursos.pcnombre", "Cpcnombre"}})
+				in
+				    #"Columnas con nombre cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

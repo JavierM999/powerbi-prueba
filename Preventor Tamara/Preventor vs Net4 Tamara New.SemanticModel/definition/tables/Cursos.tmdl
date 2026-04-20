@@ -1,0 +1,98 @@
+table Cursos
+	lineageTag: 44a0d315-3577-4633-9997-1a132e591578
+
+	column pccentro
+		dataType: int64
+		formatString: 0
+		lineageTag: f38dd4fe-53b3-4281-9f71-b5ba93eedf9d
+		summarizeBy: none
+		sourceColumn: pccentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column pccodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 238dad1d-7b22-4766-904c-e36bf73ee36f
+		summarizeBy: none
+		sourceColumn: pccodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcnombre
+		dataType: string
+		lineageTag: 3e16c263-c412-4bc7-b456-0866221f3508
+		summarizeBy: none
+		sourceColumn: pcnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcestado
+		dataType: string
+		lineageTag: d96aecec-5f60-4f0b-b3ef-73a6fe68cc10
+		summarizeBy: none
+		sourceColumn: pcestado
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcproveedor
+		dataType: string
+		lineageTag: 976252dc-14c7-42b4-b235-8ed825553b3d
+		summarizeBy: none
+		sourceColumn: pcproveedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcidcursoprov
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ad36899-dc1c-4316-a250-ee5fcf7b5249
+		summarizeBy: none
+		sourceColumn: pcidcursoprov
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcmodalidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 98630282-812e-4411-89a8-dba0556a0d43
+		summarizeBy: none
+		sourceColumn: pcmodalidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column pccaducidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ce4f202-90c1-4d88-a651-bb1041ef47cc
+		summarizeBy: none
+		sourceColumn: pccaducidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctipocurso
+		dataType: int64
+		formatString: 0
+		lineageTag: 5327ba79-9321-4ac7-b356-ecaebbfd991f
+		summarizeBy: none
+		sourceColumn: pctipocurso
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuCenCur = FORMAT(Cursos[pccentro],"00")&FORMAT(Cursos[pccodigo],"0000")
+		lineageTag: 57f359c5-c8fe-4c16-b2f8-73ad02b77621
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Cursos-e4dcd7da-a1ba-4f32-887c-9a8f867dbed8 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="select pccentro,pccodigo,pcnombre,pcestado,pcproveedor,pcidcursoprov,pcmodalidad,pccaducidad,pctipocurso#(lf)  from prvcursos#(lf)  where pcempresa=1"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"pccentro", Int64.Type}, {"pccodigo", Int64.Type}, {"pcmodalidad", Int64.Type}, {"pccaducidad", Int64.Type}, {"pctipocurso", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+

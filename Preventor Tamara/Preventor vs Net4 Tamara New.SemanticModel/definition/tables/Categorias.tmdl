@@ -1,0 +1,32 @@
+table Categorias
+	lineageTag: b5d8aeda-e5e8-4671-84f3-d1ddc45653b3
+
+	column cacodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 187fb61f-ff96-4e67-8560-525d983bd8e5
+		summarizeBy: none
+		sourceColumn: cacodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column canombre
+		dataType: string
+		lineageTag: b84956cc-fe00-41ce-be4c-7e95e366424c
+		summarizeBy: none
+		sourceColumn: canombre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Categorias = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="select cacodigo,canombre #(lf)from catego"])
+				in
+				    Origen
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

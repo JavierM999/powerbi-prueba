@@ -1,0 +1,124 @@
+table FormPRL
+	lineageTag: 01496a01-2f7d-49fb-b09b-3662b1b14232
+
+	measure TotFPRL = COUNTROWS(FormPRL)
+		formatString: 0
+		lineageTag: 6622b76e-1a69-4f6d-96fb-bc7a0cb8e28a
+
+	column docentro
+		dataType: int64
+		formatString: 0
+		lineageTag: babaadcc-1406-45d6-94db-08f31a281dbf
+		summarizeBy: sum
+		sourceColumn: docentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodContra
+		dataType: int64
+		formatString: 0
+		lineageTag: 8046da69-3c71-4e41-929b-4fd104c84de7
+		summarizeBy: sum
+		sourceColumn: CodContra
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodTrab
+		dataType: int64
+		formatString: 0
+		lineageTag: 7cc73242-3afc-437d-9cd0-13a7fe08d1af
+		summarizeBy: none
+		sourceColumn: CodTrab
+
+		annotation SummarizationSetBy = Automatic
+
+	column dotipodoc
+		dataType: string
+		lineageTag: cc05409e-d239-43fb-92f8-bf31ad775057
+		summarizeBy: none
+		sourceColumn: dotipodoc
+
+		annotation SummarizationSetBy = Automatic
+
+	column docontador
+		dataType: int64
+		formatString: 0
+		lineageTag: 9cdb7f04-747d-4e79-98a3-6a18ea3aeabb
+		summarizeBy: sum
+		sourceColumn: docontador
+
+		annotation SummarizationSetBy = Automatic
+
+	column dofecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d54c4bef-c92d-4be3-b73c-fbd7bdbb557c
+		summarizeBy: none
+		sourceColumn: dofecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dodescripcion
+		dataType: string
+		lineageTag: 6309943d-c870-49d8-a88f-a7fa26827deb
+		summarizeBy: none
+		sourceColumn: dodescripcion
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 37dc8adf-5568-4ed5-ab15-024a7df0117d
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c8ba404a-95d6-4e4b-a688-6d0eb453be65
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Validez
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ca16d49c-36e7-4fbc-9839-a7e0c93e7a4d
+		summarizeBy: none
+		sourceColumn: Validez
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column acftipacc
+		dataType: string
+		lineageTag: 4bd64a05-d976-45da-aa38-cf552587fff1
+		summarizeBy: none
+		sourceColumn: acftipacc
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FormPRL = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "ttidoc001", [Query="SELEct documentos.docentro,substring(documentos.doentidad,9,8) AS CodContra,substring(documentos.doentidad,1,8) as CodTrab#(lf)        ,documentos.dotipodoc,documentos.docontador,dofecha,dodescripcion,contra.ctfechaini,contra.ctfechafinreal#(lf)#(tab)#(tab)from documentos inner join #(lf)      no3001.dbo.contra on documentos.doempresa=contra.ctempresa and documentos.docentro=contra.ctcentro #(lf)#(tab)           and substring(documentos.doentidad,1,8)=contra.cttrabajador#(lf) where documentos.doempresa=1#(lf)and documentos.dotipodoc='N4PR'#(lf)and dofecha>= '12/01/2022'"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"docentro", Int64.Type}, {"dofecha", type date}}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado", "Validez", each Date.AddYears([dofecha],1)),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Personalizada agregada",{{"Validez", type date}, {"CodContra", Int64.Type}, {"CodTrab", Int64.Type}}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Tipo cambiado1", {"docentro", "CodContra", "CodTrab"}, ContFirmados, {"ctcentro", "ctcontrato", "cttrabajador"}, "FirSoloContra", JoinKind.LeftOuter),
+				    #"Se expandió FirSoloContra" = Table.ExpandTableColumn(#"Consultas combinadas", "FirSoloContra", {"acftipacc"}, {"acftipacc"})
+				in
+				    #"Se expandió FirSoloContra"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

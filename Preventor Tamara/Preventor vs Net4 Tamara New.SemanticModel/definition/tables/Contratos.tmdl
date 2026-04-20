@@ -1,0 +1,269 @@
+table Contratos
+	lineageTag: 839b09ee-e9c6-433c-aca3-c874436bad68
+
+	measure Asignaciones = ```
+			
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: 05037190-3f55-4a55-ba18-9f717cd4be3f
+
+	measure TotTra = ```
+			DISTINCTCOUNT(Contratos[cttrabajador]) 
+			```
+		formatString: 0
+		lineageTag: d77e0205-6f4b-4831-be1b-877effeb3759
+
+	measure TotTRaAct = ```
+			
+			    CALCULATE (
+			        DISTINCTCOUNT(Contratos[cttrabajador]),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: 4a3517d0-0f4e-4b64-b2ee-c0314a647ce8
+
+	measure Altas = CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]>=[fecini]),FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]))
+		formatString: 0
+		lineageTag: b1725d94-356d-417d-988f-da73300832f7
+
+	measure TotTRaAlt = ```
+			
+			    CALCULATE (
+			        DISTINCTCOUNT(Contratos[cttrabajador]),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] >= [fecini] ),
+			        FILTER (
+			            ALL ( contratos[ctfechaini] ),  Contratos[ctfechaini] <= [fecfin]
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: 4f9747a1-40b2-4ffa-8cbf-8b508bf13bc4
+
+	measure 'Novac OKAS' =
+			
+			SUMX (
+			    CALCULATETABLE (
+			        ADDCOLUMNS (
+			            SUMMARIZE (
+			                DocContratos,
+			                MCANCentros[Texto],
+			                DocContratos[DetCCenCon],
+			                DocContratos[dodescripcion]
+			            ),
+			            "DTROK", IF ( CONTAINSSTRING ( DocContratos[dodescripcion], "novación" ), 1 )
+			        ),
+			        FILTER (
+			            ALL ( DocContratos[ctfechaini] ),
+			            DocContratos[ctfechaini] <= [fecfin]
+			        ),
+			        FILTER (
+			            ALL ( DocContratos[ctfechafinreal] ),
+			            ISBLANK ( DocContratos[ctfechafinreal] ) = TRUE ()
+			                || DocContratos[ctfechafinreal] >= [fecini]
+			        ),
+			        FILTER (
+			            ALL ( DocContratos[CFacftipacc] ),
+			            DocContratos[CFacftipacc] = "FIEMP"
+			        )
+			    ),
+			    [DTROK]
+			)
+		formatString: 0
+		lineageTag: 2f25d430-5ff4-4605-8c1f-01f1b7f17c3e
+
+	measure 'Novac OKAL' = ```
+			
+			SUMX (
+			    CALCULATETABLE (
+			        ADDCOLUMNS (
+			            SUMMARIZE (
+			                DocContratos,
+			                MCANCentros[Texto],
+			                DocContratos[DetCCenCon],
+			                DocContratos[dodescripcion]
+			            ),
+			            "DTROK", IF ( CONTAINSSTRING ( DocContratos[dodescripcion], "novación" ), 1 )
+			        ),
+			         FILTER ( ALL(DocContratos[ctfechaini]) , DocContratos[ctfechaini] >= [fecini]  && DocContratos[ctfechaini] <= [fecfin] 
+			    ),
+			        FILTER (
+			            ALL ( DocContratos[CFacftipacc] ),
+			            DocContratos[CFacftipacc] = "FIEMP"
+			        )
+			    ),
+			    [DTROK]
+			)
+			```
+		formatString: 0
+		lineageTag: eae12880-a30e-4187-b728-014145d36552
+
+	measure Oculta = IF(SELECTEDVALUE(Opciones[Texto])="ASIGNACIONES",1,0)
+		formatString: 0
+		lineageTag: 47b56a5b-cb7d-426f-a290-907c4c2e3bbb
+
+	measure NFPRLAL = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT(Contratos[CTCenCon]),  
+			    FILTER(
+			        'Contratos',  -- Filtrar la tabla de contratos
+			        [Altas] = 1 &&  -- El contrato está activo en el período seleccionado
+			        TREATAS(
+			            SELECTCOLUMNS(
+			            FILTER(
+			                'FormPRL',
+			                FormPRL[CodTrab] = Contratos[cttrabajador] &&  -- Misma persona
+			                FormPRL[dofecha] <= [fecfin] &&  -- Fecha de realización anterior o igual al último día del mes/año seleccionado
+			                FormPRL[Validez] >= [fecini] &&  -- Fecha de fin de validez posterior o igual al primer día del mes/año seleccionado
+			                FormPRL[acftipacc]="FIEMP"
+			            ),
+			            FormPRL[CodTrab]),
+			            Contratos[cttrabajador]
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 7d41ad42-72e2-4846-b892-42de8c9608ea
+
+	measure NFPRLAS = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT(Contratos[CTCenCon]),  
+			    FILTER(
+			        'Contratos',  -- Filtrar la tabla de contratos
+			        [Asignaciones] = 1 &&  -- El contrato está activo en el período seleccionado
+			        TREATAS(
+			            SELECTCOLUMNS(
+			            FILTER(
+			                'FormPRL',
+			                FormPRL[CodTrab] = Contratos[cttrabajador] &&  -- Misma persona
+			                FormPRL[dofecha] <= [fecfin] &&  -- Fecha de realización anterior o igual al último día del mes/año seleccionado
+			                FormPRL[Validez] >= [fecini] &&  -- Fecha de fin de validez posterior o igual al primer día del mes/año seleccionado
+			                FormPRL[acftipacc] = "FIEMP"
+			            ),
+			            FormPRL[CodTrab]),
+			            Contratos[cttrabajador]
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 41faa2a6-b979-4be2-94a8-758a2e76baa8
+
+	measure '% NFPRLAL' = DIVIDE([NFPRLAL],[Altas])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 3d848cf8-5ef7-478d-b811-745794e6b21d
+
+	measure '% NFPRLAS' = DIVIDE([NFPRLAS],[Asignaciones])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 23d63dfe-570d-4813-a095-845cae625daf
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 202b3de8-eb8e-434b-ab81-339e632ecde5
+		summarizeBy: none
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: a471c385-a001-49da-8f12-07a063df89ea
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: cabc3e57-7b3a-4858-875f-a0da61233ebf
+		summarizeBy: none
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column CTCenCon = FORMAT(Contratos[ctcentro],"00")&FORMAT(Contratos[ctcontrato],"00000000")
+		lineageTag: 71699866-18cc-4d2c-9322-ae3ae81de4cb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8bffb98c-21e0-45eb-bbad-521ccb8b8444
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 64d518ea-b186-4ce4-8dac-ee98be1a5356
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CTCenCli = FORMAT(Contratos[ctcentro],"00")&FORMAT(Contratos[ctcliente],"000000")
+		lineageTag: 7707dc2d-fd30-42ca-b88e-b4b1e81b4077
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 63b6011b-e4aa-44d5-b811-b8b4da32d131
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnombre
+		dataType: string
+		lineageTag: 8d9d0787-8ecf-4b81-9746-2f2b485317bc
+		summarizeBy: none
+		sourceColumn: clnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Contratos-763aca8e-78de-4fa1-a4eb-77c7924f2259 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select ctcentro,ctcliente,clnombre,ctcontrato,cttrabajador,ctfechaini,ctfechafinreal#(lf)from contra inner join#(lf)   clientes on ctempresa=clempresa and ctcentro = clcentro and ctcliente=clcodigo#(lf)where ctempresa=1#(lf)and     (ctfechafinreal is null or year(ctfechafinreal) >= 2022)"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"ctcentro", Int64.Type}, {"ctfechaini", type date}, {"ctfechafinreal", type date}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

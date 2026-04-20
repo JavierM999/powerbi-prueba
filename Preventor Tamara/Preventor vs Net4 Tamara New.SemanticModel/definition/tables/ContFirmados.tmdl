@@ -1,0 +1,77 @@
+table ContFirmados
+	lineageTag: c631f608-8848-4cd5-aada-dad2d7bafb8a
+
+	measure totcontFirma = COUNTROWS(ContFirmados)
+		formatString: 0
+		lineageTag: 373c0e6e-1fff-43eb-81f0-12743da11f3f
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: fcf61b77-7184-4c9b-83e7-ac1219364705
+		summarizeBy: none
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column acftipacc
+		dataType: string
+		lineageTag: 4488b087-d4af-452a-a6f2-f5d05b29c125
+		summarizeBy: none
+		sourceColumn: acftipacc
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 282afeac-3c0c-4803-a761-901eedd709e1
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 29432308-ddac-4f9c-9632-856c5b1e3c54
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 808f0ac7-2f59-4f46-88b0-0daab2ca91a9
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: 5954443c-2882-4588-b0b2-9a745424fe7a
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ContFirmados = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "NO3001", [Query="#(lf)Select ctcentro,ctcontrato,cttrabajador,acftipacc,ctfechaini,ctfechafinreal#(lf) From  no3001.dbo.contra#(lf) Left outer join no3001.dbo.accctofirma on acfempresa=ctempresa  and acfcentro=ctcentro and acfcontrato=ctcontrato and acftipo=0#(lf)               and acffechaacc=(select max(acffechaacc) from no3001.dbo.accctofirma where acfempresa=ctempresa and acfcentro=ctcentro and acfcontrato=ctcontrato and acftipo=0)#(lf) Left outer join no3001.dbo.clientes on clempresa=ctempresa and clcentro=ctcentro and clcodigo=ctcliente,#(lf)no3001.dbo.trabajador,no3001.dbo.catego,no3001.dbo.empres#(lf) Where trempresa=ctempresa and trtrabajador=cttrabajador and ctcatepuesto=cacodigo and epempresa=ctempresa#(lf) and ctempresa = 1 and  (ctfechafinreal is null or ctfechafinreal >= '12/01/2022')#(lf) and ctestado <> 'E' and  traceptafirmadigital='S'#(lf) and ( exists (SELECT cxempresa FROM no3001.dbo.contraxref WHERE cxempresa=ctempresa and cxcentrocontrato=ctcentro and cxcontrato=ctcontrato and (cxtipoxcontra='CPD' or cxtipoxcontra='CSE')) or ctfdco = 0 )#(lf) and (acftipacc='FIEMP')#(lf) and (cttipofirmadigitalctolab ='W' or cttipofirmadigitalctolab ='T' or cttipofirmadigitalctolab ='C' or cttipofirmadigitalctolab is null) and ((acftipofirma is not null and acftipofirma <> 'M') or isnull(acfip,'') <> '')#(lf) and (ctrefcontratoanterior is null #(lf) or (ctrefcontratoanterior is not null and isnull(ctfdco,-1)<>0 and isnull(cttransfindef,'N')='S' and isnull(ctprimerods,'N')='S'))"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"ctfechaini", type date}, {"ctfechafinreal", type date}, {"ctcentro", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

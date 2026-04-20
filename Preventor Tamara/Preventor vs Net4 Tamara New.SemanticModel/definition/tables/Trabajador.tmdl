@@ -1,0 +1,67 @@
+table Trabajador
+	lineageTag: 22dfdc57-3c7a-47c9-b902-012cd24d064a
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 97791e4a-5759-4c93-bd98-9f3aff28a059
+		summarizeBy: none
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnombrecompleto
+		dataType: string
+		lineageTag: 0c9cbe16-6311-41ee-aeab-638f798b29c1
+		summarizeBy: none
+		sourceColumn: trnombrecompleto
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnacionalidad
+		dataType: string
+		lineageTag: d7e6a518-5576-4c4a-901a-39b5074edb11
+		summarizeBy: none
+		sourceColumn: trnacionalidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnif
+		dataType: string
+		lineageTag: 55444ef5-9f3e-4059-90e4-9c21da55be92
+		summarizeBy: none
+		sourceColumn: trnif
+
+		annotation SummarizationSetBy = Automatic
+
+	column trtipoident
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a8bb9a1-7e60-47d3-b41c-ceec5d9f3cea
+		summarizeBy: sum
+		sourceColumn: trtipoident
+
+		annotation SummarizationSetBy = Automatic
+
+	column trcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 4401d744-64ae-4ba6-b8e6-66975303b068
+		summarizeBy: sum
+		sourceColumn: trcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Trabajador-40e8e8f6-847e-4771-aac3-1298c2a81d81 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="SELECT     distinct contra.cttrabajador,trabajador.trcodigo,trabajador.trnombrecompleto,trabajador.trnacionalidad,trabajador.trnif,trabajador.trtipoident#(lf)FROM         contra INNER JOIN#(lf)                      trabajador ON contra.ctempresa = trabajador.trempresa AND contra.cttrabajador =trabajador.trtrabajador#(lf)WHERE ctempresa=01#(lf)and ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal)>=2021)"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"trtipoident", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

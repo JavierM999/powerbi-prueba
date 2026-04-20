@@ -1,0 +1,57 @@
+table Clientes
+	lineageTag: a00171f7-2cfc-47ff-ae01-600313e4559f
+
+	column clcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 840abe53-7b3e-4a99-973d-a7278fdfc32a
+		summarizeBy: none
+		sourceColumn: clcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 134b15aa-acbc-4ffd-8fe4-a8776d45425d
+		summarizeBy: none
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnombre
+		dataType: string
+		lineageTag: ea4a9f3a-2d9c-4301-acc5-452cc6fe71e4
+		summarizeBy: none
+		sourceColumn: clnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: 0910b562-467e-47d9-aa21-b1594342d491
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column CliCenCli = FORMAT(Clientes[clcentro],"00")&FORMAT(Clientes[clcodigo],"000000")
+		lineageTag: d7bf3b6c-939a-4f39-9cc5-29bf1b583245
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clientes = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="Select distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clcifdni#(lf)from                       clientes inner join#(lf)        contra on clientes.clempresa=contra.ctempresa and clientes.clcentro=contra.ctcentro and clientes.clcodigo =contra.ctcliente#(lf)where clientes.clempresa=01#(lf)and ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal)>=2025)#(lf)and clientes.clnombre not like '%fijo%'#(lf)group by clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clcifdni"]),
+				    #"Filas filtradas" = Table.SelectRows(Source, each true),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Filas filtradas",{{"clcentro", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

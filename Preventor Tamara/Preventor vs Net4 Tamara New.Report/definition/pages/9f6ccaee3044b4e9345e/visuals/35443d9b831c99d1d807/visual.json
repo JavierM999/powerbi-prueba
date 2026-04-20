@@ -1,0 +1,350 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "35443d9b831c99d1d807",
+  "position": {
+    "x": 64.848012470771621,
+    "y": 76.819953234606388,
+    "z": 5000,
+    "height": 485.86126266562741,
+    "width": 1067.4980514419328,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "ctcliente"
+                }
+              },
+              "queryRef": "Sum(Contratos.ctcliente)",
+              "nativeQueryRef": "ctcliente1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "clnombre"
+                }
+              },
+              "queryRef": "Contratos.clnombre",
+              "nativeQueryRef": "clnombre"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "ctcontrato"
+                }
+              },
+              "queryRef": "Sum(Contratos.ctcontrato)",
+              "nativeQueryRef": "ctcontrato1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CursoXTrab"
+                    }
+                  },
+                  "Property": "Categoria Cursos Trabajador"
+                }
+              },
+              "queryRef": "CursoXTrab.Categoria Cursos Trabajador",
+              "nativeQueryRef": "Puesto",
+              "displayName": "Puesto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CursoXTrab"
+                    }
+                  },
+                  "Property": "Nombre Categorias Aplicables"
+                }
+              },
+              "queryRef": "CursoXTrab.Nombre Categorias Aplicables",
+              "nativeQueryRef": "Nombre Categorias Aplicables"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "cttrabajador"
+                }
+              },
+              "queryRef": "Contratos.cttrabajador",
+              "nativeQueryRef": "cttrabajador"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajador"
+                    }
+                  },
+                  "Property": "trnombrecompleto"
+                }
+              },
+              "queryRef": "Trabajador.trnombrecompleto",
+              "nativeQueryRef": "trnombrecompleto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CursoXTrab"
+                    }
+                  },
+                  "Property": "Cursos Aplicables Resumen"
+                }
+              },
+              "queryRef": "CursoXTrab.Cursos Aplicables Resumen",
+              "nativeQueryRef": "Cursos Aplicables Resumen"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "Asignaciones"
+                }
+              },
+              "queryRef": "Contratos.Asignaciones",
+              "nativeQueryRef": "Asignaciones"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Contratos"
+                  }
+                },
+                "Property": "cttrabajador"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "138.69843589198612D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Contratos.clnombre"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5619892ce33027458ae3",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Contratos"
+              }
+            },
+            "Property": "Asignaciones"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "c1",
+              "Entity": "Contratos",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "c1"
+                        }
+                      },
+                      "Property": "Asignaciones"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "74832349cd484a90b05a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CursoXTrab"
+              }
+            },
+            "Property": "Cursos Aplicables Resumen"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b4961de48307cab4452b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Contratos"
+              }
+            },
+            "Property": "ctcontrato"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f5fac9d901020b8cd0c6",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Contratos"
+              }
+            },
+            "Property": "cttrabajador"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2b57c78f2a07643800e0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Trabajador"
+              }
+            },
+            "Property": "trnombrecompleto"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e03693ab55427d0d0621",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Contratos"
+              }
+            },
+            "Property": "ctcliente"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "dd8397eb47704ba3a89b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Contratos"
+              }
+            },
+            "Property": "clnombre"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "71fa063106d23c1c4b10",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CursoXTrab"
+              }
+            },
+            "Property": "Categoria Cursos Trabajador"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ba31477f62a0690091b7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CursoXTrab"
+              }
+            },
+            "Property": "Nombre Categorias Aplicables"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

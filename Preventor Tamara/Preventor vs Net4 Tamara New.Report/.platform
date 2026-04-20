@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Preventor vs Net4 Tamara New"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e318850b-d664-4bd3-a750-a897fc4e194f"
+  }
+}

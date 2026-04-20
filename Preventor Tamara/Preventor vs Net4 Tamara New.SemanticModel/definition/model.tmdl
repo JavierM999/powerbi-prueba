@@ -1,0 +1,27 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["Trabajador","Contratos","MCANCentros","ContFirmados","CursoXTrab","Cursos","FormPRL","Clientes","Categorias"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Trabajador
+ref table Calendario
+ref table Contratos
+ref table MCANCentros
+ref table CursoXTrab
+ref table Cursos
+ref table FormPRL
+ref table ContFirmados
+ref table Clientes
+ref table Categorias
+
+ref cultureInfo es-ES
+

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "9f6ccaee3044b4e9345e",
+  "displayName": "Duplicado de Duplicado de Tamara New",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "pageBinding": {
+    "name": "ef1f97af7bb1e7d8616e",
+    "type": "Default",
+    "parameters": []
+  }
+}

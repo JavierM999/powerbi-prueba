@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Preventor vs Net4 Tamara New"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "00ea62b7-da21-4a6e-8c80-b9912002de13"
+  }
+}

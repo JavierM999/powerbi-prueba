@@ -1,0 +1,32 @@
+relationship f5271835-4555-4aab-b28f-658052000871
+	fromColumn: Contratos.cttrabajador
+	toColumn: Trabajador.cttrabajador
+
+relationship 2bbc218c-77e2-4e52-9abe-6ecdc3303003
+	fromColumn: Contratos.ctcentro
+	toColumn: MCANCentros.Id
+
+relationship 9144eeba-bf23-4c35-9f5f-cd3746a3ad96
+	fromColumn: CursoXTrab.CurCenCur
+	toColumn: Cursos.CuCenCur
+
+relationship e4397318-235c-4b9b-9143-3ea0b46b16e3
+	fromColumn: CursoXTrab.pcttrabajador
+	toColumn: Trabajador.cttrabajador
+
+relationship 68612c76-6b01-427b-b31d-5b7165ebd50b
+	fromColumn: FormPRL.CodTrab
+	toColumn: Trabajador.cttrabajador
+
+relationship b95b770b-fb09-4664-886a-2d68ba848db0
+	fromColumn: ContFirmados.cttrabajador
+	toColumn: Trabajador.cttrabajador
+
+relationship 16591b53-5a03-0978-7ba5-a3098dc87d39
+	fromColumn: Contratos.CTCenCli
+	toColumn: Clientes.CliCenCli
+
+relationship 29565fbe-e7fb-e30b-11e6-9dce358a3400
+	fromColumn: CursoXTrab.pctcategoria
+	toColumn: Categorias.cacodigo
+
