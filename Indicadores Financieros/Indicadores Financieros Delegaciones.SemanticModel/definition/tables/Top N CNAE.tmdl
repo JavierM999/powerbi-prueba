@@ -1,0 +1,26 @@
+table 'Top N CNAE'
+	lineageTag: a8d4d933-9c89-443a-b46a-0249b82a0698
+
+	measure 'Valor Top N CNAE' = SELECTEDVALUE('Top N CNAE'[Top N CNAE], 1)
+		formatString: 0
+		lineageTag: 2b9910b9-d703-436d-8bdc-ae37b37c9e09
+
+	column 'Top N CNAE'
+		formatString: 0
+		lineageTag: fe50c527-2b31-403d-af5b-2ecacda16671
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Top N CNAE-6e9738e6-f2f9-443a-8aca-920872bed800' = calculated
+		mode: import
+		source = GENERATESERIES(0, 10, 1)
+
+	annotation PBI_Id = 158da8e95d0d44528dcdceab91674c3f
+

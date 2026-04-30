@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Indicadores Financieros Delegaciones"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "dcd1395f-708e-46f7-a724-d88b540b19aa"
+  }
+}

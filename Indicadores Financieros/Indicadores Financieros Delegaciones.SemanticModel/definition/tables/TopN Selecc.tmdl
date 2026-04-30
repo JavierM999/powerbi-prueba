@@ -1,0 +1,20 @@
+table 'TopN Selecc'
+	lineageTag: fb0aceaa-9641-4fbf-a799-70861c7ca6ec
+
+	column Value
+		formatString: 0
+		lineageTag: 009b8474-6f9f-4899-bda2-a1de97c91b09
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'TopN Selecc-20a9d7cc-bd1f-4ecb-85cc-ec6930e58486' = calculated
+		mode: import
+		source =
+				
+				{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}
+
+	annotation PBI_Id = 8b8cd90749f042119e395c34625b25ad
+

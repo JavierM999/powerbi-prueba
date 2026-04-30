@@ -1,0 +1,7 @@
+role Mario
+	modelPermission: read
+
+	tablePermission MCANCentros = [Sucursal] == 16
+
+	annotation PBI_Id = 3c6c9f297b264ce3a5310760874993c7
+

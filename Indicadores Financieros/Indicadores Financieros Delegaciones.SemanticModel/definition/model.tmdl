@@ -1,0 +1,71 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["MCANCentros","FraCNAEConv","Contratos","Clientes","CNAE 2Dig","CNAE","Agrupación xCNAE","Agrupación","estadi","Riesgos03","CtaContRec","Empresas","Tabla","PlazoMPago","CnHistor","CNHistor Fra","Facturas","Clientes (2)","GruposEmp","MCANCentros (2)","Epis","TRating"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table MCANCentros
+ref table DateTableTemplate_f927b16d-6a75-440f-b85b-fe48230859cd
+ref table Calendario
+ref table FraCNAEConv
+ref table Contratos
+ref table LocalDateTable_a03d5b43-cc2b-4155-9cd4-68436919b516
+ref table LocalDateTable_79031a7c-7b88-49ee-9e28-76cab3905da5
+ref table Clientes
+ref table 'CNAE 2Dig'
+ref table 'Pseu CNAE2'
+ref table 'TopN Selecc'
+ref table CNAE
+ref table 'Agrupación xCNAE'
+ref table Agrupación
+ref table 'Scale Table'
+ref table estadi
+ref table LocalDateTable_a47170fa-87f9-4b92-baaf-feacccd9285e
+ref table 'Pseu Clientes'
+ref table LocalDateTable_49b86612-a3e6-4f65-aa07-d9153e03e23c
+ref table 'Top N CNAE'
+ref table 'Pseu CNAE'
+ref table Riesgos03
+ref table Ratings
+ref table CtaContRec
+ref table Empresas
+ref table LocalDateTable_c664be4a-eb6b-4eb5-bfad-44f2fdfcc10a
+ref table Tabla
+ref table PlazoMPago
+ref table LocalDateTable_ec826525-9315-46c1-bac6-c13632366af6
+ref table LocalDateTable_a0d822f9-a7b7-48a3-a1e6-6571e52d761c
+ref table LocalDateTable_20533b71-3a10-413b-863b-975d87764cdd
+ref table LocalDateTable_6b9ce3f7-04c8-4ae4-b453-492969da1f8b
+ref table LocalDateTable_2781a151-adcd-4223-b851-69df69310da6
+ref table CnHistor
+ref table 'CNHistor Fra'
+ref table Facturas
+ref table LocalDateTable_c39b194a-c178-4152-9c47-58b06df5bd57
+ref table 'Clientes (2)'
+ref table GruposEmp
+ref table 'MCANCentros (2)'
+ref table LocalDateTable_e1d4674e-97a6-4eb7-9559-cdf29cf17503
+ref table Epis
+ref table 'TopN Pareto'
+ref table TRating
+
+ref role Paqui
+ref role Central
+ref role Antonio
+ref role Jael
+ref role Mario
+ref role Lorena
+
+ref cultureInfo es-ES
+

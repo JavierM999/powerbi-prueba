@@ -1,0 +1,402 @@
+table Contratos
+	lineageTag: 8742575e-f2fc-4a12-b38a-375730e9b58f
+
+	measure TotContratos = CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecini]))
+		formatString: #,0
+		lineageTag: e6da50e7-f5cd-44a7-80f1-36f53da7f04d
+
+		changedProperty = FormatString
+
+	measure TotTrabajadores = CALCULATE(DISTINCTCOUNT(Contratos[cttrabajador]),FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecini]))
+		formatString: #,0
+		lineageTag: 95a6f72b-a3b0-4b7a-913c-94b0ff0b8813
+
+		changedProperty = FormatString
+
+	measure UnidFTrab = DIVIDE([Fra.Año Act.],[TotTrabajadores])
+		formatString: #,0.00
+		lineageTag: eeaba1ed-0c71-4679-901f-90bd6686444c
+
+		changedProperty = FormatString
+
+	measure UnidFCont = DIVIDE([Fra.Año Act.],[TotContratos])
+		formatString: #,0.00
+		lineageTag: 080ddf0c-285d-49e6-88a7-acda6f3522f0
+
+		changedProperty = FormatString
+
+	measure TotTrabajadoresAA = CALCULATE(DISTINCTCOUNT(Contratos[cttrabajador]),FILTER(Contratos,Contratos[ctfechaini]<=[fecfinañan]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[feciniaa]))
+		formatString: #,0
+		lineageTag: 76b29991-01e9-42e2-9689-461dca02f5c5
+
+		changedProperty = FormatString
+
+	measure TotContratosAA = CALCULATE(COUNTROWS(Contratos),FILTER(Contratos,Contratos[ctfechaini]<=[fecfinañan]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[feciniaa]))
+		formatString: #,0
+		lineageTag: 90da7ffe-ec9c-45bd-9dfe-05a49a7886b3
+
+		changedProperty = FormatString
+
+	measure UnidFContAA = DIVIDE([Fra.Año Ant.],[TotContratosAA])
+		formatString: 0.00
+		lineageTag: 6b01b412-53a8-4d4f-9e52-f0ef352a6cfd
+
+		changedProperty = FormatString
+
+	measure UnidFTrabAA = DIVIDE([Fra.Año Ant.],[TotTrabajadoresAA])
+		formatString: #,0.00
+		lineageTag: e13df747-b041-4fd5-8dfd-1a04d47015c1
+
+		changedProperty = FormatString
+
+	measure %IncUniTrab = DIVIDE(([UnidFTrab]-[UnidFTrabAA]),[UnidFTrabAA])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 32d3da71-bbd3-49ef-8a02-2fdebaded7c4
+
+		changedProperty = FormatString
+
+	measure %IncUniCont = DIVIDE(([UnidFCont]-[UnidFContAA]),[UnidFContAA])
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 4abf0063-aecf-4b00-b49d-2674cf711a32
+
+		changedProperty = FormatString
+
+	measure DifTrabajadores = [TotTrabajadores]-[TotTrabajadoresAA]
+		formatString: #,0
+		lineageTag: b7aec38b-5b10-4af1-98d4-6079b0b45997
+
+		changedProperty = FormatString
+
+	measure DifContratos = [TotContratos]-[TotContratosAA]
+		formatString: #,0
+		lineageTag: d320f038-8783-482c-b146-8350681129f6
+
+		changedProperty = FormatString
+
+	measure TotHSemana = SUM(Contratos[cthorassemana])
+		formatString: #,0.00
+		lineageTag: c2410cbd-dfeb-44a0-9563-53d39523280e
+
+		changedProperty = FormatString
+
+	measure CtaSem = ```
+			
+			VAR fechai = 
+			    IF(max(Contratos[ctfechaini])<[fecini],[fecini],MAX(Contratos[ctfechaini]))
+			VAR fechaf = 
+			    IF(ISBLANK(MAX(Contratos[ctfechafinreal]))=TRUE() || MAX(Contratos[ctfechafinreal])>=[fecfin],[fecfin],MAX(Contratos[ctfechafinreal]))
+			return DIVIDE(DATEDIFF(fechai,fechaf,DAY),7)
+			```
+		formatString: 0.00
+		lineageTag: 27d7ed77-5ac2-4f09-a071-acc9c454a353
+
+		changedProperty = FormatString
+
+	measure TotHoras = CALCULATE([CtaSem]*MAX(Contratos[cthorassemana]))
+		formatString: 0
+		lineageTag: 15b18386-1ed0-4cdb-907c-ea8f0fcbb925
+
+		changedProperty = FormatString
+
+	measure Larefin = ```
+			
+			VAR fechai = 
+			    IF(max(Contratos[ctfechaini])<[fecini],[fecini],MAX(Contratos[ctfechaini]))
+			VAR fechaf = 
+			    IF(ISBLANK(MAX(Contratos[ctfechafinreal]))=TRUE() || MAX(Contratos[ctfechafinreal])>=[fecfin],[fecfin],MAX(Contratos[ctfechafinreal]))
+			VAR semanas = DIVIDE(DATEDIFF(fechai,fechaf,DAY),7)
+			VAR result = sumx (
+			    ADDCOLUMNS(
+			    SUMMARIZE(Contratos,Contratos[ctcentro],Contratos[ctcontrato],Contratos[cthorassemana]),
+			    "fini",fechai,
+			    "ffin",fechaf,
+			    "aver",Contratos[cthorassemana]*semanas),
+			        [aver])
+			RETURN result
+			```
+		lineageTag: 604960a1-63d6-4570-ba28-88c58942746f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure larefct = ```
+			
+			VAR fechai = 
+			    IF(max(Contratos[ctfechaini])<[fecini],[fecini],MAX(Contratos[ctfechaini]))
+			VAR fechaf = 
+			    IF(ISBLANK(MAX(Contratos[ctfechafinreal]))=TRUE() || MAX(Contratos[ctfechafinreal])>=[fecfin],[fecfin],MAX(Contratos[ctfechafinreal]))
+			VAR semanas = DIVIDE(DATEDIFF(fechai,fechaf,DAY),7)
+			VAR result = sumx (
+			    CALCULATETABLE(
+			      ADDCOLUMNS(
+			        SUMMARIZE(Contratos,Contratos[ctcentro],Contratos[ctcontrato],Contratos[cthorassemana]),
+			    "fini",fechai,
+			    "ffin",fechaf,
+			    "aver",Contratos[cthorassemana]*semanas),
+			    FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecini])),
+			        [aver])
+			RETURN result
+			```
+		formatString: 0.00
+		lineageTag: e9e53daa-eb28-4ca3-b945-9007f80cd131
+
+		changedProperty = FormatString
+
+	measure larefctab = ```
+			
+			VAR fechai = 
+			    IF(max(Contratos[ctfechaini])<[fecini],[fecini],MAX(Contratos[ctfechaini]))
+			VAR fechaf = 
+			    IF(ISBLANK(MAX(Contratos[ctfechafinreal]))=TRUE() || MAX(Contratos[ctfechafinreal])>=[fecfin],[fecfin],MAX(Contratos[ctfechafinreal]))
+			VAR semanas = DIVIDE(DATEDIFF(fechai,fechaf,DAY),7)
+			VAR result = COUNTROWS(
+			    CALCULATETABLE(
+			      ADDCOLUMNS(
+			        SUMMARIZE(Contratos,Contratos[ctcentro],Contratos[ctcontrato],Contratos[cthorassemana]),
+			    "fini",fechai,
+			    "ffin",fechaf,
+			    "aver",Contratos[cthorassemana]*semanas),
+			    FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecini])))
+			RETURN result
+			```
+		formatString: 0
+		lineageTag: 9c2b1799-90f9-4175-b075-be74a6603710
+
+	measure lareffini = ```
+			VAR fechai = 
+			    IF(max(Contratos[ctfechaini])<[fecini],[fecini],MAX(Contratos[ctfechaini]))
+			    return fechai
+			```
+		formatString: Short Date
+		lineageTag: e7ce0be5-6cdb-4326-959b-3f2e61406329
+
+		changedProperty = FormatString
+
+	measure larefffin = ```
+			VAR fechaf = 
+			    IF(ISBLANK(MAX(Contratos[ctfechafinreal]))=TRUE() || MAX(Contratos[ctfechafinreal])>=[fecfin],[fecfin],MAX(Contratos[ctfechafinreal]))
+			    return fechaf
+			```
+		formatString: Short Date
+		lineageTag: 0b92465a-2628-42fe-8665-514b92671e01
+
+		changedProperty = FormatString
+
+	measure 'Horas Realizadas' = ```
+			
+			VAR result =
+			    SUMX (
+			        CALCULATETABLE (
+			            ADDCOLUMNS (
+			                SUMMARIZE (
+			                    Contratos,
+			                    Contratos[ctcentro],
+			                    Contratos[ctcliente],
+			                    Contratos[ctcontrato],
+			                    Contratos[cthorassemana],
+			                    Contratos[ctfechaini],
+			                    Contratos[ctfechafinreal]
+			                ),
+			                "fini", IF ( Contratos[ctfechaini] < [fecini], [fecini], Contratos[ctfechaini] ),
+			                "ffin",
+			                    IF (
+			                        ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                            || Contratos[ctfechafinreal] >= [fecfin],
+			                        [fecfin],
+			                        Contratos[ctfechafinreal]
+			                    )
+			            ),
+			            FILTER ( Contratos, Contratos[ctfechaini] <= [fecfin] ),
+			            FILTER (
+			                Contratos,
+			                ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                    || Contratos[ctfechafinreal] >= [fecini]
+			            )
+			        ),
+			        DIVIDE ( ( DATEDIFF ( [fini], [ffin], DAY ) + 1 ), 7 ) * Contratos[cthorassemana]
+			    )
+			RETURN
+			    result
+			
+			```
+		formatString: #,0.00
+		lineageTag: b7112756-4172-4130-93a4-d5ce8695adf0
+
+		changedProperty = FormatString
+
+	measure FraXHora = DIVIDE([TotFraCN3],[Horas Realizadas])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 4673a3ec-60d7-4673-a92d-2a30c089cebe
+
+		changedProperty = FormatString
+
+	measure Prdatedif = DATEDIFF(max(Contratos[ctfechaini]),MAX(Contratos[ctfechafinreal]),DAY)+1
+		formatString: 0
+		lineageTag: 43ffe0aa-1173-4775-96a5-3b3b8092e60a
+
+	measure 'pru sinvar larefct' = ```
+			
+			 CALCULATE(sumx (
+			    CALCULATETABLE(
+			      ADDCOLUMNS(
+			        SUMMARIZE(Contratos,Contratos[ctcentro],Contratos[ctcontrato],Contratos[cthorassemana],Contratos[ctfechaini],Contratos[ctfechafinreal]),
+			    "fini",IF(Contratos[ctfechaini]<[fecini],[fecini],Contratos[ctfechaini]),
+			    "ffin",IF(ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecfin],[fecfin],Contratos[ctfechafinreal])),
+			    FILTER(Contratos,Contratos[ctfechaini]<=[fecfin]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecini])),
+			        DIVIDE((DATEDIFF([fini],[ffin],DAY)+1),7)*Contratos[cthorassemana]),FILTER('CNAE 2Dig','CNAE 2Dig'[cna2d]))
+			```
+		formatString: 0.00
+		lineageTag: 37037194-b7ce-4a1c-a0e5-0b9d484fd8e2
+
+		changedProperty = FormatString
+
+	measure 'Media FraHora' = AVERAGEX(VALUES('CNAE 2Dig'[cna2d]),[Horas Realizadas])
+		formatString: 0.00
+		lineageTag: e57ed1d4-8312-485b-86a6-e23e89309cf0
+
+		changedProperty = FormatString
+
+	measure ValGrande = [TotFra]/MIN('Scale Table'[Value])
+		lineageTag: 61bc5a1a-3981-418b-b309-8bad75536660
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Horas Realizadas AAnt' =
+			
+			VAR result = sumx (
+			    CALCULATETABLE(
+			      ADDCOLUMNS(
+			        SUMMARIZE(Contratos,Contratos[ctcentro],Contratos[ctcliente],Contratos[ctcontrato],Contratos[cthorassemana],Contratos[ctfechaini],Contratos[ctfechafinreal]),
+			    "fini",IF(Contratos[ctfechaini]<[feciniaa],[feciniaa],Contratos[ctfechaini]),
+			    "ffin",IF(ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[fecfinañan],[fecfinañan],Contratos[ctfechafinreal])),
+			    FILTER(Contratos,Contratos[ctfechaini]<=[fecfinañan]),FILTER(Contratos,  ISBLANK(Contratos[ctfechafinreal])=TRUE() || Contratos[ctfechafinreal]>=[feciniaa])),
+			        DIVIDE((DATEDIFF([fini],[ffin],DAY)+1),7)*Contratos[cthorassemana])
+			RETURN result
+		formatString: #,0.00
+		lineageTag: ae14ad56-272d-4c3b-a121-631b34a1f864
+
+		changedProperty = FormatString
+
+	measure 'FraXHora AA' = DIVIDE([Fra.Año Ant.],[Horas Realizadas AAnt])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 8d7a7ed1-8d5e-42ac-aff6-e3a9c212e4ad
+
+	column ctcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: aab47cb9-fc9b-4452-8acb-bdb716fd39e4
+		summarizeBy: sum
+		sourceColumn: ctcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 00262e3d-327b-4e8c-8b77-c6ff9ee1d3e4
+		summarizeBy: sum
+		sourceColumn: ctcliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcencli
+		dataType: int64
+		formatString: 0
+		lineageTag: c73db962-d4f3-46d8-b335-834f9fa3c4c5
+		summarizeBy: sum
+		sourceColumn: ctcencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: 00fa7cbb-f8fe-4314-b7a6-8bc2f998aad4
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 070e67c3-6a6c-4ac6-a0c1-10134ab71fe5
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		variation Variación
+			isDefault
+			relationship: 44d8a0ce-1089-4b10-af1c-ce439325ce02
+			defaultHierarchy: LocalDateTable_a03d5b43-cc2b-4155-9cd4-68436919b516.'Jerarquía de fechas'
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9f43e5c5-1f62-47ca-8796-d4fdebf001e3
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		variation Variación
+			isDefault
+			relationship: 68c05543-fac9-4f71-8b81-3712c0a0236a
+			defaultHierarchy: LocalDateTable_79031a7c-7b88-49ee-9e28-76cab3905da5.'Jerarquía de fechas'
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ConCenCli = FORMAT(Contratos[ctcentro],"00")&FORMAT(Contratos[ctcliente],"000000")
+		lineageTag: 386d09bc-4880-4af0-96a4-adb89c9a5ad4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: de713637-f3d5-4b59-8c8a-1c14f32cd172
+		summarizeBy: sum
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column cthorasdia
+		dataType: double
+		lineageTag: 2bd269d3-5278-4e18-8386-f28214cc13cc
+		summarizeBy: sum
+		sourceColumn: cthorasdia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cthorassemana
+		dataType: double
+		lineageTag: 4ec0abe1-385b-4823-8e58-025fa1a2b953
+		summarizeBy: sum
+		sourceColumn: cthorassemana
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Contratos-194cc11b-8d69-466c-b615-1962c6ae6464 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="select ctcentro,ctcliente,ctcencli,ctcontrato,cttrabajador,ctfechaini,ctfechafinreal,cthorasdia,cthorassemana#(lf)from contra inner join#(lf)#(tab)clientes on contra.ctempresa=clientes.clempresa and contra.ctcentro=clientes.clcentro and contra.ctcliente=clientes.clcodigo#(lf)where contra.ctempresa=1#(lf)and ((ctfechafinreal is null) or (year(ctfechafinreal)>=2021))#(lf)and clientes.clnombre not like '%fijo%'"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"ctcentro", Int64.Type}, {"ctcencli", Int64.Type}, {"ctfechaini", type date}, {"ctfechafinreal", type date}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

@@ -1,0 +1,22 @@
+table 'Pseu CNAE2'
+	lineageTag: 42721ff0-5710-41f5-a8fc-11b506c3a598
+
+	column Nombre
+		lineageTag: 91a11208-3428-4e72-9532-2b515bfeda26
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: CNAE 2Dig[Nombre]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Pseu CNAE2-f6cfe3f8-61ea-4766-ac04-069c61dcbfac' = calculated
+		mode: import
+		source =
+				
+				UNION(
+				    DISTINCT('CNAE 2Dig'[Nombre]),
+				    DATATABLE("Nombre",STRING,{{"Otros"}})
+				)
+
+	annotation PBI_Id = 9c7961527d2d4615baeabfa91bf01be5
+

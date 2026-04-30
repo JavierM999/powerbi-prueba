@@ -1,0 +1,47 @@
+
+Page                      VisualId             VisualType                    Fields
+----                      --------             ----------                    ------
+CNAE-Cliente              9d34a7922184e03daca0 card                          Calendario.MesesSel
+CNAE-Cliente              7baa59c3c049ed008ee3 card                          Calendario.PeriodoSel
+CNAE-Cliente              da63b18144d9570b732a slicer                        Agrupación.Sectores de Actividad
+CNAE-Cliente              b20d16f302e2060b0530 slicer                        Calendario.Año/Mes
+CNAE-Cliente              a9f7d909bd2b5d3766bc slicer                        Agrupación xCNAE.cna2d
+CNAE-Cliente              35cec13983a52bd5e010 slicer                        MCANCentros.Texto
+CNAE-Cliente              64540e468ca08c85036b tableEx                       Clientes.ClCenCli; Clientes.clnombre; Agrupación.Sectores de Actividad; Agrupación xCNAE.Nombre; Facturación
+Duplicado de CNAE-Cliente 3143fcab5506ec4cc570 card                          Calendario.PeriodoSel
+Duplicado de CNAE-Cliente 7276b185023950b5eaa1 card                          Calendario.MesesSel
+Duplicado de CNAE-Cliente 09b2225b0c4aad56d329 slicer                        Calendario.Año/Mes
+Duplicado de CNAE-Cliente ea1eb5c61bab2443787d slicer                        Agrupación xCNAE.cna2d
+Duplicado de CNAE-Cliente 9104b9c53c081b0095ca slicer                        MCANCentros.Texto
+Duplicado de CNAE-Cliente 0a1bb75b6e70eebde7b9 slicer                        Agrupación.Sectores de Actividad
+Duplicado de CNAE-Cliente 9ba13c9432be8e86999c tableEx                       Clientes.ClCenCli; Clientes.clnombre; Facturación; CNHistor Fra.PrestServF; CNHistor Fra.RappelSVta; CNHistor Fra.Seleccion
+Gráfico arriba descuadra  2a666670929305188c5d card                          Calendario.PeriodoSel
+Gráfico arriba descuadra  c87a20b1e1ab83d3c048 card                          Calendario.MesesSel
+Gráfico arriba descuadra  2328573542da7c8ee18b slicer                        MCANCentros.Texto
+Gráfico arriba descuadra  de709b3a879536200c04 slicer                        Calendario.Año/Mes
+Gráfico arriba descuadra  5d2fa02607a3c3229635 tableEx                       Agrupación.Sectores de Actividad; estadi.Fra.Año Ant.; Facturación; Contratos.FraXHora; Contratos.FraXHora AA; estadi.MargenGra; estadi.MargenGrAA; estadi.Fra.Año…
+Gráfico arriba descuadra  572a9a942ea8c9c9495d textbox                       
+Panel Diseño              8bc7e1ca6bc9ceb2350e card                          estadi.sEGCuadro
+Panel Diseño              d98408f2f1dc128772cc card                          Calendario.MesesSel
+Panel Diseño              c96932b25ecc5b701b9c card                          estadi.TercCuadro
+Panel Diseño              7b1e2b39e29c7541079a card                          estadi.QuintCuadro
+Panel Diseño              627e376f3cb18dadc826 card                          estadi.PrimCuadro
+Panel Diseño              f30e64925eefed2e92e4 card                          Calendario.PeriodoSel
+Panel Diseño              0595f1a99e7b7d3845a4 donutChart                    
+Panel Diseño              b2872310658e203c590d lineClusteredColumnComboChart 
+Panel Diseño              ee728b6e58b55b6c6b28 slicer                        TopN Pareto.Value
+Panel Diseño              7dbbaeb4d02a5e961086 slicer                        Calendario.Año/Mes
+Panel Diseño              43c41bbe9494ba08e3bd slicer                        MCANCentros.Texto
+Panel Diseño              40ed08c4b940c2ec3ec6 tableEx                       Nombre Cliente; Facturación; estadi.Variacion %; Contratos.FraXHora; Margen %; Plazo Cobro
+Panel Diseño              fa404c03d1482d960921 treemap                       estadi.Top 5 Fraestadi
+Panel Diseño              66dbf6e693d3b57ead29 treemap                       estadi.Top 5 FraCNAE
+Resultado Final Descuadra 1a38fe5cbd3b9ed308b9 card                          estadi.QuintCuadro
+Resultado Final Descuadra 9c125040cce51c553b31 card                          CnHistor.OfSelecc
+Resultado Final Descuadra 293728670e2bd9109ce9 card                          CnHistor.OfTot
+Resultado Final Descuadra b8212d7f43cac7ec8029 card                          Calendario.PeriodoSel
+Resultado Final Descuadra ea867ce4ed810c840d57 card                          Calendario.MesesSel
+Resultado Final Descuadra efbdd2520e5c53bbdb12 slicer                        Calendario.Año/Mes
+Resultado Final Descuadra 2f6db6059787b83e0940 slicer                        MCANCentros.Texto
+Resultado Final Descuadra 22112e53ad651060012e tableEx                       MCANCentros.Texto; CnHistor.BENEFICIOS ANTES DE IMPUESTOS; CnHistor.BENEFICIOS ANTES INTERESES E IMPUESTOS; CnHistor.GASTOS FINANCIEROS; CnHistor.Gastos Generales…
+
+

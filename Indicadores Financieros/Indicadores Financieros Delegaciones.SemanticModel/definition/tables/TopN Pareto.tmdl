@@ -1,0 +1,20 @@
+table 'TopN Pareto'
+	lineageTag: b04b82b7-318c-45a6-9fc0-5fffc1961535
+
+	column Value
+		formatString: 0\ %;-0\ %;0\ %
+		lineageTag: 06fd7f96-10ad-432a-ab6a-86ef8c5a0aec
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'TopN Pareto-47082293-a1d0-448d-b08f-047bc2b0df80' = calculated
+		mode: import
+		source =
+				
+				{0.50,0.60,0.70,0.80,0.90,1}
+
+	annotation PBI_Id = 621a94ae25ed4cd4bff2c932fc39deb0
+

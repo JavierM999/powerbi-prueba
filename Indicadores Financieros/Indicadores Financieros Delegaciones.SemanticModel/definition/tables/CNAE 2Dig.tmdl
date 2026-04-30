@@ -1,0 +1,42 @@
+table 'CNAE 2Dig'
+	lineageTag: 0338c8c7-7eae-49ac-9fb2-c3c22471fcd3
+
+	column cna2d
+		dataType: string
+		lineageTag: 4461487a-63a1-4f60-9011-529f3d3a152b
+		summarizeBy: none
+		sourceColumn: cna2d
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre
+		dataType: string
+		lineageTag: 8c727bbd-e3d8-4349-bddd-71750d7826d6
+		summarizeBy: none
+		sourceColumn: Nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'CNAE 2Dig-debdc928-f5a5-4a7d-bbc1-16d65ded1f1f' = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select * #(lf)from cnae"]),
+				    #"Filas ordenadas" = Table.Sort(Origen,{{"cncodigo", Order.Ascending}}),
+				    #"Índice agregado" = Table.AddIndexColumn(#"Filas ordenadas", "Índice", 1, 1, Int64.Type),
+				    #"Dividir columna por posición" = Table.SplitColumn(#"Índice agregado", "cncodigo", Splitter.SplitTextByPositions({0, 2}, false), {"cncodigo.1", "cncodigo.2"}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Dividir columna por posición",{"cncodigo.2"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columnas quitadas",{{"cncodigo.1", "cna2d"}}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Columnas con nombre cambiado", "Mindice", each Number.ToText([Índice],"D4")),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Personalizada agregada", "Nomunico", each Text.Combine({[Mindice], [cnnombre]}, ".- ")),
+				    #"Filas agrupadas" = Table.Group(#"Personalizada agregada1", {"cna2d"}, {{"Nombre", each List.Min([Nomunico]), type text}}),
+				    #"Dividir columna por delimitador" = Table.SplitColumn(#"Filas agrupadas", "Nombre", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, false), {"Nombre.1", "Nombre.2"}),
+				    #"Columnas quitadas1" = Table.RemoveColumns(#"Dividir columna por delimitador",{"Nombre.1"}),
+				    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Columnas quitadas1",{{"Nombre.2", "Nombre"}})
+				in
+				    #"Columnas con nombre cambiado1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

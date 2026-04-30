@@ -1,0 +1,165 @@
+relationship 44d8a0ce-1089-4b10-af1c-ce439325ce02
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.ctfechaini
+	toColumn: LocalDateTable_a03d5b43-cc2b-4155-9cd4-68436919b516.Date
+
+relationship 68c05543-fac9-4f71-8b81-3712c0a0236a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.ctfechafinreal
+	toColumn: LocalDateTable_79031a7c-7b88-49ee-9e28-76cab3905da5.Date
+
+relationship 28fa4e03-9f1e-409c-9e67-29d78d232ae5
+	fromColumn: FraCNAEConv.FraCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 7fb32e30-0054-42cf-9bab-b8b8c3f7770a
+	fromColumn: Contratos.ConCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 3375a58f-db81-4a13-a296-9083c882bdb4
+	fromColumn: Clientes.clcentro
+	toColumn: MCANCentros.Id
+
+relationship 63a03429-d685-4c8e-855d-e2c1756d6127
+	fromColumn: Clientes.clicnae2d
+	toColumn: 'Agrupación xCNAE'.cna2d
+
+relationship e903370a-1334-4618-b6fa-66d0bb34a487
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Pseu CNAE2'.Nombre
+	toColumn: 'Agrupación xCNAE'.Nombre
+
+relationship 9303af57-f9fe-48b2-a468-4da6b93ffbca
+	fromColumn: 'Agrupación xCNAE'.Agrupación
+	toColumn: Agrupación.Agrupación
+
+relationship a768bdfd-7188-4007-9dc7-5f51f32d2450
+	joinOnDateBehavior: datePartOnly
+	fromColumn: estadi.esfecha
+	toColumn: LocalDateTable_a47170fa-87f9-4b92-baaf-feacccd9285e.Date
+
+relationship 4f2c5f6c-54bf-4116-bb41-490193362973
+	fromColumn: estadi.EsCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship dacc47e7-9146-4298-b442-bb80b233a517
+	fromColumn: Clientes.clnombre
+	toColumn: 'Pseu Clientes'.clnombre
+
+relationship 6a89fb4a-3838-438c-b505-0c56d00d59d7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Date
+	toColumn: LocalDateTable_49b86612-a3e6-4f65-aa07-d9153e03e23c.Date
+
+relationship 32f26cd6-4341-45be-9f16-b76892ea4f09
+	fromColumn: FraCNAEConv.fcfecha
+	toColumn: Calendario.Date
+
+relationship 875be8e8-a8a2-49df-a05f-74938588630e
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Pseu CNAE'.Nombre
+	toColumn: 'Agrupación xCNAE'.Nombre
+
+relationship fec8e8a6-5649-4b83-9d2b-cea2c17bfee6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Empresas.'Fecha de Caducidad'
+	toColumn: LocalDateTable_c664be4a-eb6b-4eb5-bfad-44f2fdfcc10a.Date
+
+relationship 16d67c4a-7154-4ca0-b1cd-73eae0f2364d
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Riesgos03.cucodigo
+	toColumn: CtaContRec.cucodigo
+
+relationship 656498c8-7848-4a64-8029-fc8cb1321530
+	fromColumn: CtaContRec.CtaCRCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship 11c8933e-ccc3-4033-b850-54bed5d5081c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PlazoMPago.gfeemi
+	toColumn: LocalDateTable_ec826525-9315-46c1-bac6-c13632366af6.Date
+
+relationship 0653b44c-47d4-4d92-950f-06a1c4932654
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PlazoMPago.cofecha
+	toColumn: LocalDateTable_a0d822f9-a7b7-48a3-a1e6-6571e52d761c.Date
+
+relationship 83533486-b07c-4837-8b26-246ae02c92e5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PlazoMPago.Vencimiento
+	toColumn: LocalDateTable_20533b71-3a10-413b-863b-975d87764cdd.Date
+
+relationship 93a68de7-aabe-4aa6-913d-d35cf487bc9e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PlazoMPago.gfevtooriginal
+	toColumn: LocalDateTable_6b9ce3f7-04c8-4ae4-b453-492969da1f8b.Date
+
+relationship 950ddcb8-0ed9-4c3d-b002-890c8e0f8a8b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PlazoMPago.gfevtoamd
+	toColumn: LocalDateTable_2781a151-adcd-4223-b851-69df69310da6.Date
+
+relationship d46c0467-05cf-4a8d-bbc8-fc63b00ca76d
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Clientes.clctacon
+	toColumn: PlazoMPago.gcuentacli
+
+relationship 6ad08996-9619-4d96-a0dd-d0ed363fc763
+	fromColumn: CnHistor.hifechamd
+	toColumn: Calendario.Date
+
+relationship 3e17837b-1acc-49b8-afde-89c80f7b325d
+	fromColumn: CnHistor.hiseccion
+	toColumn: MCANCentros.Id
+
+relationship 52885641-872a-4fd0-aa8a-23091f6fef61
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Facturas.fcfecha
+	toColumn: LocalDateTable_c39b194a-c178-4152-9c47-58b06df5bd57.Date
+
+relationship b5d50a51-6e9c-4db3-a945-1a455614c954
+	fromColumn: 'Clientes (2)'.clcentro
+	toColumn: MCANCentros.Id
+
+relationship 9e9ee335-b3c5-48e1-b2bd-16fcdfa5e718
+	fromColumn: 'CNHistor Fra'.FecAbCargo
+	toColumn: Calendario.Date
+
+relationship dcc37a49-fc1e-46d1-b1b0-785085a21c58
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'CNHistor Fra'.hifechamd
+	toColumn: LocalDateTable_e1d4674e-97a6-4eb7-9559-cdf29cf17503.Date
+
+relationship 9c4c594c-3c58-4624-a466-6ef8295e9171
+	fromColumn: Epis.EpiCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship af2c7ee5-f41c-4903-a7a7-f2af02ad9134
+	fromColumn: Epis.mvfecha
+	toColumn: Calendario.Date
+
+relationship 198c18ef-1023-4359-9373-3d179418fc7e
+	fromColumn: 'Clientes (2)'.clnombre
+	toColumn: 'Pseu Clientes'.clnombre
+
+relationship 06077494-a6a1-4af6-80d8-31deb3d0b5e4
+	fromColumn: Empresas.Rating
+	toColumn: TRating.Rating
+
+relationship eba3f454-a073-4750-8f7d-3d6f10e58dda
+	fromColumn: CtaContRec.ERating
+	toColumn: TRating.Rating
+
+relationship c620f80e-b12a-45fd-9aec-5f174f129102
+	fromColumn: 'CNHistor Fra'.CNHCenCli
+	toColumn: Clientes.ClCenCli
+
+relationship AutoDetected_bd60528a-70dd-473a-b34e-74845f89ddd3
+	isActive: false
+	fromColumn: estadi.clcodigo
+	toColumn: 'Clientes (2)'.clcodigo
+

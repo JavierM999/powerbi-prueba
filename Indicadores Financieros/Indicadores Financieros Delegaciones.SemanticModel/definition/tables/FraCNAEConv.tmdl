@@ -1,0 +1,291 @@
+table FraCNAEConv
+	lineageTag: 0f9e95b8-81fd-4c4b-af52-fa54b4f1901c
+
+	measure TotFra = SUM(FraCNAEConv[fcbaseiva1])
+		formatString: #,0.00
+		lineageTag: 6dfa3d7b-ab00-4050-a8aa-7de47f3073b4
+
+		changedProperty = FormatString
+
+	measure TotFraAA = CALCULATE([TotFra],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.00
+		lineageTag: ad7394b1-e099-4ec0-a941-5a513cb55e71
+
+		changedProperty = FormatString
+
+	measure %IncFra = ([Fra.Año Act.]-[Fra.Año Ant.])/[Fra.Año Ant.]
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 06d1eecf-f6b6-4fa4-991e-4ffb2f769746
+
+		changedProperty = FormatString
+
+	measure DifFra = [Fra.Año Act.]-[Fra.Año Ant.]
+		formatString: #,0.00
+		lineageTag: 2f0541bc-708e-4e19-895c-e9308fdc304b
+
+		changedProperty = FormatString
+
+	measure RankCNAE = IF(HASONEVALUE('CNAE 2Dig'[cna2d]),IF([TotFra]>0,RANKX(all('CNAE 2Dig'),[TotFra]),BLANK()))
+		formatString: 0
+		lineageTag: fcb45590-af74-483f-aa2a-3229f57facf2
+
+	measure 'Top N FraCnae' = ```
+			
+			VAR TopnSele = SELECTEDVALUE('TopN Selecc'[Value])
+			VAR TopCnaetabla = 
+			 TOPN(
+			            TopnSele,
+			            ALLSELECTED('Pseu CNAE2'),
+			            [TotFra]
+			 )
+			 VAR TopCnaeVta =
+			CALCULATE(
+			    [TotFra],
+			    KEEPFILTERS(
+			        TopCnaetabla
+			        )
+			    )
+			VAR OtrasVta =
+			CALCULATE(
+			    [TotFra],
+			    ALLSELECTED('Pseu CNAE2')
+			) -
+			CALCULATE(
+			    [TotFra],
+			    TopCnaetabla
+			)
+			VAR CnaeAct = SELECTEDVALUE('Pseu CNAE2'[Nombre])
+			Return 
+			IF(
+			    CnaeAct<>"Otros",
+			    TopCnaeVta,
+			    OtrasVta
+			)
+			```
+		lineageTag: 4e626da8-5525-42ba-8121-a56560084018
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Rank =
+			
+			IF(
+			    [Top N FraCnae]<>BLANK(),
+			    RANKX(
+			        TOPN(
+			            SELECTEDVALUE('TopN Selecc'[Value]),
+			            ALLSELECTED('Pseu CNAE2'),
+			            [TotFra]
+			        ),
+			        [TotFra],,DESC,Dense
+			        )
+			)
+		formatString: 0
+		lineageTag: d515c53b-d48c-4e86-a5b5-ca6d75247437
+
+	measure Rank2 = ```
+			
+			    RANKX(
+			        TOPN(
+			            SELECTEDVALUE('TopN Selecc'[Value]),
+			            ALLSELECTED('Pseu CNAE2'),
+			            [TotFra]
+			        ),
+			        [TotFra],,DESC,Dense
+			        )
+			```
+		formatString: 0
+		lineageTag: ae76e292-373c-41ea-ab13-e4cfe04051a5
+
+	measure titulo = ```
+			
+			VAR TopCnae = 
+			    CALCULATE(
+			        [TotFra],
+			        TOPN(
+			            SELECTEDVALUE('TopN Selecc'[Value]),
+			            ALLSELECTED('Pseu CNAE2'[Nombre]),
+			            [TotFra]
+			        )
+			    )
+			VAR TopCnaepc = 
+			    DIVIDE(TopCnae,[TotFra])
+			REturn 
+			"Top " & SELECTEDVALUE('TopN Selecc'[Value]) & " CNAE'S " & FORMAT(TopCnaepc,"#,#% Fra")
+			            
+			```
+		lineageTag: 1fa27494-b1e7-4fac-99cc-70ab6da1b0d3
+
+	measure Color =
+			
+			SWITCH(
+			    SELECTEDVALUE('Pseu Clientes'[clnombre]),
+			    "Otros","#D9D9D9",
+			    "#ED7D31"
+			)
+		lineageTag: 5606a1ec-3044-45e5-80c2-93af27fe35b3
+
+	measure RankD =
+			
+			IF(
+			    [Top N FraCnae]<>BLANK(),
+			    RANKX(
+			        TOPN(
+			            SELECTEDVALUE('TopN Selecc'[Value]),
+			            ALLSELECTED('Pseu CNAE2'),
+			            [TotFra]
+			        ),
+			        [TotFra],,DESC,Dense
+			        )
+			)
+		formatString: 0
+		lineageTag: 0db8cadb-741e-4149-a36f-fff11a9ed756
+
+	measure RankFraCnae = RANKX(ALL('Agrupación'[Agrupación],'Agrupación'[Sectores de Actividad]),[Fra.Año Act.])
+		formatString: 0
+		lineageTag: 2714793f-b179-4887-b34d-fcc67c29586e
+
+	measure AcumFraAnt = CALCULATE([TotFra],TOPN([RankFraCnae],ALL('Agrupación'[Agrupación],'Agrupación'[Sectores de Actividad]),[TotFra]))
+		lineageTag: 5aa08558-580f-44d5-8f65-976e7e2e66b2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AcumFra1N = IF(HASONEFILTER('Agrupación'[Agrupación]),SUMX(TOPN([RankFraCnae],ALL('Agrupación'[Agrupación],'Agrupación'[Sectores de Actividad]),[Fra.Año Act.]),[Fra.Año Act.]),BLANK())
+		lineageTag: 5447f424-6b71-404d-a303-aebf32af2f1d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure %Pareto1N = DIVIDE([AcumFra1N],CALCULATE([Fra.Año Act.],ALL('Agrupación'[Agrupación],'Agrupación'[Sectores de Actividad])))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: af0ea630-e243-4195-8b13-dfb26aecf92d
+
+		changedProperty = FormatString
+
+	measure Rank2Niv = RANKX(ALL('Agrupación xCNAE'[cna2d],'Agrupación xCNAE'[Nombre]),[Fra.Año Act.])
+		formatString: 0
+		lineageTag: aaa6db7d-cd91-4569-b4a9-d1eba06f56d2
+
+	measure AcumFra2N = IF(HASONEFILTER('Agrupación xCNAE'[cna2d]),SUMX(TOPN([Rank2Niv],ALL('Agrupación xCNAE'[cna2d],'Agrupación xCNAE'[Nombre]),[Fra.Año Act.]),[Fra.Año Act.]),BLANK())
+		lineageTag: 5ef58e60-1947-4680-965b-7c032c04056f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure %Pareto2N = DIVIDE([AcumFra2N],CALCULATE([Fra.Año Act.],ALL('Agrupación xCNAE'[cna2d],'Agrupación xCNAE'[Nombre])))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 82805e2a-b413-4922-ad61-5b592ac355fc
+
+		changedProperty = FormatString
+
+	measure Rank3Niv = RANKX(ALL(Clientes[clcodigo],Clientes[clnombre]),[Fra.Año Act.])
+		formatString: 0
+		lineageTag: 48164d34-901e-43fe-860b-609ffc174f53
+
+	measure AcumFra3N = IF(HASONEVALUE(Clientes[clcodigo]),SUMX(TOPN([Rank3Niv],ALL(Clientes[clcodigo],Clientes[clnombre]),[Fra.Año Act.]),[Fra.Año Act.]),BLANK())
+		formatString: #,0.00
+		lineageTag: 120ed1b8-3fa0-4711-b9f9-1f5a1f259d37
+
+		changedProperty = FormatString
+
+	measure %Pareto3N = DIVIDE([AcumFra3N],CALCULATE([Fra.Año Act.],ALL(Clientes[clcodigo],Clientes[clnombre])))
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 1f3ed577-337a-4df3-96f5-ce4a9d24834c
+
+		changedProperty = FormatString
+
+	column fccentro
+		dataType: int64
+		formatString: 0
+		lineageTag: bdb61d2d-aed8-4145-9c73-36a3a1ae5b65
+		summarizeBy: sum
+		sourceColumn: fccentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column fccliente
+		dataType: int64
+		formatString: 0
+		lineageTag: a5f95e07-79ae-4d0b-83fa-4d34372297c2
+		summarizeBy: sum
+		sourceColumn: fccliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcserie
+		dataType: int64
+		formatString: 0
+		lineageTag: dead7f83-7617-46e8-99e7-07cbbc844c0a
+		summarizeBy: sum
+		sourceColumn: fcserie
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcdocum
+		dataType: int64
+		formatString: 0
+		lineageTag: 517636c6-27b3-4633-ab8b-e891b6d7269a
+		summarizeBy: sum
+		sourceColumn: fcdocum
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d1037c23-4f1e-43ee-a8ea-e0362414e946
+		summarizeBy: none
+		sourceColumn: fcfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column cclcnae
+		dataType: string
+		lineageTag: dcc3e21c-6713-4a88-9460-175a7b36b250
+		summarizeBy: none
+		sourceColumn: cclcnae
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcbaseiva1
+		dataType: double
+		lineageTag: 65475fb8-fdeb-40b1-be66-a231c7184a30
+		summarizeBy: sum
+		sourceColumn: fcbaseiva1
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cnae2dig
+		dataType: string
+		lineageTag: a56e7b9e-00a5-4724-b6a9-60b29100f7bb
+		summarizeBy: none
+		sourceColumn: cnae2dig
+
+		annotation SummarizationSetBy = Automatic
+
+	column FraCenCli = FORMAT(FraCNAEConv[fccentro],"00")&FORMAT(FraCNAEConv[fccliente],"000000")
+		lineageTag: e528ff58-1cab-432f-84a1-ad7759fb4314
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FraCNAEConv-1bfa579e-4144-4c5b-b1cd-62973fb91ab3 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="SELECT     distinct fccentro,fccliente,fcserie,fcdocum,fcfecha,cencli.cclcnae, facturas.fcbaseiva1#(lf)FROM         facturas INNER JOIN#(lf)                      cencli ON facturas.fcempresa=cencli.cclempresa and facturas.fccliente = cencli.cclcodigo and facturas.fccencli=cencli.cclcentrocliente#(lf)WHERE     (facturas.fcfecha >= '01/01/2019') #(lf)and fcempresa=01"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"fccentro", Int64.Type}, {"fcserie", Int64.Type}, {"fcfecha", type date}}),
+				    #"Columna duplicada" = Table.DuplicateColumn(#"Tipo cambiado", "cclcnae", "cclcnae - Copia"),
+				    #"Dividir columna por posición" = Table.SplitColumn(#"Columna duplicada", "cclcnae - Copia", Splitter.SplitTextByPositions({0, 2}, false), {"cclcnae - Copia.1", "cclcnae - Copia.2"}),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Dividir columna por posición",{{"cclcnae - Copia.1", type text}, {"cclcnae - Copia.2", Int64.Type}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado1",{"cclcnae - Copia.2"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columnas quitadas",{{"cclcnae - Copia.1", "cnae2dig"}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Columnas con nombre cambiado", each ([fccentro] <> 96 and [fccentro] <> 98))
+				in
+				    #"Filas filtradas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

@@ -1,0 +1,196 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "9ba13c9432be8e86999c",
+  "position": {
+    "x": 40.93603744149766,
+    "y": 159.75039001560063,
+    "z": 4000,
+    "height": 560.12480499219976,
+    "width": 942.52730109204379,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clientes"
+                    }
+                  },
+                  "Property": "ClCenCli"
+                }
+              },
+              "queryRef": "Clientes.ClCenCli",
+              "nativeQueryRef": "ClCenCli"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clientes"
+                    }
+                  },
+                  "Property": "clnombre"
+                }
+              },
+              "queryRef": "Clientes.clnombre",
+              "nativeQueryRef": "clnombre"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistor Fra"
+                    }
+                  },
+                  "Property": "TotFraCN3"
+                }
+              },
+              "queryRef": "CNHistor Fra.TotFraCN3",
+              "nativeQueryRef": "Facturación",
+              "displayName": "Facturación"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistor Fra"
+                    }
+                  },
+                  "Property": "PrestServF"
+                }
+              },
+              "queryRef": "CNHistor Fra.PrestServF",
+              "nativeQueryRef": "PrestServF"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistor Fra"
+                    }
+                  },
+                  "Property": "RappelSVta"
+                }
+              },
+              "queryRef": "CNHistor Fra.RappelSVta",
+              "nativeQueryRef": "RappelSVta"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CNHistor Fra"
+                    }
+                  },
+                  "Property": "Seleccion"
+                }
+              },
+              "queryRef": "CNHistor Fra.Seleccion",
+              "nativeQueryRef": "Seleccion"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Clientes"
+                  }
+                },
+                "Property": "ClCenCli"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "245.55172648844072D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Clientes.clnombre"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "10a2f626ce3cb072737a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Clientes"
+              }
+            },
+            "Property": "ClCenCli"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "c1",
+              "Entity": "Clientes",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 0,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "c1"
+                        }
+                      },
+                      "Property": "ClCenCli"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "'21210568'"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

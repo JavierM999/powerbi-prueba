@@ -1,0 +1,219 @@
+table Empresas
+	lineageTag: 85c36696-f49a-4dd8-9e86-9785afcffb2f
+
+	column 'Razón Social'
+		dataType: string
+		lineageTag: d99ee479-71a7-499c-b95c-5874eee2f7ff
+		summarizeBy: none
+		sourceColumn: Razón Social
+
+		annotation SummarizationSetBy = Automatic
+
+	column NIF
+		dataType: string
+		lineageTag: 3edf9a81-8263-41c9-86a0-fa26086e0ba5
+		summarizeBy: none
+		sourceColumn: NIF
+
+		annotation SummarizationSetBy = Automatic
+
+	column Provincia
+		dataType: string
+		lineageTag: f9799109-e621-4e67-9350-21ee3b4b6a46
+		summarizeBy: none
+		sourceColumn: Provincia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rating
+		dataType: int64
+		formatString: 0
+		lineageTag: f4306cef-cbd3-4618-95af-6a8316d3e501
+		summarizeBy: none
+		sourceColumn: Rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resultado
+		dataType: double
+		lineageTag: 5044f888-ee41-4cfa-8b83-bfa6e9d84bcf
+		summarizeBy: sum
+		sourceColumn: Resultado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Año de Resultado'
+		dataType: int64
+		formatString: 0
+		lineageTag: 96778355-15ca-427f-9440-a6cac2c143a7
+		summarizeBy: sum
+		sourceColumn: Año de Resultado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Servicios
+		dataType: string
+		lineageTag: e9ac65e6-d7db-4f61-8917-cdf710468e4a
+		summarizeBy: none
+		sourceColumn: Servicios
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fecha de Caducidad'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 59eacf3a-dbca-4f8d-b9ce-71e26f364117
+		summarizeBy: none
+		sourceColumn: Fecha de Caducidad
+
+		variation Variación
+			isDefault
+			relationship: fec8e8a6-5649-4b83-9d2b-cea2c17bfee6
+			defaultHierarchy: LocalDateTable_c664be4a-eb6b-4eb5-bfad-44f2fdfcc10a.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Deuda Total'
+		dataType: int64
+		formatString: 0
+		lineageTag: 37304578-5b88-40bd-85d2-3ea51a98220a
+		summarizeBy: sum
+		sourceColumn: Deuda Total
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column13
+		dataType: string
+		lineageTag: bf71642b-7209-4af5-98bf-69a8466f4fcc
+		summarizeBy: none
+		sourceColumn: Column13
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column14
+		dataType: string
+		lineageTag: 7dcce190-41a4-4d23-884a-489c5fd9e279
+		summarizeBy: none
+		sourceColumn: Column14
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column15
+		dataType: string
+		lineageTag: 395aa7db-12bd-421a-b433-6c3757b1d6fe
+		summarizeBy: none
+		sourceColumn: Column15
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column16
+		dataType: string
+		lineageTag: 319d82b3-4676-4cc2-9b65-da51fe26a176
+		summarizeBy: none
+		sourceColumn: Column16
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column17
+		dataType: string
+		lineageTag: 2c288583-77c9-4523-a5e4-15a6593d1886
+		summarizeBy: none
+		sourceColumn: Column17
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column18
+		dataType: string
+		lineageTag: ad0f4825-8a2c-4a63-b4a7-4dfaa4f8c89d
+		summarizeBy: none
+		sourceColumn: Column18
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column19
+		dataType: string
+		lineageTag: 94e14d18-cbf0-46d2-a2eb-84c484a5d6d3
+		summarizeBy: none
+		sourceColumn: Column19
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column20
+		dataType: string
+		lineageTag: 9e2713df-484a-43f0-bcc8-fadaa9765abd
+		summarizeBy: none
+		sourceColumn: Column20
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column21
+		dataType: string
+		lineageTag: a5af4529-0738-46fc-abed-b5e3ecd8e895
+		summarizeBy: none
+		sourceColumn: Column21
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column22
+		dataType: string
+		lineageTag: 54f07213-c16c-4d51-be1e-5c78bb975481
+		summarizeBy: none
+		sourceColumn: Column22
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column23
+		dataType: string
+		lineageTag: 2b27ed7d-4072-4d08-84b9-d17e51d788e4
+		summarizeBy: none
+		sourceColumn: Column23
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column24
+		dataType: string
+		lineageTag: 5630366b-85c9-42c0-88ff-c9785e2ba97f
+		summarizeBy: none
+		sourceColumn: Column24
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column25
+		dataType: string
+		lineageTag: 67e373a3-bdc3-4a10-87eb-24eacfbdfc41
+		summarizeBy: none
+		sourceColumn: Column25
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column26
+		dataType: string
+		lineageTag: b7e736e4-2109-44bb-9919-92fe834f0018
+		summarizeBy: none
+		sourceColumn: Column26
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Empresas-8917356b-cf88-4dc3-bc2a-d6de3654a528 = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents("\\10.10.138.5\Excels PBIs\Empresas.xls"), null, true),
+				    Empresas1 = Origen{[Name="Empresas"]}[Data],
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Empresas1,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}}),
+				    #"Filas superiores quitadas" = Table.Skip(#"Tipo cambiado",1),
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"Filas superiores quitadas", [PromoteAllScalars=true]),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"Razón Social", type text}, {"A.Pagos", type text}, {"NIF", type text}, {"Provincia", type text}, {"Rating", Int64.Type}, {"Resultado", type number}, {"Año de Resultado", Int64.Type}, {"Servicios", type text}, {"Fecha de Caducidad", type date}, {"Deuda Total", Int64.Type}, {"Fecha de Alta", type date}, {"Renovación Automática", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado1",{"A.Pagos", "Fecha de Alta", "Renovación Automática"}),
+				    #"Filas filtradas" = Table.SelectRows(#"Columnas quitadas", each [NIF] <> null and [NIF] <> "")
+				in
+				    #"Filas filtradas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

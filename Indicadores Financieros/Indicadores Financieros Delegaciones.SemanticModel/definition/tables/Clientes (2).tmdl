@@ -1,0 +1,105 @@
+table 'Clientes (2)'
+	lineageTag: d7d0b7f1-2048-45f2-9756-c31f9caf6641
+
+	column clcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 38e9ebb7-a09f-412a-8624-f0ff67c8c1e2
+		summarizeBy: none
+		sourceColumn: clcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 068b8eec-6b78-456a-8319-bc92b58132a0
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnombre
+		dataType: string
+		lineageTag: 3ede35d9-ee5e-4fab-8bdc-0b5c0f9361eb
+		summarizeBy: none
+		sourceColumn: clnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnomfis
+		dataType: string
+		lineageTag: f1cdc3fd-ccee-4e3f-b7c2-b35b37dbdac9
+		summarizeBy: none
+		sourceColumn: clnomfis
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: 3da2be68-7987-458b-bcea-49a06f7243e0
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column clgrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 049d7ebb-33b6-4b7e-b493-2986a71a2abb
+		summarizeBy: sum
+		sourceColumn: clgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clsubgrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 6889745e-4d55-4340-86d6-2d75416aef92
+		summarizeBy: sum
+		sourceColumn: clsubgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column gedescripcion
+		dataType: string
+		lineageTag: e8262d85-1b75-4aa2-b68a-05b51f03d44c
+		summarizeBy: none
+		sourceColumn: gedescripcion
+
+		annotation SummarizationSetBy = Automatic
+
+	column MCSucursal
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ce48262-d122-420b-aa7d-586b4bb50f9c
+		summarizeBy: sum
+		sourceColumn: MCSucursal
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClCenCli = FORMAT('Clientes (2)'[clcentro],"00")&FORMAT('Clientes (2)'[clcodigo],"000000")
+		lineageTag: 8767f5c3-8c79-477b-9a1d-a67f31ce3650
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Clientes (2)-bce84b7e-1efb-4e91-95fc-80ce176b0690' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)FROM         clientes INNER JOIN#(lf)                      contra ON clientes.clempresa = contra.ctempresa and clientes.clcentro=contra.ctcentro and clientes.clcodigo=contra.ctcliente#(lf)where ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal)>=2022)#(lf)and clientes.clempresa=1#(lf)and clientes.clnombre not like '%fijo%'#(lf)#(lf)union#(lf)SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)from facturas INNER JOIN#(lf)                      clientes ON facturas.fcempresa=clientes.clempresa and facturas.fccentro=clientes.clcentro  and  facturas.fccliente = clientes.clcodigo#(lf)where year(facturas.fcfecha)>=2022#(lf)and facturas.fcempresa=01#(lf)and clientes.clnombre not like '%fijo%'#(lf)#(lf)union#(lf)SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)FROM         clientes#(lf)where clempresa=1#(lf)and clcentro=22#(lf)AND (clcodigo=220437 or clcodigo=220438 or clcodigo=220439 or clcodigo=220382 or clcodigo>=220454)#(lf)union#(lf)SELECT     distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clnomfis,clientes.clcifdni,clientes.clgrupo,clientes.clsubgrupo#(lf)FROM         clientes#(lf)where clempresa=1#(lf)and clcentro=16#(lf)AND (clcodigo=160242 or clcodigo=160228 or clcodigo=160236)"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"clcentro", Int64.Type},  {"clgrupo", Int64.Type}, {"clsubgrupo", Int64.Type}}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Changed Type",{"clgrupo", "clsubgrupo"},GruposEmp,{"gegrupo", "gesubgrupo"},"GruposEmp",JoinKind.LeftOuter),
+				    #"Se expandió GruposEmp" = Table.ExpandTableColumn(#"Consultas combinadas", "GruposEmp", {"gedescripcion"}, {"GruposEmp.gedescripcion"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Se expandió GruposEmp",{{"GruposEmp.gedescripcion", "gedescripcion"}}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Columnas con nombre cambiado", {"clcentro"}, #"MCANCentros (2)", {"Id"}, "MCANCentros", JoinKind.LeftOuter),
+				    #"Se expandió MCANCentros" = Table.ExpandTableColumn(#"Consultas combinadas1", "MCANCentros", {"Sucursal"}, {"MCANCentros.Sucursal"}),
+				    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Se expandió MCANCentros",{{"MCANCentros.Sucursal", "MCSucursal"}})
+				in
+				    #"Columnas con nombre cambiado1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

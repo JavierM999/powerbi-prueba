@@ -1,0 +1,22 @@
+table 'Pseu Clientes'
+	lineageTag: c67f3ae5-4cc1-49ec-9a56-15302f8b63d2
+
+	column clnombre
+		lineageTag: b2ba9727-1bd8-4ad5-bbd0-221e14568695
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Clientes[clnombre]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Pseu Clientes-3361c15b-58df-4e45-9a8e-092bcc87b0d3' = calculated
+		mode: import
+		source =
+				
+				UNION(
+				    DISTINCT(Clientes[clnombre]),
+				    DATATABLE("Nombre",STRING,{{"Otros"}})
+				)
+
+	annotation PBI_Id = a5c590ad02ea4ae0b0cea06fe07ce68d
+

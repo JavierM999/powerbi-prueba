@@ -1,0 +1,23 @@
+table Ratings
+	lineageTag: 10e912e6-791c-4115-9eff-263dd33e7e61
+
+	column Id
+		formatString: 0
+		lineageTag: 5f72ef9d-424c-4cb9-b8e0-d0b9357fc55a
+		summarizeBy: count
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valores = IF(Ratings[Id]>=0 && Ratings[Id]<7,"00-06",IF(Ratings[Id]<11,"07-10",IF(Ratings[Id]<16,"11-15",IF(Ratings[Id]<21,"16-20",IF(Ratings[Id]<-98,"Rat.ND","Sin Datos")))))
+		lineageTag: 8ae9b8cd-e796-444f-9465-172b78dedac0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Ratings-5faad630-e4de-4b1e-8e53-c72e18a3bb3f = calculated
+		mode: import
+		source = GENERATESERIES(0,21,1)
+
+	annotation PBI_Id = 2c8127339baf4eb58c8c1286dd744dca
+

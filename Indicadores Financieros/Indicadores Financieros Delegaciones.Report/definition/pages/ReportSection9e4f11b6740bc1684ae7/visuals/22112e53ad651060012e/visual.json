@@ -1,0 +1,136 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "22112e53ad651060012e",
+  "position": {
+    "x": 58.522167487684733,
+    "y": 32.807881773399018,
+    "z": 5000,
+    "height": 464.6305418719212,
+    "width": 1175.7635467980297,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MCANCentros"
+                    }
+                  },
+                  "Property": "Texto"
+                }
+              },
+              "queryRef": "MCANCentros.Texto",
+              "nativeQueryRef": "Texto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CnHistor"
+                    }
+                  },
+                  "Property": "BENEFICIOS ANTES DE IMPUESTOS"
+                }
+              },
+              "queryRef": "CnHistor.BENEFICIOS ANTES DE IMPUESTOS",
+              "nativeQueryRef": "BENEFICIOS ANTES DE IMPUESTOS"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CnHistor"
+                    }
+                  },
+                  "Property": "BENEFICIOS ANTES INTERESES E IMPUESTOS"
+                }
+              },
+              "queryRef": "CnHistor.BENEFICIOS ANTES INTERESES E IMPUESTOS",
+              "nativeQueryRef": "BENEFICIOS ANTES INTERESES E IMPUESTOS"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CnHistor"
+                    }
+                  },
+                  "Property": "GASTOS FINANCIEROS"
+                }
+              },
+              "queryRef": "CnHistor.GASTOS FINANCIEROS",
+              "nativeQueryRef": "GASTOS FINANCIEROS"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CnHistor"
+                    }
+                  },
+                  "Property": "Gastos Generales"
+                }
+              },
+              "queryRef": "CnHistor.Gastos Generales",
+              "nativeQueryRef": "Gastos Generales"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CnHistor"
+                    }
+                  },
+                  "Property": "Gastos Generales Central"
+                }
+              },
+              "queryRef": "CnHistor.Gastos Generales Central",
+              "nativeQueryRef": "Gastos Generales Central"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CnHistor"
+                    }
+                  },
+                  "Property": "Gastos Generales Central3"
+                }
+              },
+              "queryRef": "CnHistor.Gastos Generales Central3",
+              "nativeQueryRef": "Gastos Generales Central3"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CnHistor"
+                    }
+                  },
+                  "Property": "INGRESOS"
+                }
+              },
+              "queryRef": "CnHistor.INGRESOS",
+              "nativeQueryRef": "INGRESOS"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

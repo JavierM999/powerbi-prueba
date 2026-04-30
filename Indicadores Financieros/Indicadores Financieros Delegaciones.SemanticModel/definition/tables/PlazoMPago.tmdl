@@ -1,0 +1,240 @@
+table PlazoMPago
+	lineageTag: b6b819a3-befc-48c7-b919-78a6d49180d1
+
+	measure SumImpInicial = SUM(PlazoMPago[NuevImpInic])
+		lineageTag: faf20010-5bfa-4fcf-bcf7-702d6a2c8da8
+
+	measure SumPPactado = SUM(PlazoMPago[Ppactado])
+		lineageTag: 08dc07bb-781a-4c11-a913-0e7d181ef608
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SumPReal = SUM(PlazoMPago[NuevReal])
+		lineageTag: e382fd64-3c10-4196-a937-e77ece4178d4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PM Pactado' = IF([SumImpInicial]>0,[SumPPactado]/[SumImpInicial],BLANK())
+		lineageTag: 20adb72a-4ca7-4af6-8bc2-ac49c8176995
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PM Real' = IF([SumImpInicial]>0,[SumPReal]/[SumImpInicial],BLANK())
+		lineageTag: 8eeb76a2-674d-4812-b3d9-22e32a2eebc5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gcuentacli
+		dataType: int64
+		formatString: 0
+		lineageTag: 5dc25a20-b523-4080-9b39-7b63deb95e6e
+		summarizeBy: none
+		sourceColumn: gcuentacli
+
+		annotation SummarizationSetBy = Automatic
+
+	column cunombre
+		dataType: string
+		lineageTag: 3bab9215-e2c0-4f1f-868f-e042ee556374
+		summarizeBy: none
+		sourceColumn: cunombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipodoc
+		dataType: string
+		lineageTag: c3dd0c8c-f806-42d5-89e7-459eb82d7b98
+		summarizeBy: none
+		sourceColumn: tipodoc
+
+		annotation SummarizationSetBy = Automatic
+
+	column gimppagado
+		dataType: double
+		lineageTag: 9dcd0043-9517-4ad5-9d9f-2041fd0eff8e
+		summarizeBy: sum
+		sourceColumn: gimppagado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column coimporte
+		dataType: double
+		lineageTag: 758ad124-61c5-4d27-bc24-48ee2af9ab14
+		summarizeBy: sum
+		sourceColumn: coimporte
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gimpinicial
+		dataType: double
+		lineageTag: 4a2dba48-42cb-4fa7-abfe-aeb8a06a2b9d
+		summarizeBy: sum
+		sourceColumn: gimpinicial
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gfeemi
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9e276e55-7326-4672-b05a-a9d19e423307
+		summarizeBy: none
+		sourceColumn: gfeemi
+
+		variation Variación
+			isDefault
+			relationship: 11c8933e-ccc3-4033-b850-54bed5d5081c
+			defaultHierarchy: LocalDateTable_ec826525-9315-46c1-bac6-c13632366af6.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column cofecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8667f36d-82dd-48d4-b058-189cb2981931
+		summarizeBy: none
+		sourceColumn: cofecha
+
+		variation Variación
+			isDefault
+			relationship: 0653b44c-47d4-4d92-950f-06a1c4932654
+			defaultHierarchy: LocalDateTable_a0d822f9-a7b7-48a3-a1e6-6571e52d761c.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Vencimiento
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 854e8c68-d8e9-4422-bb68-2162821aa68b
+		summarizeBy: none
+		sourceColumn: Vencimiento
+
+		variation Variación
+			isDefault
+			relationship: 83533486-b07c-4837-8b26-246ae02c92e5
+			defaultHierarchy: LocalDateTable_20533b71-3a10-413b-863b-975d87764cdd.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column gfevtooriginal
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 948441c5-23c2-4870-8a2c-ff21b0921812
+		summarizeBy: none
+		sourceColumn: gfevtooriginal
+
+		variation Variación
+			isDefault
+			relationship: 93a68de7-aabe-4aa6-913d-d35cf487bc9e
+			defaultHierarchy: LocalDateTable_6b9ce3f7-04c8-4ae4-b453-492969da1f8b.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column gfevtoamd
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2a029208-e110-4d4b-8fea-d8f979003f54
+		summarizeBy: none
+		sourceColumn: gfevtoamd
+
+		variation Variación
+			isDefault
+			relationship: 950ddcb8-0ed9-4c3d-b002-890c8e0f8a8b
+			defaultHierarchy: LocalDateTable_2781a151-adcd-4223-b851-69df69310da6.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Reales
+		dataType: double
+		lineageTag: 8be1593c-6c3b-4cf5-8992-e0ced74946da
+		summarizeBy: sum
+		sourceColumn: Reales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Teoricos
+		dataType: double
+		lineageTag: 93b0cfb3-3604-446f-87ca-8554c73b0ccc
+		summarizeBy: sum
+		sourceColumn: Teoricos
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Preal
+		dataType: double
+		lineageTag: 2a26a474-9760-472b-8351-09dead481d2d
+		summarizeBy: sum
+		sourceColumn: Preal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Ppactado
+		dataType: double
+		lineageTag: 7c072d40-a5de-4a1a-ba72-a28e8bf9f549
+		summarizeBy: sum
+		sourceColumn: Ppactado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Desv
+		dataType: double
+		lineageTag: 1dcbb757-56e5-4a67-a9c5-16bdd1c787e9
+		summarizeBy: sum
+		sourceColumn: Desv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NuevImpInic = IF([Reales]>0,[NuevReal]/[Reales],0)
+		lineageTag: 718144ef-09c4-40d8-952f-ee8e9af72b4d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column NuevReal = IF([Reales]>0 && [Preal]>0,[Reales]*[Preal],0)
+		lineageTag: 0888c10e-6268-4da5-8a4d-eae61718e775
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition PlazoMPago-5d820e63-fc64-478d-a517-0962fd962bee = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "n4db003", [Query="select gcuentacli,cunombre,tipodoc,gimppagado,coimporte,gimpinicial,CONVERT(nvarchar (10),gfeemi,103) as gfeemi,CONVERT(nvarchar (10),cofecha,103) as cofecha,#(lf)Vencimiento=#(lf)case #(lf)when gfevtooriginal is null then CONVERT(nvarchar (10),gfevtoamd,103) #(lf)when gfevtooriginal is not null then CONVERT(nvarchar (10),gfevtooriginal,103) #(lf)end,#(lf)CONVERT(nvarchar (10),gfevtooriginal,103) as gfevtooriginal,CONVERT(nvarchar (10),gfevtoamd,103) as gfevtoamd,#(lf)Reales=#(lf)case#(lf)when (cofecha is not null and gestado='P') then ((CONVERT(decimal (10,2), (GETDATE()-gfeemi)))) #(lf)when (cofecha is not null and (gestado='R' or gestado='G') and gtipodoc='P' ) then CONVERT(decimal (10,2), (gfevtoamd-gfeemi))#(lf)when ((cofecha is not null) and ((CONVERT(decimal (10,2),(cofecha-gfeemi)))<(CONVERT(decimal (10,2),(gifevto-gifeemi)))) and (gtipodoc='P') ) then ((CONVERT(decimal (10,2),(gifevto-gifeemi)))) #(lf)when ((cofecha is not null) and ((CONVERT(decimal (10,2),(cofecha-gfeemi)))<(CONVERT(decimal (10,2),(gifevto-gifeemi)))) and (gtipodoc='G' or gtipodoc='CO')) then ((CONVERT(decimal (10,2),(gifevto-gifeemi)))) #(lf)when (cofecha is not null and cofecha<gifevto) then ((CONVERT(decimal (10,2),(cofecha-gfeemi))))#(lf)when (cofecha is not null and cofecha>=gifevto) then ((CONVERT(decimal (10,2),(cofecha-gfeemi)))) #(lf)when cofecha is null then ((CONVERT(decimal (10,2), (GETDATE()-gfeemi))))#(lf)end,#(lf)CONVERT(decimal (10,2), (gifevto-gifeemi)) as Teoricos,#(lf)Preal=#(lf)case#(lf)when (gestado='R' or gestado='G' )then CONVERT(decimal (10,2),gimpinicial)#(lf)when (gimppagado>0 and ((CONVERT(decimal (10,2),(gfevtooriginal-GETDATE()))<0) or (gfevtooriginal is null))) then CONVERT(decimal (10,2),gimppagado)#(lf)when (gimppagado<0.01 and ((CONVERT(decimal (10,2),(gfevtooriginal-GETDATE()))<0) or (gfevtooriginal is null))) then CONVERT(decimal (10,2),gimpinicial)#(lf)#(lf)end,#(lf)Ppactado=#(lf)case#(lf)when ((gimppagado<0.01 and ((CONVERT(decimal (10,2),(gfevtooriginal-GETDATE()))))<0)or gfevtooriginal is null) then CONVERT(decimal (10,2),(gifevto-gifeemi))*gimpinicial#(lf)when ((gimppagado>0 and ((CONVERT(decimal (10,2),(gfevtooriginal-GETDATE()))))<0)or gfevtooriginal is null) then CONVERT(decimal (10,2),(gifevto-gifeemi))*gimppagado#(lf)end#(lf)#(lf)FROM cncobros right JOIN#(lf)cngirosc ON cncobros.codelegacion = cngirosc.gdelegacion AND cncobros.cotipoope = cngirosc.gtipoope AND cncobros.conumope = cngirosc.gnumope inner join#(lf)cncuenta on cngirosc.gcuentacli = cncuenta.cucodigo INNER JOIN#(lf)no3001.dbo.clientes on cncuenta.cucodigo=clientes.clctacon INNER JOIN#(lf)no3001.dbo.giros ON no3001.dbo.clientes.clcentro = no3001.dbo.giros.gicentro and no3001.dbo.clientes.clcodigo = no3001.dbo.giros.gicliente inner join#(lf)no3001.dbo.formaspago on no3001.dbo.clientes.clfopago=no3001.dbo.formaspago.cod_fpago#(lf)where year(gfeemi)= 2023#(lf)and gestado<>'I' and gestado<>'A'#(lf)and (gestado='C' or gestado='R' or (GETDATE()-gfevtoamd>0))#(lf)and gfevtoamd-GETDATE()<0#(lf)and gfeemi=gifeemi#(lf)and year(gifeemi)=2023#(lf)group by gcuentacli,cunombre,tipodoc,gimppagado,coimporte,gimpinicial,gfeemi,cofecha,gfevtooriginal,gfevtoamd,gestado,giros.gifevto,giros.gifeemi,clientes.cldfpago1,cngirosc.gtipodoc"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"gfeemi", type date}, {"cofecha", type date}, {"Vencimiento", type date}, {"gfevtooriginal", type date}, {"gfevtoamd", type date}, {"Reales", Int64.Type}, {"Teoricos", Int64.Type}, {"gcuentacli", Int64.Type}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Desv", each [Reales]-[Teoricos]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Desv", type number}, {"Reales", type number}, {"Teoricos", type number}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

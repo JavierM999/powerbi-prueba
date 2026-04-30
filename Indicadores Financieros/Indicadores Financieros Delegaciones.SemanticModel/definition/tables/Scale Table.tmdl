@@ -1,0 +1,20 @@
+table 'Scale Table'
+	lineageTag: a8829f99-e3dd-4d90-8219-a806483b43c8
+
+	column Value
+		formatString: 0
+		lineageTag: 253c0c82-1188-4362-9712-37061a0e29ee
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Scale Table-063bd7c6-1501-4023-9eb6-a4dea359d517' = calculated
+		mode: import
+		source =
+				
+				GENERATESERIES(1,10,1)
+
+	annotation PBI_Id = a6ba632cf3c045d1a26eacb2305c9904
+

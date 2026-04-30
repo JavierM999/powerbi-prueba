@@ -1,0 +1,73 @@
+table Riesgos03
+	lineageTag: 02693317-6707-4763-92e7-6b933bb49206
+
+	measure TRiesgo = IF(SUM(Riesgos03[importe])>0,SUM(Riesgos03[importe]),BLANK())
+		lineageTag: a7cb56d0-922e-40fb-a4b6-e6a91dcaba8b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tipo
+		dataType: string
+		lineageTag: 747dc51a-4ec7-4aae-9e15-5ceed7855175
+		summarizeBy: none
+		sourceColumn: tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column cucodigo
+		dataType: string
+		lineageTag: 1e031982-93bd-4d35-ba09-1726a600f961
+		summarizeBy: none
+		sourceColumn: cucodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column cunombre
+		dataType: string
+		lineageTag: 3f8b314c-5d67-47f4-a7e1-ddafde274ddb
+		summarizeBy: none
+		sourceColumn: cunombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column limite
+		dataType: double
+		lineageTag: 74658931-b6bb-48ca-b9b1-e97960393b62
+		summarizeBy: sum
+		sourceColumn: limite
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column importe
+		dataType: double
+		lineageTag: 7d49113e-dbf6-426d-b0aa-08f3fd1b1475
+		summarizeBy: sum
+		sourceColumn: importe
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Mes
+		dataType: int64
+		formatString: 0
+		lineageTag: d20a2c10-1d65-4ca4-8152-1a527d2a0ed6
+		summarizeBy: sum
+		sourceColumn: Mes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Riesgos03-5d09c993-1b1f-4c56-9ac2-a0a2959b8905 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.10.138.5\TEMPORING", "n4db003", [Query="Select 'P' as tipo,cucodigo,cunombre,pelimite as limite,sum(g1.gimpinicial) as importe, MONTH(getdate()) as Mes #(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cngirosc g1,n4db003.dbo.cnperson#(lf) where  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'#(lf) and  g1.gcuentacli=cucodigo#(lf) and g1.gestado='P'#(lf) and not exists (select * from n4db003.dbo.cngirosc g2#(lf)                   Where g2.gano=g1.gano#(lf)                   and g2.gdelegacion=g1.gdelegacion#(lf)                   and g2.gnumbase=g1.gnumbase#(lf)                   and g2.gnumrenov=g1.gnumrel#(lf)                   and g2.gestado='I')#(lf) and pecuenta=cucodigo#(lf) GROUP BY cucodigo,cunombre,pelimite  UNION ALL  Select 'R' as tipo,cucodigo,cunombre,pelimite as limite,sum(g1.gimpinicial) as importe , MONTH(getdate()) as Mes#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cngirosc g1,n4db003.dbo.cnperson#(lf) where  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'#(lf) and  g1.gcuentacli=cucodigo#(lf) and g1.gestado='E'#(lf) and not exists (select * from n4db003.dbo.cngirosc g2#(lf)                   Where g2.gano=g1.gano#(lf)                   and g2.gdelegacion=g1.gdelegacion#(lf)                   and g2.gnumbase=g1.gnumbase#(lf)                   and g2.gnumrenov=g1.gnumrel#(lf)                   and g2.gestado='I')#(lf) and pecuenta=cucodigo#(lf) GROUP BY cucodigo,cunombre,pelimite  UNION ALL  Select 'I' as tipo,cucodigo,cunombre,pelimite as limite,sum(g1.gimpinicial-g1.gimppagado) as importe , MONTH(getdate()) as Mes#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cngirosc g1,n4db003.dbo.cnperson#(lf) where  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'#(lf) and  g1.gcuentacli=cucodigo#(lf) and g1.gestado='P'#(lf) and exists (select * from n4db003.dbo.cngirosc g2#(lf)                   Where g2.gano=g1.gano#(lf)                   and g2.gdelegacion=g1.gdelegacion#(lf)                   and g2.gnumbase=g1.gnumbase#(lf)                   and g2.gnumrenov=g1.gnumrel#(lf)                   and g2.gestado='I')#(lf) and pecuenta=cucodigo#(lf) GROUP BY cucodigo,cunombre,pelimite  UNION ALL  Select 'E' as tipo,cucodigo,cunombre,pelimite as limite,sum(gimpinicial-gimppagado) as importe , MONTH(getdate()) as Mes#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cngirosc,n4db003.dbo.cnperson#(lf) where  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'#(lf) and  gcuentacli=cucodigo#(lf) and (gestado='R' OR gestado='G' OR gestado='F')#(lf) and gtipodoc<>'CO'#(lf) AND gfevtoamd >= getdate() -1 and pecuenta=cucodigo#(lf) GROUP BY cucodigo,cunombre,pelimite  UNION ALL  Select 'P' as tipo,cucodigo,cunombre,pelimite as limite,0 as importe  , MONTH(getdate()) as Mes#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cnperson#(lf) where pecuenta=cucodigo#(lf) and  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

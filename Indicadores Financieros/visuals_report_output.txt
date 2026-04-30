@@ -1,0 +1,47 @@
+
+Page                      VisualId             VisualTitle VisualType Fields
+----                      --------             ----------- ---------- ------
+CNAE-Cliente              7baa59c3c049ed008ee3 Unknown                
+CNAE-Cliente              da63b18144d9570b732a Unknown                
+CNAE-Cliente              b20d16f302e2060b0530 Unknown                
+CNAE-Cliente              a9f7d909bd2b5d3766bc Unknown                
+CNAE-Cliente              9d34a7922184e03daca0 Unknown                
+CNAE-Cliente              64540e468ca08c85036b Unknown                
+CNAE-Cliente              35cec13983a52bd5e010 Unknown                
+Duplicado de CNAE-Cliente 09b2225b0c4aad56d329 Unknown                
+Duplicado de CNAE-Cliente 9ba13c9432be8e86999c Unknown                
+Duplicado de CNAE-Cliente 9104b9c53c081b0095ca Unknown                
+Duplicado de CNAE-Cliente 7276b185023950b5eaa1 Unknown                
+Duplicado de CNAE-Cliente 3143fcab5506ec4cc570 Unknown                
+Duplicado de CNAE-Cliente 0a1bb75b6e70eebde7b9 Unknown                
+Duplicado de CNAE-Cliente ea1eb5c61bab2443787d Unknown                
+Gráfico arriba descuadra  2328573542da7c8ee18b Unknown                
+Gráfico arriba descuadra  5d2fa02607a3c3229635 Unknown                
+Gráfico arriba descuadra  572a9a942ea8c9c9495d Unknown                
+Gráfico arriba descuadra  2a666670929305188c5d Unknown                
+Gráfico arriba descuadra  c87a20b1e1ab83d3c048 Unknown                
+Gráfico arriba descuadra  de709b3a879536200c04 Unknown                
+Panel Diseño              b2872310658e203c590d Unknown                
+Panel Diseño              f30e64925eefed2e92e4 Unknown                
+Panel Diseño              ee728b6e58b55b6c6b28 Unknown                
+Panel Diseño              d98408f2f1dc128772cc Unknown                
+Panel Diseño              c96932b25ecc5b701b9c Unknown                
+Panel Diseño              8bc7e1ca6bc9ceb2350e Unknown                
+Panel Diseño              fa404c03d1482d960921 Unknown                
+Panel Diseño              7dbbaeb4d02a5e961086 Unknown                
+Panel Diseño              66dbf6e693d3b57ead29 Unknown                
+Panel Diseño              627e376f3cb18dadc826 Unknown                
+Panel Diseño              43c41bbe9494ba08e3bd Unknown                
+Panel Diseño              40ed08c4b940c2ec3ec6 Unknown                
+Panel Diseño              0595f1a99e7b7d3845a4 Unknown                
+Panel Diseño              7b1e2b39e29c7541079a Unknown                
+Resultado Final Descuadra 22112e53ad651060012e Unknown                
+Resultado Final Descuadra 1a38fe5cbd3b9ed308b9 Unknown                
+Resultado Final Descuadra 293728670e2bd9109ce9 Unknown                
+Resultado Final Descuadra 9c125040cce51c553b31 Unknown                
+Resultado Final Descuadra b8212d7f43cac7ec8029 Unknown                
+Resultado Final Descuadra efbdd2520e5c53bbdb12 Unknown                
+Resultado Final Descuadra 2f6db6059787b83e0940 Unknown                
+Resultado Final Descuadra ea867ce4ed810c840d57 Unknown                
+
+

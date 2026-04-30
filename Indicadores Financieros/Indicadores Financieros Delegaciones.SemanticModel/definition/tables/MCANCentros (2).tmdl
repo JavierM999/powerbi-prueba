@@ -1,0 +1,60 @@
+table 'MCANCentros (2)'
+	lineageTag: 83d2a153-30b5-45e5-a4c4-c953c831c47e
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f4f773d-d864-4b99-b0fd-ef6ae41503f2
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sucursal
+		dataType: int64
+		formatString: 0
+		lineageTag: dd9d3812-5606-4ab4-ba93-c8b15db7aa2b
+		summarizeBy: sum
+		sourceColumn: Sucursal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Texto
+		dataType: string
+		lineageTag: c9842ccb-edd0-4b6b-a7eb-42a75c862844
+		summarizeBy: none
+		sourceColumn: Texto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre
+		dataType: string
+		lineageTag: f0df11ff-0fdb-4783-957f-1db87f058a9d
+		summarizeBy: none
+		sourceColumn: Nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Delegado
+		dataType: string
+		lineageTag: ed44400f-4488-4cb9-9b02-0176ce84dfb1
+		summarizeBy: none
+		sourceColumn: Delegado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'MCANCentros (2)-09f10e8b-887e-4124-a65e-2bbdcc9ab262' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("\\10.10.138.5\Excels PBIs\MCA Oficinas.xlsx"), null, true),
+				    #"Changed Type" = Source{[Item="Hoja1",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"Id", Int64.Type}, {"Sucursal", Int64.Type}, {"Texto", type text}, {"Nombre", type text}, {"Delegado", type text}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

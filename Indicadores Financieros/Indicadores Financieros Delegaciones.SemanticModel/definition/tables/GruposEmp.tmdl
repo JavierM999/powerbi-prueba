@@ -1,0 +1,69 @@
+table GruposEmp
+	lineageTag: 55525a6f-cd5f-4e2e-9da2-b6c2808d02e2
+
+	column gegrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: d0943f4a-728a-45fb-82cb-606b23beaa27
+		summarizeBy: sum
+		sourceColumn: gegrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column gesubgrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e0f42b4-fe1d-4f77-9034-a8bcba807abd
+		summarizeBy: sum
+		sourceColumn: gesubgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column gedescripcion
+		dataType: string
+		lineageTag: 25cce904-d0c3-4f75-9209-3a5370788c14
+		summarizeBy: none
+		sourceColumn: gedescripcion
+
+		annotation SummarizationSetBy = Automatic
+
+	column gevendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: ea1b253c-623d-4dc6-8fc3-826db37d835b
+		summarizeBy: sum
+		sourceColumn: gevendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column geclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 3405e030-8d26-4d99-87fe-6ce2b401b826
+		summarizeBy: sum
+		sourceColumn: geclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column geclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 17a81110-5f0d-4d02-96df-8ef337d79cb4
+		summarizeBy: sum
+		sourceColumn: geclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GruposEmp-ade9fda0-f6a2-4d4a-b8ce-d4998407f798 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select gegrupo,gesubgrupo,gedescripcion,gevendedor,geclcentro,geclcodigo#(lf)from gruposemp#(lf)where geempresa=1"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"gegrupo", Int64.Type}, {"gesubgrupo", Int64.Type}, {"gevendedor", Int64.Type}, {"geclcentro", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

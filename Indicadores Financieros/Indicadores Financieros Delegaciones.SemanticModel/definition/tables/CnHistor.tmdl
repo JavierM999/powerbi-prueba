@@ -1,0 +1,332 @@
+table CnHistor
+	lineageTag: 8ad29a36-c4a6-4c40-a392-c7e78859e2dd
+
+	measure ALQUILERES+RENTINGS = CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6210000000,CnHistor[hicuenta]<= 6219999999)
+		lineageTag: 5344db5b-ca03-4f8b-a5e6-445f9c9bace3
+
+	measure 'Benefic AA' = CALCULATE([BENEFICIOS ANTES DE IMPUESTOS],SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: dfed3b66-7ee3-4f62-8ce2-cfae2ce968ff
+
+	measure 'BENEFICIOS ANTES DE IMPUESTOS' = [BENEFICIOS ANTES INTERESES E IMPUESTOS]+[GASTOS FINANCIEROS]-[Gastos Generales]+[Gastos Generales Central3]
+		formatString: 0.00
+		lineageTag: c4c1e4d8-d81a-4da3-81bc-3925eaf5adfc
+
+	measure 'BENEFICIOS ANTES INTERESES E IMPUESTOS' = [MARGEN DE CONTRIBUCIÓN]+[GASTOS FIJOS]
+		lineageTag: 8a237001-93c8-4b40-bd8d-b72c3b098e06
+
+	measure 'Clientes de dudoso cobro' = CALCULATE( CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6500000000,CnHistor[hicuenta]<= 6500999999) +CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6940000000,CnHistor[hicuenta]<= 6949999999)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6954000000,CnHistor[hicuenta]<= 6954009999) +CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7940000000,CnHistor[hicuenta]<= 7949999999)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7954000000,CnHistor[hicuenta]<= 7954999999))
+		lineageTag: 281b9523-3dab-448e-bd2d-97feffe58eed
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Coste de personal externo' = CALCULATE(CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6400000000,CnHistor[hicuenta]<= 6400999999,RIGHT(CnHistor[hicuenta],1)="1")+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7550000000,CnHistor[hicuenta]<= 7550009999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6420000000,CnHistor[hicuenta]<= 6420009999,RIGHT(CnHistor[hicuenta],1)="1")+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6490000000,CnHistor[hicuenta]<= 6490009999,RIGHT(CnHistor[hicuenta],1)="1"))
+		lineageTag: f5d9f6ac-c312-4e00-99fe-27dc66b8ad11
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Coste Indemnizaciones externos ant' = CALCULATE(CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6410000000,CnHistor[hicuenta]<= 6410999999,RIGHT(CnHistor[hicuenta],1)="1"))
+		lineageTag: fe7f9610-5e58-4620-ad8d-76e2d3299fce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'COSTES DE VENTAS' = [Coste de personal externo]+[Coste Indemnizaciones externos]+[Gastos de Formación]+[Vestuario]+[Publicidad]+[Otros gastos variables]+[Clientes de dudoso cobro]
+		lineageTag: 413da720-3a82-4299-ba01-159a9e164fba
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'GastFijos AA' = CALCULATE([GASTOS FIJOS],SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: abbead38-f1c0-45a3-8e83-cdc992d6f036
+
+	measure 'Gastos de Formación' =
+			CALCULATE( CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6420000003,CnHistor[hicuenta]<= 6420000003)
+			   + CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6420000004,CnHistor[hicuenta]<= 6420000004)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6480000000,CnHistor[hicuenta]<= 6489999999))
+		lineageTag: d992bbe4-e75a-48a5-908a-272b97565305
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gastos de personal Internos' = CALCULATE( CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000002)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000004)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000017)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000026)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6400000000,CnHistor[hicuenta]<= 6400710000,RIGHT(CnHistor[hicuenta],1)="0")+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6400940000,CnHistor[hicuenta]<= 6400949999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6420000000)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6490000000)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6410990000)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6420990000)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6490990000))
+		lineageTag: 8134f7ff-6d4d-4f01-8de7-103d9c32db15
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'GASTOS FIJOS' = [Gastos de personal Internos]+[Gastos Indemnizaciones Internos]+[Otros gastos de explotación]+[ALQUILERES+RENTINGS]+[Otros tributos]+[Ingresos financieros]+[Resultados extraordinarios]+[Gastos Telefonia]
+		lineageTag: 70f27efa-f3bd-41e2-a64a-6d71089980c6
+
+	measure 'GASTOS FINANCIEROS' = CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6600000000,CnHistor[hicuenta]<= 6699999999)
+		lineageTag: 60d798e4-e565-45e9-a7ea-f8fa62d974f0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gastos Generales' = CALCULATE(DIVIDE([INGRESOS]*2.5,100),CnHistor[hiseccion]<99)
+		lineageTag: dba67db8-9d45-4c80-88ba-a157275f4ea0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gastos Indemnizaciones Internos' = CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6410000000)
+		lineageTag: ae51f542-efef-482c-9103-fb2221a78530
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gastos Telefonia' = CALCULATE( CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000009)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000010))
+		lineageTag: 2b36f440-9e59-42aa-854b-1953874d3106
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GtosComCli = ```
+			CALCULATE((CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6290000011,CnHistor[hicuenta]<= 6290000011))) 
+			```
+		lineageTag: 4ea344ee-15ed-4b84-929e-a9f2ed629efe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'GtsFinan AA' = CALCULATE([GASTOS FINANCIEROS],SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: 571d1aee-ca69-4ef7-9c6f-6b685003068d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure INGRESOS = [Prestaciones de Servicios]+[Servicos de Selección]+[Otros Ingresos]
+		lineageTag: 131fb370-2b1f-42f1-be55-33106d410d96
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ingresos financieros' = CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7600000000,CnHistor[hicuenta]<= 7699999999)
+		lineageTag: 167adf1c-4d8d-4c30-b382-3afd4f47e642
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IngXArrend = CALCULATE((CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7520000000,CnHistor[hicuenta]<= 7529999999)))
+		lineageTag: 270533e0-6b93-4f67-9e42-2b023248a9a4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IngXSeDiv = CALCULATE((CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7590000000,CnHistor[hicuenta]<= 7599999999)))
+		lineageTag: 68aca182-58a7-47ae-a9f0-faeee3d6ede0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MARGEN DE CONTRIBUCIÓN' = [INGRESOS]+[COSTES DE VENTAS]
+		formatString: 0.00
+		lineageTag: 5562111e-5616-43c6-8365-0343ac1cab87
+
+	measure 'Otros gastos de explotación' = CALCULATE( CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6220000000,CnHistor[hicuenta]<= 6220999999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000000)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000100)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000101)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000102)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6240000000,CnHistor[hicuenta]<= 6240999999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6250000000,CnHistor[hicuenta]<= 6259999999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6260000001)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6260000002)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6280000000,CnHistor[hicuenta]<= 6289999999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000000)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000002)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000003)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000005)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290010000)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290010001)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290010002)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6800000000,CnHistor[hicuenta]<= 6899999999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6920000000,CnHistor[hicuenta]<= 6920999999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6990000000,CnHistor[hicuenta]<= 6990999999))
+		lineageTag: 26582584-1b6c-497f-839f-eb93defb7e44
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Otros gastos variables' =
+			CALCULATE( CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6070000000,CnHistor[hicuenta]<= 6079999999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6230000001)
+			     + CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6260000000)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6260000003)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000004)
+			      + CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000006)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290000007)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6290010003)
+			     +CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6590000000,CnHistor[hicuenta]<= 6599999999))
+		lineageTag: 72b819a1-37cf-4c50-9e33-a512064b3483
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Otros Ingresos' = [IngXArrend]+[IngXSeDiv]
+		lineageTag: 68df9c9c-72ec-4b83-9b00-452ef54a2886
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Otros tributos' = CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6300000000,CnHistor[hicuenta]<= 6399999999)
+		lineageTag: 8072cd3d-1877-43ca-991c-fee1c13e93eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Prestaciones de Servicios' = ```
+			[PrestServF]+[GtosComCli]+[RappelSVta]
+			
+			```
+		lineageTag: b1383745-d710-4272-a799-825a653fe496
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PrestServ = ```
+			CALCULATE((CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7050000000,CnHistor[hicuenta]<= 7050009999))) 
+			```
+		lineageTag: 689cb075-b988-4985-bd28-1ea44946bfe0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Publicidad = CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6270000000,CnHistor[hicuenta]<= 6270999999)
+		lineageTag: 12768009-5fa6-41a9-86e7-98f3b64171c2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure RapSoVta = ```
+			CALCULATE((CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7090000000,CnHistor[hicuenta]<= 7090999999))) 
+			```
+		lineageTag: 68e39372-66e3-414e-9bf4-be7d347d1b01
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Resultados extraordinarios' = CALCULATE( CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6700000000,CnHistor[hicuenta]<= 6799999999)+ CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]= 6959000000)-CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7400000000,CnHistor[hicuenta]<= 7499999999)+CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7700000000,CnHistor[hicuenta]<= 7799999999)-CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7952000000,CnHistor[hicuenta]<= 7952999999))
+		lineageTag: 9b1f717a-1332-43a8-bd76-6dd0760ba5a5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Servicos de Selección' = CALCULATE((CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 7050010000,CnHistor[hicuenta]<= 7050019999)))
+		lineageTag: 8ab0aec9-a97b-4ba7-a43e-1c841acfeb52
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Vestuario = CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6290000008,CnHistor[hicuenta]<= 6290000008)
+		lineageTag: 385aeadc-b2f6-443c-bea9-cbf050a36123
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Coste Indemnizaciones externos' = [Coste Indemnizaciones externos ant]+ [Cost Indem ExtNew]
+		lineageTag: 8d1ac81f-e8a1-4441-b59c-543be507cba2
+
+	measure 'Cost Indem ExtNew' = CALCULATE((CALCULATE(SUM(CnHistor[MiImport]),CnHistor[hicuenta]>= 6410000002,CnHistor[hicuenta]<= 6410000002)))
+		lineageTag: 406cbb27-3402-456c-9601-04b758aa1860
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gastos Generales Central' =
+			
+			IF (
+			    HASONEVALUE ( MCANCentros[Texto] ),
+			    IF (
+			        SELECTEDVALUE ( MCANCentros[Texto] ) = "99 CEN",
+			        CALCULATE (
+			            SUMX ( VALUES ( MCANCentros[Sucursal] ), [Gastos Generales] ),
+			            ALL ( MCANCentros )
+			        ),
+			        BLANK ()
+			    ),
+			     CALCULATE(DIVIDE([INGRESOS]*2.5,100),ALL(MCANCentros),CnHistor[hiseccion]<99)
+			)
+		lineageTag: 008ccbdb-1efd-4803-9fae-bfa0d1029efc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MARGEN DE CONTRIBUCIÓN 2' = CALCULATE([INGRESOS]+[COSTES DE VENTAS],SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: 2fbf42b3-a408-4572-ae36-b3ab1bbfc5fe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'COSTES DE VENTAS 2' = CALCULATE([Coste de personal externo]+[Coste Indemnizaciones externos]+[Gastos de Formación]+[Vestuario]+[Publicidad]+[Otros gastos variables]+[Clientes de dudoso cobro],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: 0.00
+		lineageTag: 7b6c60e6-fc43-46e6-acd5-2b0b2e104847
+
+	measure 'INGRESOS 2' = CALCULATE([Prestaciones de Servicios]+[Servicos de Selección]+[Otros Ingresos],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: 0.00
+		lineageTag: 17887644-77a5-42cf-bca9-8b17cd485159
+
+	measure 'VariIngres %' = IF([INGRESOS]>0,if([INGRESOS 2]>0,([INGRESOS]-[INGRESOS 2])/[INGRESOS 2],blank()),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 8e94ebac-8d01-4f85-a774-eee5f3035699
+
+	measure OfSelecc = DISTINCTCOUNT(MCANCentros[Texto])
+		formatString: 0
+		lineageTag: 640b02bd-549f-4a61-8e8e-2ebe448598f1
+
+	measure OfTot = CALCULATE(DISTINCTCOUNT(MCANCentros[Texto]),ALL(MCANCentros))
+		formatString: 0
+		lineageTag: 8cc9228a-a372-458d-a17b-01df17b29ef2
+
+	measure 'Gastos Generales Central3' = ```
+			
+			    SUMX(
+			        VALUES(MCANCentros[Texto]),
+			        IF (
+			            MCANCentros[Texto] = "99 CEN",
+			            CALCULATE (
+			                SUMX ( VALUES ( MCANCentros[Sucursal] ), [Gastos Generales] ),
+			                ALL ( MCANCentros )
+			            ),
+			            BLANK()
+			        )
+			    )
+			
+			```
+		lineageTag: a3d0dbb8-e9bc-4789-9805-067e0b09978f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column hidelegacion
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b054b4e-266e-4369-a72c-1e54b638fa4c
+		summarizeBy: sum
+		sourceColumn: hidelegacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiseccion
+		dataType: double
+		lineageTag: 5cf6bb2b-54c7-4480-b958-871561d8e4d4
+		summarizeBy: none
+		sourceColumn: hiseccion
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column hicuenta
+		dataType: int64
+		formatString: 0
+		lineageTag: bac77e54-6112-42a7-8b02-87ed17ef75ea
+		summarizeBy: sum
+		sourceColumn: hicuenta
+
+		annotation SummarizationSetBy = Automatic
+
+	column hidocum
+		dataType: string
+		lineageTag: 45757de2-2343-485e-a60e-563337ec31f2
+		summarizeBy: none
+		sourceColumn: hidocum
+
+		annotation SummarizationSetBy = Automatic
+
+	column hitipo
+		dataType: string
+		lineageTag: f419e6c5-734c-407c-8ff2-2d2b73489f1e
+		summarizeBy: none
+		sourceColumn: hitipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column hifechamd
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: da82cf77-e7fe-4ffb-9089-5fb2c4671f1f
+		summarizeBy: none
+		sourceColumn: hifechamd
+
+		annotation SummarizationSetBy = Automatic
+
+	column importe
+		dataType: double
+		lineageTag: c94098a1-c871-44e2-9e82-ca41d9410d32
+		summarizeBy: sum
+		sourceColumn: importe
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MiImport = IF([hitipo]="D",[importe]*-1,[importe])
+		lineageTag: d0fd7ba4-00f8-47a5-8e8d-ef6e27564ef2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition CnHistor-11590709-0a12-4eca-a07b-c2537367f22f = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "n4db003", [Query=" select hidelegacion,hiseccion,hicuenta,hidocum,hitipo, hifechamd,sum(hiimporte) as importe#(lf)  from cnhistor#(lf)  Where hifechamd>='01/01/2021'#(lf) and hiconcep<> 'Asiento Regularización'#(lf)  group by hidelegacion,hiseccion,hicuenta,hidocum,hitipo, hifechamd"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"hicuenta", Int64.Type}}),
+				    #"Valor reemplazado" = Table.ReplaceValue(#"Tipo cambiado",96,99,Replacer.ReplaceValue,{"hiseccion"}),
+				    #"Valor reemplazado1" = Table.ReplaceValue(#"Valor reemplazado",97,98,Replacer.ReplaceValue,{"hiseccion"})
+				in
+				    #"Valor reemplazado1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

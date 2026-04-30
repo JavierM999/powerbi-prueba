@@ -1,0 +1,88 @@
+table CtaContRec
+	lineageTag: 2935701b-eed6-4cbf-a004-c5d431f36813
+
+	column cucodigo
+		dataType: string
+		lineageTag: f4176a9b-3393-4328-b820-71009173ea8c
+		summarizeBy: none
+		sourceColumn: cucodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: b01ed5a8-3199-4c29-8277-5aa04398ce4a
+		summarizeBy: sum
+		sourceColumn: Cclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e4c5f7c-e7b4-4a9a-914d-4d0570e9935b
+		summarizeBy: sum
+		sourceColumn: Cclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cclnombre
+		dataType: string
+		lineageTag: 33c84a04-84fa-4c51-98ce-03b25d290d4d
+		summarizeBy: none
+		sourceColumn: Cclnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column CtaCRCenCli = FORMAT(CtaContRec[Cclcentro],"00")&FORMAT(CtaContRec[Cclcodigo],"000000")
+		lineageTag: c409b523-c6b0-41eb-81ef-f4bd81274455
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cclcifdni
+		dataType: string
+		lineageTag: 5ca6af71-4061-4a14-bb31-04040e41e8cc
+		summarizeBy: none
+		sourceColumn: Cclcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column ERating
+		dataType: int64
+		formatString: 0
+		lineageTag: 14115795-7511-4030-900e-385271c53bc4
+		summarizeBy: none
+		sourceColumn: ERating
+
+		annotation SummarizationSetBy = Automatic
+
+	column EResultado
+		dataType: double
+		lineageTag: bb77b932-330e-4fd5-b32c-7016a97a5706
+		summarizeBy: sum
+		sourceColumn: EResultado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition CtaContRec-95964b12-f34f-4e98-99b5-4140a93a5a66 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "n4db003", [Query="select distinct cucodigo #(lf)from n4db003.dbo.cncuenta#(lf)where cucodigo in(#(lf)Select distinct cucodigo#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cngirosc g1,n4db003.dbo.cnperson#(lf) where  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'#(lf) and  g1.gcuentacli=cucodigo#(lf) and g1.gestado='P'#(lf) and not exists (select * from n4db003.dbo.cngirosc g2#(lf)                   Where g2.gano=g1.gano#(lf)                   and g2.gdelegacion=g1.gdelegacion#(lf)                   and g2.gnumbase=g1.gnumbase#(lf)                   and g2.gnumrenov=g1.gnumrel#(lf)                   and g2.gestado='I')#(lf) and pecuenta=cucodigo#(lf) GROUP BY cucodigo,cunombre,pelimite  UNION ALL  Select distinct cucodigo#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cngirosc g1,n4db003.dbo.cnperson#(lf) where  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'#(lf) and  g1.gcuentacli=cucodigo#(lf) and g1.gestado='E'#(lf) and not exists (select * from n4db003.dbo.cngirosc g2#(lf)                   Where g2.gano=g1.gano#(lf)                   and g2.gdelegacion=g1.gdelegacion#(lf)                   and g2.gnumbase=g1.gnumbase#(lf)                   and g2.gnumrenov=g1.gnumrel#(lf)                   and g2.gestado='I')#(lf) and pecuenta=cucodigo#(lf) GROUP BY cucodigo,cunombre,pelimite  UNION ALL  Select distinct cucodigo#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cngirosc g1,n4db003.dbo.cnperson#(lf) where  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'#(lf) and  g1.gcuentacli=cucodigo#(lf) and g1.gestado='P'#(lf) and exists (select * from n4db003.dbo.cngirosc g2#(lf)                   Where g2.gano=g1.gano#(lf)                   and g2.gdelegacion=g1.gdelegacion#(lf)                   and g2.gnumbase=g1.gnumbase#(lf)                   and g2.gnumrenov=g1.gnumrel#(lf)                   and g2.gestado='I')#(lf) and pecuenta=cucodigo#(lf) GROUP BY cucodigo,cunombre,pelimite  UNION ALL Select  distinct cucodigo#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cngirosc,n4db003.dbo.cnperson#(lf) where  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999'#(lf) and  gcuentacli=cucodigo#(lf) and (gestado='R' OR gestado='G' OR gestado='F')#(lf) AND gfevtoamd >= '03/03/2020'and pecuenta=cucodigo#(lf) GROUP BY cucodigo,cunombre,pelimite UNION ALL  Select distinct cucodigo#(lf) from n4db003.dbo.cncuenta,n4db003.dbo.cnperson#(lf) where pecuenta=cucodigo#(lf) and  cucodigo>='4300000000'#(lf) AND  cucodigo<='4300999999')"]),
+				    #"Consultas combinadas" = Table.NestedJoin(Origen, {"cucodigo"}, Clientes, {"clctacon"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes" = Table.ExpandTableColumn(#"Consultas combinadas", "Clientes", {"clcentro", "clcifdni", "clcodigo", "clnombre"}, {"Clientes.clcentro", "Clientes.clcifdni", "Clientes.clcodigo", "Clientes.clnombre"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Se expandió Clientes",{{"Clientes.clcentro", "Cclcentro"}, {"Clientes.clcodigo", "Cclcodigo"}, {"Clientes.clnombre", "Cclnombre"}, {"Clientes.clcifdni", "Cclcifdni"}}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Columnas con nombre cambiado", {"Cclcifdni"}, Empresas, {"NIF"}, "Empresas", JoinKind.LeftOuter),
+				    #"Se expandió Empresas" = Table.ExpandTableColumn(#"Consultas combinadas1", "Empresas", {"Rating", "Resultado"}, {"Empresas.Rating", "Empresas.Resultado"}),
+				    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Se expandió Empresas",{{"Empresas.Rating", "ERating"}, {"Empresas.Resultado", "EResultado"}})
+				in
+				    #"Columnas con nombre cambiado1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

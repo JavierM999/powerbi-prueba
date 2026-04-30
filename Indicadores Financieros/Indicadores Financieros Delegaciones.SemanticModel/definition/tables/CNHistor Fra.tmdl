@@ -1,0 +1,355 @@
+table 'CNHistor Fra'
+	lineageTag: a1b44734-343a-42e7-8a1c-f323227565a1
+
+	measure PrestServF = CALCULATE(SUM('CNHistor Fra'[hiimporte]),'CNHistor Fra'[hicuenta]>= 7050000000,'CNHistor Fra'[hicuenta]<= 7050009999)
+		lineageTag: 07a90a01-a565-4dc9-865e-ff1192831a20
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CN3 Margen1 %' = IF([TotFraCN3]>0,1-(([esSumCosSalP]+[esSumCosSSP])/[TotFraCN3]),blank())
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 986531db-5612-4b8f-be37-7e8bdaa605ce
+
+	measure TotFraCN3 = [PrestServF]+[RappelSVta]+[Seleccion]
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 852e22a6-fc2c-4b4b-8b99-7db29a7068fd
+
+	measure RappelSVta = CALCULATE(SUM('CNHistor Fra'[hiimporte]),'CNHistor Fra'[hicuenta]>= 7090000000,'CNHistor Fra'[hicuenta]<= 7090999999)
+		lineageTag: 9b77818d-9d61-4241-92d6-da1543eeab0d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Seleccion = CALCULATE(SUM('CNHistor Fra'[hiimporte]),'CNHistor Fra'[hicuenta]>= 7050010000,'CNHistor Fra'[hicuenta]<= 7050010001)
+		lineageTag: a56f8b2c-0895-423a-a47c-daf5373cb2ea
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PrestServFAA = CALCULATE(SUM('CNHistor Fra'[hiimporte]),'CNHistor Fra'[hicuenta]>= 7050000000,'CNHistor Fra'[hicuenta]<= 7050009999,SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.00
+		lineageTag: 5c0cbbcc-cc98-4392-a96f-c1ca17e3fe99
+
+	column hidiario
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d9f6da2-2645-4ae3-b7f4-946c40750165
+		summarizeBy: sum
+		sourceColumn: hidiario
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiseccion
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f146c12-09a5-441e-acb9-08669bc7ae52
+		summarizeBy: sum
+		sourceColumn: hiseccion
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiejercicio
+		dataType: int64
+		formatString: 0
+		lineageTag: 541f4272-1e4b-4b75-98bd-d35ebb772917
+		summarizeBy: sum
+		sourceColumn: hiejercicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column hitipo
+		dataType: string
+		lineageTag: e8af71cb-38d9-4c05-89f6-102110408d62
+		summarizeBy: none
+		sourceColumn: hitipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column hifechamd
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: cf85170e-1b29-47ed-a2c2-ab0f86043c2b
+		summarizeBy: none
+		sourceColumn: hifechamd
+
+		variation Variación
+			isDefault
+			relationship: dcc37a49-fc1e-46d1-b1b0-785085a21c58
+			defaultHierarchy: LocalDateTable_e1d4674e-97a6-4eb7-9559-cdf29cf17503.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hicuenta
+		dataType: int64
+		formatString: 0
+		lineageTag: fde272a7-6e11-489f-917f-8479bdb3de7c
+		summarizeBy: sum
+		sourceColumn: hicuenta
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiimporteant
+		dataType: double
+		lineageTag: 6ce0d69c-a7c4-45de-a2d2-4ad320a206a1
+		summarizeBy: sum
+		sourceColumn: hiimporteant
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column oficina
+		dataType: int64
+		formatString: 0
+		lineageTag: 1baf8e57-dd5a-4452-9c7f-1f494cad48c6
+		summarizeBy: sum
+		sourceColumn: oficina
+
+		annotation SummarizationSetBy = Automatic
+
+	column numfra
+		dataType: int64
+		formatString: 0
+		lineageTag: 5324e23a-ae27-446a-bc2c-e187b71a77a0
+		summarizeBy: sum
+		sourceColumn: numfra
+
+		annotation SummarizationSetBy = Automatic
+
+	column hicontra
+		dataType: string
+		lineageTag: 2122b6f0-61d7-4c4d-8796-ce762a6e243e
+		summarizeBy: none
+		sourceColumn: hicontra
+
+		annotation SummarizationSetBy = Automatic
+
+	column UltDigCta
+		dataType: int64
+		formatString: 0
+		lineageTag: ced0c1a4-6201-4e73-bff7-933af2ee422f
+		summarizeBy: sum
+		sourceColumn: UltDigCta
+
+		annotation SummarizationSetBy = Automatic
+
+	column DebeAct
+		dataType: double
+		lineageTag: 12e0c044-4dfc-47fb-b7b4-922d37bab729
+		summarizeBy: sum
+		sourceColumn: DebeAct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column hiimporte
+		dataType: double
+		lineageTag: 8f745170-0306-473f-b74c-e91fb28385c1
+		summarizeBy: sum
+		sourceColumn: hiimporte
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column hidocumC
+		dataType: string
+		lineageTag: 07a52837-6ed2-4a13-8f3a-a3f51b1ba002
+		summarizeBy: none
+		sourceColumn: hidocumC
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ffccentro
+		dataType: int64
+		formatString: 0
+		lineageTag: fc4afe6c-db02-4907-bd67-6292a5424cc4
+		summarizeBy: sum
+		sourceColumn: Ffccentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ffccliente
+		dataType: int64
+		formatString: 0
+		lineageTag: 6232f638-2dac-4d6f-b84c-41d9c1b95111
+		summarizeBy: sum
+		sourceColumn: Ffccliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cclcifdni
+		dataType: string
+		lineageTag: d2a4761a-dd77-40dc-87ec-220bc357cd7f
+		summarizeBy: none
+		sourceColumn: Cclcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column FRefclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 4094db3e-880f-4afb-85fa-40739916409b
+		summarizeBy: sum
+		sourceColumn: FRefclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column FRefclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 5aefdc51-d716-433a-8324-57cd84a354e1
+		summarizeBy: sum
+		sourceColumn: FRefclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column hicontraCli
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f4abc7f-5fc4-47bc-b359-ff3a99d09d94
+		summarizeBy: sum
+		sourceColumn: hicontraCli
+
+		annotation SummarizationSetBy = Automatic
+
+	column CRefclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 1f4c73c9-c766-45ec-990a-fdcfe2a2285a
+		summarizeBy: sum
+		sourceColumn: CRefclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Refclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 93bea7e6-267b-43d9-aba8-384f72ed9dad
+		summarizeBy: sum
+		sourceColumn: Refclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column Refclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: ae045644-2348-4c83-8149-5ac6991e3b15
+		summarizeBy: sum
+		sourceColumn: Refclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column SRefclcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: cdb6e4cb-4199-4ad2-ab30-924e4123507d
+		summarizeBy: sum
+		sourceColumn: SRefclcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column SRefclcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 9bf1f06e-6e37-4342-b717-5e7837d69e6c
+		summarizeBy: sum
+		sourceColumn: SRefclcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column FecAbCargo
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 09b61eaa-4fa5-4f0c-ab0f-07549a2be7f5
+		summarizeBy: none
+		sourceColumn: FecAbCargo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CNHCenCli = FORMAT('CNHistor Fra'[SuperCentro],"00")&FORMAT('CNHistor Fra'[ClienteMio],"000000")
+		lineageTag: 0da7c7df-24c0-453f-a17d-bca37f083023
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienteMio
+		dataType: int64
+		formatString: 0
+		lineageTag: 416ca2e9-062d-41ac-9c0d-ab4afcbd981e
+		summarizeBy: sum
+		sourceColumn: ClienteMio
+
+		annotation SummarizationSetBy = Automatic
+
+	column SuperCentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 41c642cf-063d-45e2-a9fe-59e07612bd86
+		summarizeBy: sum
+		sourceColumn: SuperCentro
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'CNHistor Fra-226e7443-79c9-49f2-9b97-879f28b925e8' = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "n4db003", [Query="select hidiario,hiseccion,hiejercicio,hitipo,hifechamd,hicuenta,hiimporte,hidocum,hicontra#(lf)from cnhistor#(lf)where year(hifechamd)>=2022#(lf)and ((hicuenta>=7050000000 and hicuenta<=7050009999) or#(lf)(hicuenta>=7090000000 and hicuenta<=7090999999) or#(lf)(hicuenta>=7050010000 and hicuenta<=7050010001))#(lf) and hiconcep<> 'Asiento Regularización'"]),
+				    #"Personalizada agregada" = Table.AddColumn(Origen, "UltDigCta", each Text.End([hicuenta],1)),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Personalizada agregada",{{"hidiario", Int64.Type}, {"hiseccion", Int64.Type}, {"hiejercicio", Int64.Type}, {"hifechamd", type date}, {"hicuenta", Int64.Type}}),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Tipo cambiado",{{"UltDigCta", Int64.Type}}),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Tipo cambiado1", "DebeAct", each if [hitipo]="D" then [hiimporte] * -1 else 0),
+				    #"Personalizada agregada2" = Table.AddColumn(#"Personalizada agregada1", "ImporteRef", each if [hitipo]="D" then [DebeAct] else [hiimporte]),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Personalizada agregada2",{{"hiimporte", "hiimporteant"}, {"ImporteRef", "hiimporte"}}),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Columnas con nombre cambiado",{{"DebeAct", type number}, {"hiimporte", type number}}),
+				    #"Columna duplicada" = Table.DuplicateColumn(#"Tipo cambiado2", "hidocum", "hidocum - Copia"),
+				    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Columna duplicada",{{"hidocum - Copia", "hidocumC"}}),
+				    #"Dividir columna por posición" = Table.SplitColumn(#"Columnas con nombre cambiado1", "hidocum", Splitter.SplitTextByPositions({0, 3}, false), {"hidocum.1", "hidocum.2"}),
+				    #"Tipo cambiado3" = Table.TransformColumnTypes(#"Dividir columna por posición",{{"hidocum.1", type text}, {"hidocum.2", Int64.Type}}),
+				    #"Columnas con nombre cambiado2" = Table.RenameColumns(#"Tipo cambiado3",{{"hidocum.1", "oficina"}, {"hidocum.2", "numfra"}}),
+				    #"Tipo cambiado4" = Table.TransformColumnTypes(#"Columnas con nombre cambiado2",{{"oficina", Int64.Type}}),
+				    #"Errores quitados" = Table.RemoveRowsWithErrors(#"Tipo cambiado4", {"oficina"}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Errores quitados", {"oficina", "numfra"}, Facturas, {"fcserie", "fcdocum"}, "Facturas", JoinKind.LeftOuter),
+				    #"Se expandió Facturas" = Table.ExpandTableColumn(#"Consultas combinadas", "Facturas", {"fccentro", "fccliente"}, {"Facturas.fccentro", "Facturas.fccliente"}),
+				    #"Columnas con nombre cambiado3" = Table.RenameColumns(#"Se expandió Facturas",{{"Facturas.fccentro", "Ffccentro"}, {"Facturas.fccliente", "Ffccliente"}}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Columnas con nombre cambiado3", {"Ffccentro", "Ffccliente"}, #"Clientes (2)", {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes" = Table.ExpandTableColumn(#"Consultas combinadas1", "Clientes", {"clcifdni"}, {"Clientes.clcifdni"}),
+				    #"Columnas con nombre cambiado4" = Table.RenameColumns(#"Se expandió Clientes",{{"Clientes.clcifdni", "Cclcifdni"}}),
+				    #"Consultas combinadas2" = Table.NestedJoin(#"Columnas con nombre cambiado4", {"hiseccion", "Cclcifdni"}, #"Clientes (2)", {"clcentro", "clcifdni"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes1" = Table.ExpandTableColumn(#"Consultas combinadas2", "Clientes", {"clcentro", "clcodigo"}, {"Clientes.clcentro", "Clientes.clcodigo"}),
+				    #"Columnas con nombre cambiado5" = Table.RenameColumns(#"Se expandió Clientes1",{{"Clientes.clcentro", "FRefclcentro"}, {"Clientes.clcodigo", "FRefclcodigo"}}),
+				    #"Columna duplicada1" = Table.DuplicateColumn(#"Columnas con nombre cambiado5", "hicontra", "hicontra - Copia"),
+				    #"Dividir columna por posición1" = Table.SplitColumn(#"Columna duplicada1", "hicontra - Copia", Splitter.SplitTextByPositions({0, 3}, false), {"hicontra - Copia.1", "hicontra - Copia.2"}),
+				    #"Tipo cambiado5" = Table.TransformColumnTypes(#"Dividir columna por posición1",{{"hicontra - Copia.1", type text}, {"hicontra - Copia.2", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado5",{"hicontra - Copia.1"}),
+				    #"Tipo cambiado6" = Table.TransformColumnTypes(#"Columnas quitadas",{{"hicontra - Copia.2", Int64.Type}}),
+				    #"Columnas con nombre cambiado6" = Table.RenameColumns(#"Tipo cambiado6",{{"hicontra - Copia.2", "hicontraCli"}}),
+				    #"Consultas combinadas3" = Table.NestedJoin(#"Columnas con nombre cambiado6", {"hiseccion", "hicontraCli"}, #"Clientes (2)", {"clcentro", "clcodigo"}, "Clientes", JoinKind.LeftOuter),
+				    #"Se expandió Clientes2" = Table.ExpandTableColumn(#"Consultas combinadas3", "Clientes", {"clcodigo"}, {"Clientes.clcodigo"}),
+				    #"Columnas con nombre cambiado7" = Table.RenameColumns(#"Se expandió Clientes2",{{"Clientes.clcodigo", "CRefclcodigo"}}),
+				    #"Personalizada agregada3" = Table.AddColumn(#"Columnas con nombre cambiado7", "Refclcentro", each if [hidocumC] = null then [hiseccion] else [FRefclcentro]),
+				    #"Tipo cambiado7" = Table.TransformColumnTypes(#"Personalizada agregada3",{{"Refclcentro", Int64.Type}}),
+				    #"Personalizada agregada4" = Table.AddColumn(#"Tipo cambiado7", "Refclcodigo", each if [oficina]=null then [CRefclcodigo] else [FRefclcodigo]),
+				    #"Tipo cambiado8" = Table.TransformColumnTypes(#"Personalizada agregada4",{{"Refclcodigo", Int64.Type}}),
+				    #"Personalizada agregada6" = Table.AddColumn(#"Tipo cambiado8", "SRefclcentro", each if [Refclcentro] = null then [Ffccentro] else [Refclcentro]),
+				    #"Tipo cambiado10" = Table.TransformColumnTypes(#"Personalizada agregada6",{{"SRefclcentro", Int64.Type}}),
+				    #"Personalizada agregada7" = Table.AddColumn(#"Tipo cambiado10", "SRefclcodigo", each if [Refclcodigo] = null then [Ffccliente] else [Refclcodigo]),
+				    #"Tipo cambiado11" = Table.TransformColumnTypes(#"Personalizada agregada7",{{"SRefclcodigo", Int64.Type}}),
+				    #"Personalizada agregada5" = Table.AddColumn(#"Tipo cambiado11", "FecAbCargo", each if [oficina]>900 and [oficina]<> null then if Date.Day([hifechamd])< 15 then Date.AddMonths([hifechamd],-1) else [hifechamd] else [hifechamd]),
+				    #"Tipo cambiado9" = Table.TransformColumnTypes(#"Personalizada agregada5",{{"FecAbCargo", type date}}),
+				    #"Duplicados quitados" = Table.Distinct(#"Tipo cambiado9", {"hidiario", "hiseccion", "hiejercicio", "hitipo", "hifechamd", "hicuenta", "hiimporteant", "oficina", "numfra", "hicontra", "UltDigCta", "DebeAct", "hiimporte", "hidocumC", "Ffccentro", "Ffccliente", "Cclcifdni"}),
+				    #"Personalizada agregada8" = Table.AddColumn(#"Duplicados quitados", "ClienteMio", each if [hiejercicio]=2024 then (if [SRefclcodigo]= 60492 then 160242 else (if [SRefclcodigo]= 60378 then 160225 else (if [SRefclcodigo]= 60280 then 160224 else (if [SRefclcodigo]= 60422 then 160230 else (if [SRefclcodigo]= 60461 then 160230 else (if [SRefclcodigo]= 60306 then 160228 else (if [SRefclcodigo]= 60449 then 160226 else (if [SRefclcodigo]= 60292 then 160227 else (if [SRefclcodigo]= 60433 then 160231 else (if [SRefclcodigo]= 60388 then 160236 else [SRefclcodigo])))))))))) else [SRefclcodigo]),
+				    #"Tipo cambiado12" = Table.TransformColumnTypes(#"Personalizada agregada8",{{"ClienteMio", Int64.Type}}),
+				    #"Personalizada agregada9" = Table.AddColumn(#"Tipo cambiado12", "SuperCentro", each if [ClienteMio]=160228 or [ClienteMio]=160230 or[ClienteMio]=160227 or[ClienteMio]=160231 or[ClienteMio]=160236 or[ClienteMio]=160226 or[ClienteMio]=160224 or[ClienteMio]=160225 or[ClienteMio]=160242 then 16 else [SRefclcentro]),
+				    #"Tipo cambiado13" = Table.TransformColumnTypes(#"Personalizada agregada9",{{"SuperCentro", Int64.Type}})
+				in
+				    #"Tipo cambiado13"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

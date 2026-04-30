@@ -1,0 +1,34 @@
+table TRating
+	lineageTag: bb88cd90-e1a2-4308-9b37-7bfb98c69bbc
+
+	column Rating
+		dataType: int64
+		formatString: 0
+		lineageTag: 0fbdad73-8024-4630-99ba-7ac2b47adbb7
+		summarizeBy: none
+		sourceColumn: Rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column Riesgo
+		dataType: string
+		lineageTag: 07ab9c45-c50b-434e-98de-84fae53b9397
+		summarizeBy: none
+		sourceColumn: Riesgo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TRating = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("bc+xCoMwEIDhV5HMHtxFk5hsLa7t0DU4WColRUyhvj+aIh16t37/9MeowHtVq9u4puVZXXPVp887L+k+T2qoo8I9IqANp3nNXyEmmknDpGVimFgmrogDwnCZ4KedqF5UQpnLBRGQ2fmRDtQSNhK2EhoJyxRZ0BjO4+swJ1gnmOem8c+GDQ==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Rating = _t, Descripción = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Rating", Int64.Type}}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Tipo cambiado",{{"Descripción", "Riesgo"}})
+				in
+				    #"Columnas con nombre cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

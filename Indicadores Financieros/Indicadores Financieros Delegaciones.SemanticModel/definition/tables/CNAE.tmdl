@@ -1,0 +1,31 @@
+table CNAE
+	lineageTag: dd2abcd3-b660-4a0d-9f62-f2cf2825f864
+
+	column cncodigo
+		dataType: string
+		lineageTag: 9d0f5f38-ebba-4d19-8d4b-5a51f785f48a
+		summarizeBy: none
+		sourceColumn: cncodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column cnnombre
+		dataType: string
+		lineageTag: b7ecacf9-273d-4032-9350-2bc4173c18e7
+		summarizeBy: none
+		sourceColumn: cnnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CNAE-6109d03c-a877-44d5-bf98-05d008fe721a = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select * #(lf)from cnae"])
+				in
+				    Origen
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

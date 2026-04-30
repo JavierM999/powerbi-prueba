@@ -1,0 +1,86 @@
+table Clientes
+	lineageTag: 1c567b36-bb03-4567-8874-862c3ee53cd2
+
+	column clcentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 02cc1163-1120-42f2-8f67-05366263e0dc
+		summarizeBy: none
+		sourceColumn: clcentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 7cca64fc-a628-40f8-ad06-50b45250440f
+		summarizeBy: sum
+		sourceColumn: clcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column clnombre
+		dataType: string
+		lineageTag: 68723039-e8e7-4745-9a29-8a48b7e425d9
+		summarizeBy: none
+		sourceColumn: clnombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClCenCli = FORMAT(Clientes[clcentro],"00")&FORMAT(Clientes[clcodigo],"000000")
+		lineageTag: 62c4327f-ed86-4e44-b5a3-9bd4ff81f4be
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column clicnae
+		dataType: string
+		lineageTag: fd0dc88c-d528-4f22-bebf-1e9963854ddf
+		summarizeBy: none
+		sourceColumn: clicnae
+
+		annotation SummarizationSetBy = Automatic
+
+	column clicnae2d
+		dataType: string
+		lineageTag: 6a9b2d2b-3e07-4713-a725-61a32ca72f34
+		summarizeBy: none
+		sourceColumn: clicnae2d
+
+		annotation SummarizationSetBy = Automatic
+
+	column clctacon
+		dataType: string
+		lineageTag: 2cc3ac5c-49b7-4829-ad7d-18df5de915cc
+		summarizeBy: none
+		sourceColumn: clctacon
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: beb598f7-304d-4e75-9a37-532e24a3cd48
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clientes-2a2c729e-4c5e-4c43-b165-8b5979c9a1d4 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="select distinct clientes.clcentro,clientes.clcodigo,clientes.clnombre,min(cencli.cclcnae) as clicnae,clctacon,clcifdni#(lf)from clientes inner join#(lf)       cencli ON clientes.clempresa=cencli.cclempresa and  clientes.clcentro=cencli.cclcentro and clientes.clcodigo = cencli.cclcodigo #(lf)where clempresa=01#(lf)and clcentro>0#(lf)and clientes.clnombre not like '%fijo%'#(lf)group by clientes.clcentro,clientes.clcodigo,clientes.clnombre,clientes.clcifdni,clctacon,clcifdni#(lf)"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"clcentro", Int64.Type}}),
+				    #"Columna duplicada" = Table.DuplicateColumn(#"Tipo cambiado", "clicnae", "clicnae - Copia"),
+				    #"Dividir columna por posición" = Table.SplitColumn(#"Columna duplicada", "clicnae - Copia", Splitter.SplitTextByPositions({0, 2}, false), {"clicnae - Copia.1", "clicnae - Copia.2"}),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Dividir columna por posición",{{"clicnae - Copia.1", Int64.Type}, {"clicnae - Copia.2", Int64.Type}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado1",{"clicnae - Copia.2"}),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Columnas quitadas",{{"clicnae - Copia.1", type text}}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Tipo cambiado2",{{"clicnae - Copia.1", "clicnae2d"}})
+				in
+				    #"Columnas con nombre cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

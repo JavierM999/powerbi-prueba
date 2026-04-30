@@ -1,0 +1,113 @@
+table Facturas
+	lineageTag: 7629c580-ecdf-4953-9557-e8a4a6973353
+
+	column fccentro
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a0ce349-c4ac-4a18-b489-d1177b9a6aba
+		summarizeBy: sum
+		sourceColumn: fccentro
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcserie
+		dataType: int64
+		formatString: 0
+		lineageTag: 6813caa1-dcfc-473b-a4dd-fb54585c1ca9
+		summarizeBy: sum
+		sourceColumn: fcserie
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcano
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fa5f50d-b706-461d-9c0b-477ea3f47a58
+		summarizeBy: sum
+		sourceColumn: fcano
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcdocum
+		dataType: int64
+		formatString: 0
+		lineageTag: ded61358-9252-4f9a-83cd-492572d20cce
+		summarizeBy: sum
+		sourceColumn: fcdocum
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a6e74ab3-5b16-4ae6-a31d-3e19e347683d
+		summarizeBy: none
+		sourceColumn: fcfecha
+
+		variation Variación
+			isDefault
+			relationship: 52885641-872a-4fd0-aa8a-23091f6fef61
+			defaultHierarchy: LocalDateTable_c39b194a-c178-4152-9c47-58b06df5bd57.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fccliente
+		dataType: int64
+		formatString: 0
+		lineageTag: f8c8d4ac-fbc4-4a56-8454-6711f82f6030
+		summarizeBy: sum
+		sourceColumn: fccliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column fccencli
+		dataType: int64
+		formatString: 0
+		lineageTag: e18260ec-db2f-4f7d-84fa-3175b4ffeaae
+		summarizeBy: sum
+		sourceColumn: fccencli
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcvendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: 13b8e557-7a3f-45e3-807c-9c1bceb00654
+		summarizeBy: sum
+		sourceColumn: fcvendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column clcifdni
+		dataType: string
+		lineageTag: d928ce02-74a7-4bad-aa57-93754f435a7f
+		summarizeBy: none
+		sourceColumn: clcifdni
+
+		annotation SummarizationSetBy = Automatic
+
+	column fcbruto
+		dataType: double
+		lineageTag: 5e1dde29-6e35-455b-bf26-f8cf1ad29cbb
+		summarizeBy: sum
+		sourceColumn: fcbruto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Facturas-f222712a-7044-46c3-8477-e87e56daf521 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\TEMPORING", "no3001", [Query="select fccentro,fcserie,fcano,fcdocum,fcfecha,fccliente,fccencli,fcvendedor,clientes.clcifdni,fcbruto #(lf)from facturas inner join#(lf)#(tab)clientes on facturas.fcempresa=clientes.clempresa and facturas.fccentro=clientes.clcentro and facturas.fccliente=clientes.clcodigo#(lf)where fcempresa=1#(lf)and fcano>=2021"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"fccentro", Int64.Type}, {"fcfecha", type date}, {"fccencli", Int64.Type}, {"fcserie", Int64.Type}, {"fcano", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

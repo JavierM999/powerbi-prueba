@@ -1,0 +1,95 @@
+table Epis
+	lineageTag: ed8f815c-acf8-48ff-8439-26aba165b7e4
+
+	measure Epis = SUM(Epis[mvtotal])
+		formatString: #,0.00
+		lineageTag: 65e1cc70-afde-49f3-9403-f5a97736f109
+
+	column mvsucursal
+		dataType: int64
+		formatString: 0
+		lineageTag: e5d669ac-f4fa-44e7-80f1-25583a2e84c1
+		summarizeBy: sum
+		sourceColumn: mvsucursal
+
+		annotation SummarizationSetBy = Automatic
+
+	column mventidad
+		dataType: int64
+		formatString: 0
+		lineageTag: bf31bbb7-396d-4afe-9f4e-49c3a5d0d96e
+		summarizeBy: sum
+		sourceColumn: mventidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvarticulo
+		dataType: string
+		lineageTag: 44f48e88-b97a-4d28-a445-0fed4b70d689
+		summarizeBy: none
+		sourceColumn: mvarticulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column mvfecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7a0b1d3d-a6d7-4d6d-8c85-9cb459da600e
+		summarizeBy: none
+		sourceColumn: mvfecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column mvcantid
+		dataType: double
+		lineageTag: 35353614-af0c-49b0-a6a0-814af41a455b
+		summarizeBy: sum
+		sourceColumn: mvcantid
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mvprecio
+		dataType: double
+		lineageTag: bd46d7cb-76f7-49bc-b686-caf3b7cab2f4
+		summarizeBy: sum
+		sourceColumn: mvprecio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mvtotal
+		dataType: double
+		lineageTag: 4266c69a-2ad1-40e7-af5c-ba6d21af9416
+		summarizeBy: sum
+		sourceColumn: mvtotal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EpiCenCli = FORMAT(Epis[mvsucursal],"00")&FORMAT(Epis[mventidad],"000000")
+		lineageTag: 23b4b033-eb22-4ff2-b1f4-534b3588a7ad
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Epis-5271adb4-a7ce-4c95-97f5-d9cb98299ac3 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="SELECT mvsucursal,mventidad,mvarticulo,mvfecha,mvcantid,mvprecio#(lf) From aes001.dbo.movtos LEFT OUTER JOIN#(lf)         aes001.dbo.articulos on mvarticulo=arcodigo#(lf) where mvempresa = 1 and year(mvfecha) >=2023#(lf) and mvestablecimiento IS NULL and mvtipodoc='ES' and aresepi='S'"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"mvsucursal", Int64.Type}, {"mvfecha", type date}}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado", "mvtotal", each [mvcantid]*[mvprecio]),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Personalizada agregada",{{"mvtotal", type number}})
+				in
+				    #"Tipo cambiado1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

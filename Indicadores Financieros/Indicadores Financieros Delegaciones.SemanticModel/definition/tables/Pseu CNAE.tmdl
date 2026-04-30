@@ -1,0 +1,22 @@
+table 'Pseu CNAE'
+	lineageTag: 5f1e19c8-f6c3-4ef1-ab6d-47d20f32af4f
+
+	column Nombre
+		lineageTag: 50c0bd55-6429-44bb-b1b8-f91b38e0df4c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Agrupación xCNAE[Nombre]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Pseu CNAE-deaeeb5a-9477-4716-81cd-42460d79e4e6' = calculated
+		mode: import
+		source =
+				
+				UNION(
+				    DISTINCT('Agrupación xCNAE'[Nombre]),
+				    DATATABLE("Nombre",STRING,{{"Otros"}})
+				)
+
+	annotation PBI_Id = 066e6a53f8bc467c9e72a84e5e87f314
+
