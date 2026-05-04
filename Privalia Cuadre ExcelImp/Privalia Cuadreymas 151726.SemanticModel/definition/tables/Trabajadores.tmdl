@@ -1,0 +1,40 @@
+table Trabajadores
+	lineageTag: 92b8c262-e900-4884-b3d2-bfc6fd6e6690
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: e8f71dd7-5de3-483a-a299-23b408d0d5ba
+		summarizeBy: none
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnombrecompleto
+		dataType: string
+		lineageTag: 7944feb8-a10b-4ccd-a98f-19ebe961505a
+		summarizeBy: none
+		sourceColumn: trnombrecompleto
+
+		annotation SummarizationSetBy = Automatic
+
+	column trnif
+		dataType: string
+		lineageTag: 8b916c01-83d3-4a9b-aea3-1b082b5b78e1
+		summarizeBy: none
+		sourceColumn: trnif
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Trabajadores = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="SELECT DISTINCT#(lf)    contra.cttrabajador,#(lf)    trnombrecompleto,trnif#(lf)FROM contra#(lf)INNER JOIN trabajador#(lf)    ON contra.ctempresa = trabajador.trempresa and cttrabajador=trtrabajador#(lf)WHERE ctempresa = 01#(lf)and ctcentro=09#(lf)and ctcliente=90318#(lf)  AND (contra.ctfechafinreal IS NULL OR YEAR(contra.ctfechafinreal) >= 2025)#(lf)"])
+				in
+				    Origen
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,79 @@
+table Contratos
+	lineageTag: a8423541-d704-4b55-b0e7-73494e52e828
+
+	measure Asignaciones = ```
+			
+			    CALCULATE (
+			        COUNTROWS ( Contratos ),
+			        FILTER ( ALL ( contratos[ctfechaini] ), Contratos[ctfechaini] <= [fecfin] ),
+			        FILTER (
+			            ALL ( contratos[ctfechafinreal] ),
+			            ISBLANK ( Contratos[ctfechafinreal] ) = TRUE ()
+			                || Contratos[ctfechafinreal] >= [fecini]
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: 3a3bc2f5-3c50-439a-917c-3956587fb363
+
+	column ctcontrato
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c27b205-7fe9-45bd-9a43-89bb8a2b5007
+		summarizeBy: sum
+		sourceColumn: ctcontrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column cttrabajador
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c7916d5-ece4-4200-9e3e-5f9eb5602fdb
+		summarizeBy: none
+		sourceColumn: cttrabajador
+
+		annotation SummarizationSetBy = Automatic
+
+	column ctfechaini
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: cbd60a20-7d1a-44f5-9227-a83a0a8fc5b4
+		summarizeBy: none
+		sourceColumn: ctfechaini
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ctfechafinreal
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 567b3337-7966-4da0-b4ea-328391da2dfc
+		summarizeBy: none
+		sourceColumn: ctfechafinreal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column trnif
+		dataType: string
+		lineageTag: 84ae1a71-805a-4d2f-8c3e-b44a1a1b5cdb
+		summarizeBy: none
+		sourceColumn: trnif
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Contratos = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("10.10.138.5\temporing", "no3001", [Query="select ctcontrato,cttrabajador,trnif,ctfechaini,ctfechafinreal#(lf)from contra inner join#(lf)#(tab)clientes on contra.ctempresa=clientes.clempresa and contra.ctcentro=clientes.clcentro and contra.ctcliente=clientes.clcodigo inner join#(lf)#(tab)trabajador on ctempresa=trempresa and cttrabajador=trtrabajador#(lf)where contra.ctempresa=1#(lf)and ctcentro=09#(lf)and ctcliente=90318#(lf)and ((contra.ctfechafinreal is null) or year(contra.ctfechafinreal)>=2025)#(lf)and clientes.clnombre not like '%fijo%'"]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"ctfechaini", type date}, {"ctfechafinreal", type date}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

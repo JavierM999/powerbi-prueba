@@ -1,0 +1,237 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "708da88025720e4b4a53",
+  "position": {
+    "x": 50.880748246297735,
+    "y": 59.859703819173809,
+    "z": 0,
+    "height": 498.83086515978169,
+    "width": 1113.3904910366327,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "mrproductor"
+                }
+              },
+              "queryRef": "Sum(CipHoras.mrproductor)",
+              "nativeQueryRef": "mrproductor"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajadores"
+                    }
+                  },
+                  "Property": "trnombrecompleto"
+                }
+              },
+              "queryRef": "Trabajadores.trnombrecompleto",
+              "nativeQueryRef": "trnombrecompleto"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajadores"
+                    }
+                  },
+                  "Property": "trnif"
+                }
+              },
+              "queryRef": "Trabajadores.trnif",
+              "nativeQueryRef": "trnif"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHNormales"
+                }
+              },
+              "queryRef": "CipHoras.TotHNormales",
+              "nativeQueryRef": "TotHNormales"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHNoctExtra"
+                }
+              },
+              "queryRef": "CipHoras.TotHNoctExtra",
+              "nativeQueryRef": "TotHNoctExtra"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHNoctNorm"
+                }
+              },
+              "queryRef": "CipHoras.TotHNoctNorm",
+              "nativeQueryRef": "TotHNoctNorm"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHExtraNorm"
+                }
+              },
+              "queryRef": "CipHoras.TotHExtraNorm",
+              "nativeQueryRef": "TotHExtraNorm"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHExtraSab"
+                }
+              },
+              "queryRef": "CipHoras.TotHExtraSab",
+              "nativeQueryRef": "TotHExtraSab"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHExtraFest"
+                }
+              },
+              "queryRef": "CipHoras.TotHExtraFest",
+              "nativeQueryRef": "TotHExtraFest"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHNoctFest"
+                }
+              },
+              "queryRef": "CipHoras.TotHNoctFest",
+              "nativeQueryRef": "TotHNoctFest"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHNoctSab"
+                }
+              },
+              "queryRef": "CipHoras.TotHNoctSab",
+              "nativeQueryRef": "TotHNoctSab"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHComp"
+                }
+              },
+              "queryRef": "CipHoras.TotHComp",
+              "nativeQueryRef": "TotHComp"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotH Net4"
+                }
+              },
+              "queryRef": "CipHoras.TotHPres",
+              "nativeQueryRef": "TotHPres"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotHInci"
+                }
+              },
+              "queryRef": "CipHoras.TotHInci",
+              "nativeQueryRef": "TotHInci"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Trabajadores"
+                  }
+                },
+                "Property": "trnombrecompleto"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

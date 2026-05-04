@@ -1,0 +1,125 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "36162453e681cb41478e",
+  "position": {
+    "x": 135.57158618348467,
+    "y": 468.12752836006678,
+    "z": 5000,
+    "height": 120.50807660754194,
+    "width": 538.81015021641349,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "Asignaciones"
+                }
+              },
+              "queryRef": "Contratos.Asignaciones",
+              "nativeQueryRef": "Asignaciones"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "ctcontrato"
+                }
+              },
+              "queryRef": "Sum(Contratos.ctcontrato)",
+              "nativeQueryRef": "ctcontrato"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "cttrabajador"
+                }
+              },
+              "queryRef": "Contratos.cttrabajador",
+              "nativeQueryRef": "cttrabajador"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "ctfechaini"
+                }
+              },
+              "queryRef": "Contratos.ctfechaini",
+              "nativeQueryRef": "ctfechaini"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "ctfechafinreal"
+                }
+              },
+              "queryRef": "Contratos.ctfechafinreal",
+              "nativeQueryRef": "ctfechafinreal"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contratos"
+                    }
+                  },
+                  "Property": "trnif"
+                }
+              },
+              "queryRef": "Contratos.trnif",
+              "nativeQueryRef": "trnif"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Contratos"
+                  }
+                },
+                "Property": "trnif"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

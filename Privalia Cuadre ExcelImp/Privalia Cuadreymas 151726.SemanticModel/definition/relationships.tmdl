@@ -1,0 +1,22 @@
+relationship b99d1bd5-0622-0337-eff9-a1abcbb540b1
+	fromColumn: CipHoras.mrfecha
+	toColumn: Calendario.Date
+
+relationship a1f4d289-7f89-6884-5a83-9c7ecbc77206
+	fromColumn: CipHoras.mrproductor
+	toColumn: Trabajadores.cttrabajador
+
+relationship a732aa88-301d-c1e3-2949-a30e4ed515c2
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: HORASOK.semana
+	toColumn: Calendario.SemMia
+
+relationship 33300180-a385-f6b9-4d54-7255d41afcc7
+	fromColumn: Contratos.cttrabajador
+	toColumn: Trabajadores.cttrabajador
+
+relationship 7578caa8-27a2-95ce-2ef9-07930cbb2fad
+	fromColumn: HORASOK.DNI
+	toColumn: Trabajadores.trnif
+

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "5cc519f139c2e26dd51c",
+  "position": {
+    "x": 83.428668420605959,
+    "y": 125.14300263090894,
+    "z": 4000,
+    "height": 359.20676681094233,
+    "width": 1018.5249936348977,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "DNI"
+                }
+              },
+              "queryRef": "HORASOK W15.DNI",
+              "nativeQueryRef": "DNI"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "NOMBRE"
+                }
+              },
+              "queryRef": "HORASOK W15.NOMBRE",
+              "nativeQueryRef": "NOMBRE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajadores"
+                    }
+                  },
+                  "Property": "trnombrecompleto"
+                }
+              },
+              "queryRef": "Trabajadores.trnombrecompleto",
+              "nativeQueryRef": "trnombrecompleto"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "TotNormal Excel"
+                }
+              },
+              "queryRef": "HORASOK W15.TotNormal Excel",
+              "nativeQueryRef": "TotNormal Excel"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "TotNoche Excel"
+                }
+              },
+              "queryRef": "HORASOK W15.TotNoche Excel",
+              "nativeQueryRef": "TotNoche Excel"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "TotExtras Excel"
+                }
+              },
+              "queryRef": "HORASOK W15.TotExtras Excel",
+              "nativeQueryRef": "TotExtras Excel"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "TotH Excel"
+                }
+              },
+              "queryRef": "HORASOK W15.TotHorOK",
+              "nativeQueryRef": "TotHorOK"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "HORASOK"
+                  }
+                },
+                "Property": "NOMBRE"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

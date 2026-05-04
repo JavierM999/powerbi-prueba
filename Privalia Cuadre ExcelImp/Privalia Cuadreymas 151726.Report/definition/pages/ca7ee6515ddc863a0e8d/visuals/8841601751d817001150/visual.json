@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "8841601751d817001150",
+  "position": {
+    "x": 878.31848142804608,
+    "y": 40.555602704461229,
+    "z": 5000,
+    "height": 161.06367931200316,
+    "width": 253.76219977934312,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "advanceCardE03760C5AB684758B56AA29F9E6C257B",
+    "query": {
+      "queryState": {
+        "mainMeasure": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotH Net4"
+                }
+              },
+              "queryRef": "CipHoras.TotH Net4",
+              "nativeQueryRef": "TotH Net4"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CipHoras"
+                  }
+                },
+                "Property": "TotH Net4"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "dataLabelSettings": [
+        {
+          "properties": {
+            "displayUnit": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

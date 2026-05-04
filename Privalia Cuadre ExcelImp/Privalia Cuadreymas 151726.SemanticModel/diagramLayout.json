@@ -1,0 +1,111 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 166,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 86
+          },
+          "nodeIndex": "TipHoras",
+          "nodeLineageTag": "a116da59-807b-4df3-a841-a8cf721c3c56",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 332,
+            "y": 0
+          },
+          "nodeIndex": "CipHoras",
+          "nodeLineageTag": "d07a1a03-b946-4847-8af3-f9a501fbec7c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 695,
+            "y": 24
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "2316cda8-8ba6-4e18-9501-43477c6652af",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 79,
+            "y": 320
+          },
+          "nodeIndex": "Trabajadores",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 412,
+            "y": 517.5
+          },
+          "nodeIndex": "Contratos",
+          "nodeLineageTag": "a8423541-d704-4b55-b0e7-73494e52e828",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 979,
+            "y": 196.75
+          },
+          "nodeIndex": "HORASOK W17",
+          "nodeLineageTag": "cd0f4216-c23b-46bc-87b6-ac9718370e79",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 670,
+            "y": 305
+          },
+          "nodeIndex": "HORASOK",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

@@ -1,0 +1,31 @@
+table TipHoras
+	lineageTag: a116da59-807b-4df3-a841-a8cf721c3c56
+
+	column Código
+		dataType: string
+		lineageTag: c2334cab-9ade-4bda-9e06-b5aba00c5912
+		summarizeBy: none
+		sourceColumn: Código
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de Hora'
+		dataType: string
+		lineageTag: a4f483d0-9a2c-46e2-9316-e0d8e6dcb869
+		summarizeBy: none
+		sourceColumn: Tipo de Hora
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipHoras = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMjBU0lHyyC9KLFbIyy/KTcxJLVaK1QGKGwHF/fKTS0qL8vKhUhAJY6CEa0VJUSKKqAlctDgxKTElHyJqChdNSy0uySyDCpshm50KkoeImyOLI5tjgSyBYpQl3PnJ+bkFqXnFicmZ+XlKsbEA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Código = _t, #"Tipo de Hora" = _t])
+				in
+				    Origen
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

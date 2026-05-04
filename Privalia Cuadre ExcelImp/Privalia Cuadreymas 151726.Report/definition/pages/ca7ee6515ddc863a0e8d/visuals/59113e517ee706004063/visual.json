@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "59113e517ee706004063",
+  "position": {
+    "x": 878.31848142804608,
+    "y": 285.04795043707037,
+    "z": 6000,
+    "height": 171.49226286457892,
+    "width": 253.76219977934312,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "advanceCardE03760C5AB684758B56AA29F9E6C257B",
+    "query": {
+      "queryState": {
+        "mainMeasure": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "TotH Excel"
+                }
+              },
+              "queryRef": "HORASOK W15.TotH Excel",
+              "nativeQueryRef": "TotH Excel"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "HORASOK"
+                  }
+                },
+                "Property": "TotH Excel"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "dataLabelSettings": [
+        {
+          "properties": {
+            "displayUnit": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,275 @@
+table HORASOK
+	lineageTag: 893febf6-9127-4e3e-93c7-71a0ee835107
+
+	measure 'TotH Excel' = ```
+			
+			VAR _Tot = SUM('HORASOK'[TOTAL])
+			RETURN
+			    IF(_Tot = 0, BLANK(), _Tot)
+			
+			```
+		formatString: #,0.00
+		lineageTag: 181095d8-fb25-488a-a9fb-ef027e248c19
+
+	measure Diferencia = [TotH Net4]-[TotH Excel]
+		formatString: 0.00
+		lineageTag: f2c8afc7-a29c-4190-aece-33d8ed0a50db
+
+	measure 'TotNormal Excel' =
+			
+			VAR _Tot = SUM('HORASOK'[normal])
+			RETURN
+			    IF(_Tot = 0, BLANK(), _Tot)
+		formatString: #,0.00
+		lineageTag: 9cdc4f3c-d266-479d-a521-5107395315a9
+
+	measure 'TotNoche Excel' = ```
+			
+			VAR _Tot = SUM('HORASOK'[noche])
+			RETURN
+			    IF(_Tot = 0, BLANK(), _Tot)
+			
+			```
+		formatString: #,0.00
+		lineageTag: e14ab617-0f17-45fa-aba6-0a2df2b774d8
+
+	measure 'TotExtras Excel' = ```
+			
+			VAR _Tot = SUM('HORASOK'[extra])
+			RETURN
+			    IF(_Tot = 0, BLANK(), _Tot)
+			
+			```
+		formatString: #,0.00
+		lineageTag: 11bc4e8f-cbf2-4668-add0-e503bd4eb96a
+
+	measure FechaIni =
+			
+			VAR _Semana = SELECTEDVALUE(Calendario[Semana])
+			VAR _Anio = SELECTEDVALUE(Calendario[Año])
+			RETURN
+			CALCULATE(
+			    MIN(Calendario[Date]),
+			    FILTER(
+			        ALL(Calendario),
+			        Calendario[Año] = _Anio &&
+			        Calendario[Semana] = _Semana &&
+			        Calendario[Día Semana (Número)] = 1
+			    )
+			)
+		formatString: Short Date
+		lineageTag: dc1ebab1-a4fd-4e7d-8c80-0cec3e59a30f
+
+	measure FechaFin =
+			
+			VAR _Semana = SELECTEDVALUE(Calendario[Semana])
+			VAR _Anio = SELECTEDVALUE(Calendario[Año])
+			RETURN
+			CALCULATE(
+			    MIN(Calendario[Date]),
+			    FILTER(
+			        ALL(Calendario),
+			        Calendario[Año] = _Anio &&
+			        Calendario[Semana] = _Semana &&
+			        Calendario[Día Semana (Número)] = 1
+			    )
+			)
+		formatString: Short Date
+		lineageTag: d47f9db2-af19-4e7d-b578-2446a5cb7e0e
+
+	measure ContratoActivoSemana =
+			
+			VAR _Trabajador = SELECTEDVALUE(Trabajadores[cttrabajador])
+			VAR _FecIni = [fecini]
+			VAR _FecFin = [fecfin]
+			VAR _Contrato =
+			    TOPN(
+			        1,
+			        FILTER(
+			            ALL(Contratos),
+			            Contratos[cttrabajador] = _Trabajador
+			                && Contratos[ctfechaini] <= _FecFin
+			                && (
+			                    ISBLANK(Contratos[ctfechafinreal])
+			                    || Contratos[ctfechafinreal] >= _FecIni
+			                )
+			        ),
+			        Contratos[ctfechaini], ASC,
+			        Contratos[ctcontrato], ASC
+			    )
+			RETURN
+			    MAXX(_Contrato, Contratos[ctcontrato])
+		formatString: 0
+		lineageTag: e6a44b45-7365-48b2-b624-d5bfd58473f3
+
+	measure FIniContSem =
+			
+			VAR _Trabajador = SELECTEDVALUE(Trabajadores[cttrabajador])
+			VAR _FecIni = [fecini]
+			VAR _FecFin = [fecfin]
+			VAR _Contrato =
+			    TOPN(
+			        1,
+			        FILTER(
+			            ALL(Contratos),
+			            Contratos[cttrabajador] = _Trabajador
+			                && Contratos[ctfechaini] <= _FecFin
+			                && (
+			                    ISBLANK(Contratos[ctfechafinreal])
+			                    || Contratos[ctfechafinreal] >= _FecIni
+			                )
+			        ),
+			        Contratos[ctfechaini], ASC,
+			        Contratos[ctcontrato], ASC
+			    )
+			VAR _FechaInicioContrato =
+			    MAXX(_Contrato, Contratos[ctfechaini])
+			RETURN
+			    IF(
+			        ISBLANK(_FechaInicioContrato),
+			        BLANK(),
+			        IF(_FechaInicioContrato > _FecIni, _FechaInicioContrato, _FecIni)
+			    )
+		formatString: Short Date
+		lineageTag: bbfd3808-59b3-4cd8-99cb-43b6380c82c5
+
+	measure FFinContSem =
+			
+			VAR _Trabajador = SELECTEDVALUE(Trabajadores[cttrabajador])
+			VAR _FecIni = [fecini]
+			VAR _FecFin = [fecfin]
+			VAR _Contrato =
+			    TOPN(
+			        1,
+			        FILTER(
+			            ALL(Contratos),
+			            Contratos[cttrabajador] = _Trabajador
+			                && Contratos[ctfechaini] <= _FecFin
+			                && (
+			                    ISBLANK(Contratos[ctfechafinreal])
+			                    || Contratos[ctfechafinreal] >= _FecIni
+			                )
+			        ),
+			        Contratos[ctfechaini], ASC,
+			        Contratos[ctcontrato], ASC
+			    )
+			VAR _FechaInicioContrato =
+			    MAXX(_Contrato, Contratos[ctfechaini])
+			RETURN
+			    IF(
+			        ISBLANK(_FechaInicioContrato),
+			        BLANK(),
+			        IF(_FechaInicioContrato > _FecIni, _FechaInicioContrato, _FecIni)
+			    )
+		formatString: Short Date
+		lineageTag: 25e609e4-b15e-46c9-9a74-79244d3e9e4f
+
+	column NOMBRE
+		dataType: string
+		lineageTag: 720c8515-54ab-4e14-a7a6-78d3ad279282
+		summarizeBy: none
+		sourceColumn: NOMBRE
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORIA
+		dataType: string
+		lineageTag: b9182a43-f99b-42fd-a256-53dbc9dfaa28
+		summarizeBy: none
+		sourceColumn: CATEGORIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column OPERATIVA
+		dataType: string
+		lineageTag: 310bf586-a76f-4182-b83e-c168142309d7
+		summarizeBy: none
+		sourceColumn: OPERATIVA
+
+		annotation SummarizationSetBy = Automatic
+
+	column RESPONSABLE
+		dataType: string
+		lineageTag: 57a9e4f5-98ea-4aa9-8b54-c53e51606d3d
+		summarizeBy: none
+		sourceColumn: RESPONSABLE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DNI
+		dataType: string
+		lineageTag: 2195be86-bb80-4db6-b5cc-47d0f77640dd
+		summarizeBy: none
+		sourceColumn: DNI
+
+		annotation SummarizationSetBy = Automatic
+
+	column noche
+		dataType: double
+		lineageTag: 6c55ac85-38a7-41e3-8f16-8e60c6dfc747
+		summarizeBy: sum
+		sourceColumn: noche
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column normal
+		dataType: double
+		lineageTag: 5f1ca031-821a-4ce6-8d85-184b2d575777
+		summarizeBy: sum
+		sourceColumn: normal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column extra
+		dataType: double
+		lineageTag: a31d51cb-e01c-4584-a9a9-393c798ae59d
+		summarizeBy: sum
+		sourceColumn: extra
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TOTAL
+		dataType: double
+		lineageTag: f618d4c7-0dc1-4623-9895-53a85976849e
+		summarizeBy: sum
+		sourceColumn: TOTAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column semana
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a89c1c0-b37f-49fc-8fa4-a6d78a580c69
+		summarizeBy: none
+		sourceColumn: semana
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HORASOK = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents("C:\Users\infor\OneDrive - Temporing ETT S.L\sincroniza\W15 TEMPORING.xlsx"), null, true),
+				    #"HORAS OK_Sheet" = Origen{[Item="HORAS OK",Kind="Sheet"]}[Data],
+				    #"Filas superiores quitadas" = Table.Skip(#"HORAS OK_Sheet",5),
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"Filas superiores quitadas", [PromoteAllScalars=true]),
+				    #"Otras columnas quitadas" = Table.SelectColumns(#"Encabezados promovidos",{"NOMBRE", "CATEGORIA", "OPERATIVA", "RESPONSABLE", "DNI", "noche", "normal", "extras", "total", "Semana"}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Otras columnas quitadas",{{"noche", type number}, {"normal", type number}, {"extras", type number}, {"total", type number}, {"NOMBRE", type text}, {"CATEGORIA", type text}, {"OPERATIVA", type text}, {"RESPONSABLE", type text}, {"DNI", type text},  {"Semana", Int64.Type}}),
+				    #"Rellenar hacia abajo" = Table.FillDown(#"Tipo cambiado",{"Semana"}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Rellenar hacia abajo",{{"extras", "extra"}, {"Semana", "semana"}, {"total", "TOTAL"}}),
+				    #"Consulta anexada" = Table.Combine({#"Columnas con nombre cambiado", #"HORASOK W17"})
+				in
+				    #"Consulta anexada"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

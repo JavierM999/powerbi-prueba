@@ -1,0 +1,111 @@
+table 'HORASOK W17'
+	lineageTag: cd0f4216-c23b-46bc-87b6-ac9718370e79
+
+	column NOMBRE
+		dataType: string
+		lineageTag: a0849a6c-975a-406e-97ae-238829005464
+		summarizeBy: none
+		sourceColumn: NOMBRE
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORIA
+		dataType: string
+		lineageTag: 513139ea-79da-4955-9594-0c872e023ed4
+		summarizeBy: none
+		sourceColumn: CATEGORIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column OPERATIVA
+		dataType: string
+		lineageTag: 9d82ea27-65be-4356-8d1d-916c178b6467
+		summarizeBy: none
+		sourceColumn: OPERATIVA
+
+		annotation SummarizationSetBy = Automatic
+
+	column RESPONSABLE
+		dataType: string
+		lineageTag: a80e0d02-e398-4607-ac40-eb3c8cc7f679
+		summarizeBy: none
+		sourceColumn: RESPONSABLE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DNI
+		dataType: string
+		lineageTag: 3dcdd2c9-5c41-4390-86a7-de999fb01c47
+		summarizeBy: none
+		sourceColumn: DNI
+
+		annotation SummarizationSetBy = Automatic
+
+	column noche
+		dataType: double
+		lineageTag: d4c1a469-d2a0-4ee2-881f-9aadb2f3dbfc
+		summarizeBy: sum
+		sourceColumn: noche
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column normal
+		dataType: double
+		lineageTag: 8912ad28-c4a8-4211-9f47-64564ca8fba5
+		summarizeBy: sum
+		sourceColumn: normal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column extra
+		dataType: double
+		lineageTag: f72b6b95-86c8-4d56-9a58-cb3376a958a4
+		summarizeBy: sum
+		sourceColumn: extra
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TOTAL
+		dataType: double
+		lineageTag: c28f74f7-9c3a-43bd-9a7d-060b5004d092
+		summarizeBy: sum
+		sourceColumn: TOTAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column semana
+		dataType: int64
+		formatString: 0
+		lineageTag: 190432dc-9451-4178-9c23-6dad5fef2529
+		summarizeBy: sum
+		sourceColumn: semana
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'HORASOK W17' = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents("C:\Users\infor\OneDrive - Temporing ETT S.L\sincroniza\W17 TEMPORING.xlsx"), null, true),
+				    #"HORAS OK_Sheet" = Origen{[Item="HORAS OK",Kind="Sheet"]}[Data],
+				    #"Filas superiores quitadas" = Table.Skip(#"HORAS OK_Sheet",5),
+				    #"Encabezados promovidos" = Table.PromoteHeaders(#"Filas superiores quitadas", [PromoteAllScalars=true]),
+				    #"Otras columnas quitadas" = Table.SelectColumns(#"Encabezados promovidos",{"NOMBRE", "CATEGORIA", "OPERATIVA", "RESPONSABLE", "DNI", "noche", "normal", "extra", "TOTAL", "semana"}),
+				    #"Rellenar hacia abajo" = Table.FillDown(#"Otras columnas quitadas",{"semana"}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Rellenar hacia abajo",{  {"NOMBRE", type text}, {"CATEGORIA", type text}, {"OPERATIVA", type text}, {"RESPONSABLE", type text}, {"DNI", type text}, {"noche", type number}, {"normal", type number}, {"extra", type number}, {"TOTAL", type number}, {"semana", Int64.Type}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado", each ([NOMBRE] <> null))
+				in
+				    #"Filas filtradas"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

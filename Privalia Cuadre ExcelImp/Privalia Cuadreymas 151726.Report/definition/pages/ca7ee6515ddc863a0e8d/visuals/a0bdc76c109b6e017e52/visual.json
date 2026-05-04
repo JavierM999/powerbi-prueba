@@ -1,0 +1,108 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "a0bdc76c109b6e017e52",
+  "position": {
+    "x": 114.71441907833319,
+    "y": 40.555602704461229,
+    "z": 4000,
+    "height": 543.44507623978041,
+    "width": 792.57234999575655,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajadores"
+                    }
+                  },
+                  "Property": "cttrabajador"
+                }
+              },
+              "queryRef": "Trabajadores.cttrabajador",
+              "nativeQueryRef": "cttrabajador"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajadores"
+                    }
+                  },
+                  "Property": "trnombrecompleto"
+                }
+              },
+              "queryRef": "Trabajadores.trnombrecompleto",
+              "nativeQueryRef": "trnombrecompleto"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Trabajadores"
+                    }
+                  },
+                  "Property": "trnif"
+                }
+              },
+              "queryRef": "Trabajadores.trnif",
+              "nativeQueryRef": "trnif"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CipHoras"
+                    }
+                  },
+                  "Property": "TotH Net4"
+                }
+              },
+              "queryRef": "CipHoras.TotHPres",
+              "nativeQueryRef": "TotH Net4"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "TotH Excel"
+                }
+              },
+              "queryRef": "HORASOK W15.TotHorOK",
+              "nativeQueryRef": "TotH Excel"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HORASOK"
+                    }
+                  },
+                  "Property": "Diferencia"
+                }
+              },
+              "queryRef": "HORASOK W15.Diferencia",
+              "nativeQueryRef": "Diferencia"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
